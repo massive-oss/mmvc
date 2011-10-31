@@ -1,0 +1,8 @@
+/build/*
+/temp/*
+
+Icon
+Thumbs.db
+.DS_Store
+
+TestSuite.hx
