@@ -1,0 +1,2 @@
+-cmd haxelib dev raxe `pwd`/lib/raxe
+-cmd haxelib run raxe

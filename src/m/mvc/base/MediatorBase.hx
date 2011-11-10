@@ -32,10 +32,19 @@ class MediatorBase<T> implements IMediator
 	var removed:Bool;
 	
 	/**
+	 * Internal
+	 * 
+	 * <p>An array of slots to remove when the mediator is removed to ensure garbage 
+	 * collection.</p>
+	 **/
+	var slots:Array<Slot>;
+
+	/**
 	 * Creates a new <code>Mediator</code> object
 	 */
 	public function new()
 	{
+		slots = [];
 	}
 	
 	/**
@@ -68,6 +77,7 @@ class MediatorBase<T> implements IMediator
 	 */
 	public function onRemove():Void
 	{
+		for (slot in slots) slot.remove();
 	}
 	
 	/**
@@ -84,5 +94,10 @@ class MediatorBase<T> implements IMediator
 	public function setViewComponent(viewComponent:Dynamic):Void
 	{
 		view = viewComponent;
+	}
+
+	function mediate(slot:Slot)
+	{
+		slots.push(slot);
 	}
 }
