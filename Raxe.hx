@@ -21,13 +21,40 @@ class Raxe implements raxe.Module
 				license:"BSD",
 				version:"${app.version}",
 				tag:"${app.tag}",
+				dependencies:
+				{
+					mcore:
+					{
+						name:"mcore"
+					}
+				},
 				files:
 				[
 					"src"
 				]
+			},
+			ftp:
+			{
+				server:"ui.massive.com.au",
+				username:"admin",
+				password:"noJJ2qSaCz5t"
 			}
 		});
 		
+		app.rule("^release haxelib\\.zip ([\\d\\.]+)$")
+		.describe("Build a versioned haxelib archive.")
+		.action = function(t:raxe.Task)
+		{
+			var pattern = ~/^release haxelib\.zip ([\d\.]+)$/;
+			if (!pattern.match(t.name)) return;
+			
+			var version = pattern.matched(1);
+			raxe.Build.app.args.app.version = version;
+			t.task("default").invoke();
+
+			raxe.FTP.put("build/mmvc.haxelib.zip", "release/mmvc/github/mmvc_" + version + ".zip");
+		}
+
 		app.task("default").require(["build/mmvc.haxelib.zip"]);
 	}
 }
