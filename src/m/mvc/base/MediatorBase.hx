@@ -8,6 +8,7 @@
 package m.mvc.base;
 
 import m.mvc.api.IMediator;
+import m.signal.Slot;
 
 /**
  * An abstract <code>IMediator</code> implementation
@@ -37,7 +38,7 @@ class MediatorBase<T> implements IMediator
 	 * <p>An array of slots to remove when the mediator is removed to ensure garbage 
 	 * collection.</p>
 	 **/
-	var slots:Array<Slot>;
+	var slots:Array<AnySlot>;
 
 	/**
 	 * Creates a new <code>Mediator</code> object
@@ -96,7 +97,7 @@ class MediatorBase<T> implements IMediator
 		view = viewComponent;
 	}
 
-	function mediate(slot:Slot)
+	function mediate(slot:AnySlot)
 	{
 		slots.push(slot);
 	}
