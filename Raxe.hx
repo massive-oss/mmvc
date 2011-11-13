@@ -55,6 +55,14 @@ class Raxe implements raxe.Module
 			raxe.FTP.put("build/mmvc.haxelib.zip", "release/mmvc/github/mmvc_" + version + ".zip");
 		}
 
+		app.task("configure").action = function(t:raxe.Task)
+		{
+			var config = function(lib:String) { raxe.Command.run("haxelib dev " + lib + " ${project.path}lib/" + lib, false); }
+
+			config("mcore");
+			config("raxe");
+		}
+
 		app.task("default").require(["build/mmvc.haxelib.zip"]);
 	}
 }
