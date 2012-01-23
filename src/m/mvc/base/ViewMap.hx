@@ -1,10 +1,3 @@
-/*
-* Copyright (c) 2009, 2010 the original author or authors
-*
-* Permission is hereby granted to use, modify, and distribute this file
-* in accordance with the terms of the license agreement accompanying it.
-*/
-
 package m.mvc.base;
 
 import m.data.Dictionary;
@@ -13,33 +6,10 @@ import m.mvc.api.IViewMap;
 import m.mvc.api.IViewContainer;
 
 /**
- * An abstract <code>IViewMap</code> implementation
- */
+An abstract <code>IViewMap</code> implementation
+*/
 class ViewMap extends ViewMapBase, implements IViewMap
 {
-	/**
-	 * @private
-	 */
-	
-	/**
-	 * @private
-	 */
-	var mappedPackages:Array<Dynamic>;
-
-	/**
-	 * @private
-	 */
-	var mappedTypes:Dictionary<Dynamic, Dynamic>;
-
-	/**
-	 * @private
-	 */
-	var injectedViews:Dictionary<Dynamic, Dynamic>;
-
-	//---------------------------------------------------------------------
-	// Constructor
-	//---------------------------------------------------------------------
-
 	/**
 	 * Creates a new <code>ViewMap</code> object
 	 *
@@ -55,14 +25,7 @@ class ViewMap extends ViewMapBase, implements IViewMap
 		this.mappedTypes = new Dictionary<Dynamic, Dynamic>();
 		this.injectedViews = new Dictionary<Dynamic, Dynamic>(true);
 	}
-
-	//---------------------------------------------------------------------
-	// API
-	//---------------------------------------------------------------------
-
-	/**
-	 * @inheritDoc
-	 */
+	
 	public function mapPackage(packageName:String):Void
 	{
 		if (!Lambda.has(mappedPackages, packageName))
@@ -77,9 +40,6 @@ class ViewMap extends ViewMapBase, implements IViewMap
 		}
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function unmapPackage(packageName:String):Void
 	{
 		var index = Lambda.indexOf(mappedPackages, packageName);
@@ -96,9 +56,6 @@ class ViewMap extends ViewMapBase, implements IViewMap
 		}
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function mapType(type:Class<Dynamic>):Void
 	{
 		if (mappedTypes.get(type) != null) return;
@@ -118,9 +75,6 @@ class ViewMap extends ViewMapBase, implements IViewMap
 		}
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function unmapType(type:Class<Dynamic>):Void
 	{
 		var mapping:Class<Dynamic> = mappedTypes.get(type);
@@ -137,29 +91,22 @@ class ViewMap extends ViewMapBase, implements IViewMap
 		}
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function hasType(type:Class<Dynamic>):Bool
 	{
 		return mappedTypes.get(type) != null;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function hasPackage(packageName:String):Bool
 	{
 		return Lambda.has(mappedPackages, packageName);
 	}
 
-	//---------------------------------------------------------------------
-	// Internal
-	//---------------------------------------------------------------------
+	//------------------------------------------------------------------ private
+	
+	var mappedPackages:Array<Dynamic>;
+	var mappedTypes:Dictionary<Dynamic, Dynamic>;
+	var injectedViews:Dictionary<Dynamic, Dynamic>;
 
-	/**
-	 * @private
-	 */
 	override function addListeners():Void
 	{
 		if (contextView != null && enabled)
@@ -169,9 +116,6 @@ class ViewMap extends ViewMapBase, implements IViewMap
 		}
 	}
 
-	/**
-	 * @private
-	 */
 	override function removeListeners():Void
 	{
 		if (contextView != null)
@@ -181,9 +125,6 @@ class ViewMap extends ViewMapBase, implements IViewMap
 		}
 	}
 
-	/**
-	 * @private
-	 */
 	override function onViewAdded(view:Dynamic):Void
 	{
 		if (injectedViews.get(view) != null)

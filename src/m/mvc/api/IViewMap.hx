@@ -1,17 +1,11 @@
-/*
-* Copyright (c) 2009 the original author or authors
-* 
-* Permission is hereby granted to use, modify, and distribute this file 
-* in accordance with the terms of the license agreement accompanying it.
-*/
-
 package m.mvc.api;
 
 import m.mvc.api.IViewContainer;
 
 /**
- * The Robotlegs ViewMap contract. All IViewMap automatic injections occur AFTER the view components are added to the stage.
- */
+The Robotlegs ViewMap contract. All IViewMap automatic injections occur 
+AFTER the view components are added to the stage.
+*/
 interface IViewMap
 {
 	/**

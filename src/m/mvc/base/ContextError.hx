@@ -1,15 +1,8 @@
-/*
- * Copyright (c) 2009 the original author or authors
- * 
- * Permission is hereby granted to use, modify, and distribute this file 
- * in accordance with the terms of the license agreement accompanying it.
- */
-
 package m.mvc.base;
 
 /**
- * A framework Error implementation
- */
+A framework Error implementation
+*/
 class ContextError
 {
 	public static var E_COMMANDMAP_NOIMPL:String = 'Command Class does not implement an execute() method';

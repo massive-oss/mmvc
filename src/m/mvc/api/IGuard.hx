@@ -4,4 +4,3 @@ interface IGuard
 {
 	function approve():Bool;
 }
-

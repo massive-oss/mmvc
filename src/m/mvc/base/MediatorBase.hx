@@ -1,18 +1,11 @@
-/*
-* Copyright (c) 2009 the original author or authors
-*
-* Permission is hereby granted to use, modify, and distribute this file
-* in accordance with the terms of the license agreement accompanying it.
-*/
-
 package m.mvc.base;
 
 import m.mvc.api.IMediator;
 import m.signal.Slot;
 
 /**
- * An abstract <code>IMediator</code> implementation
- */
+An abstract <code>IMediator</code> implementation
+*/
 class MediatorBase<T> implements IMediator
 {
 	/**

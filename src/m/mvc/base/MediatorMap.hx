@@ -1,10 +1,3 @@
-/*
-* Copyright (c) 2009, 2010 the original author or authors
-* 
-* Permission is hereby granted to use, modify, and distribute this file 
-* in accordance with the terms of the license agreement accompanying it.
-*/
-
 package m.mvc.base;
 
 import m.inject.IInjector;
@@ -16,8 +9,8 @@ import m.mvc.api.IViewContainer;
 import haxe.Timer;
 
 /**
- * An abstract <code>IMediatorMap</code> implementation
- */
+An abstract <code>IMediatorMap</code> implementation
+*/
 class MediatorMap extends ViewMapBase, implements IMediatorMap
 {
 	var mediatorByView:Dictionary<Dynamic, IMediator>;
