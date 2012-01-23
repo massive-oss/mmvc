@@ -66,7 +66,7 @@ class CommandMap implements ICommandMap
 		return signal;
 	}
 
-	private function createSignalClassInstance(signalClass:SignalClass):AnySignal
+	function createSignalClassInstance(signalClass:SignalClass):AnySignal
 	{
 		var injectorForSignalInstance = injector;
 		var signal:AnySignal;

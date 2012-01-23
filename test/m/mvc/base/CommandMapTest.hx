@@ -2,7 +2,7 @@ package m.mvc.base;
 
 import massive.munit.Assert;
 import m.mvc.base.CommandMap;
-import m.mvc.base.support.ManualCommand;
+import m.mvc.base.support.TestCommand;
 import m.mvc.base.support.TestSignal;
 import m.mvc.api.ICommandMap;
 import m.inject.IInjector;
@@ -19,142 +19,91 @@ class CommandMapTest implements ICommandTester
 	var commandMap:ICommandMap;
 	var injector:IInjector;
 	var reflector:IReflector;
-	
+	var signal:TestSignal;
+
 	@Before
-	public function setup():Void
+	public function before():Void
 	{
 		commandExecuted = false;
-		// injector = new Injector();
-		// reflector = new Reflector();
-		// commandMap = new CommandMap(injector);
-		// injector.mapValue(ICommandTester, this);
+		injector = new Injector();
+		reflector = new Reflector();
+		commandMap = new CommandMap(injector);
+		injector.mapValue(ICommandTester, this);
+		signal = new TestSignal();
 	}
 	
 	@After
-	public function tearDown():Void
+	public function after():Void
 	{
-		// injector.unmap(ICommandTester);
-		// resetCommandExecuted();
+		injector.unmap(ICommandTester);
+		resetCommandExecuted();
 	}
 	
 	@Test
-	public function noCommand():Void
+	public function unmapped_signal_does_nothing():Void
 	{
-		// var signal = injector.getInstance(TestSignal);
-		// signal.dispatch();
+		injector.mapClass(TestSignal, TestSignal);
+		
+		signal.dispatch();
 		Assert.isFalse(commandExecuted);
 	}
-	/*
+	
 	@Test
-	public function hasCommand():Void
+	public function command_map_has_mapped_signal_instance():Void
 	{
-		commandMap.mapEvent(CustomEvent.STARTED, EventCommand);
-		var hasCommand:Bool = commandMap.hasEventCommand(CustomEvent.STARTED, EventCommand);
+		commandMap.mapSignal(signal, TestCommand);
+		var hasCommand = commandMap.hasSignalCommand(signal, TestCommand);
 		Assert.isTrue(hasCommand);
 	}
 	
 	@Test
-	public function normalCommand():Void
+	public function dispatched_signal_executes_mapped_command():Void
 	{
-		commandMap.mapEvent(CustomEvent.STARTED, EventCommand);
-		eventDispatcher.dispatchEvent(new CustomEvent(CustomEvent.STARTED));
-		Assert.isTrue(commandExecuted);//'Command should have reponded to event'
+		commandMap.mapSignal(signal, TestCommand);
+		signal.dispatch();
+		Assert.isTrue(commandExecuted);
 	}
 	
 	@Test
-	public function normalCommandRepeated():Void
+	public function repeated_dispatch_repeats_command():Void
 	{
-		commandMap.mapEvent(CustomEvent.STARTED, EventCommand);
-		eventDispatcher.dispatchEvent(new CustomEvent(CustomEvent.STARTED));
-		Assert.isTrue(commandExecuted);//'Command should have reponded to event'
+		commandMap.mapSignal(signal, TestCommand);
+		
+		signal.dispatch();
+		Assert.isTrue(commandExecuted);
 
 		resetCommandExecuted();
-		eventDispatcher.dispatchEvent(new CustomEvent(CustomEvent.STARTED));
-		Assert.isTrue(commandExecuted);//'Command should have reponded to event again'
+		signal.dispatch();
+		Assert.isTrue(commandExecuted);
 	}
 	
 	@Test
-	public function oneshotCommand():Void
+	public function one_shot_command_does_not_repeat():Void
 	{
-		commandMap.mapEvent(CustomEvent.STARTED, EventCommand, null, true);
-		eventDispatcher.dispatchEvent(new CustomEvent(CustomEvent.STARTED));
-		Assert.isTrue(commandExecuted);//'Command should have reponded to event'
+		commandMap.mapSignal(signal, TestCommand, true);
+
+		signal.dispatch();
+		Assert.isTrue(commandExecuted);
 
 		resetCommandExecuted();
-		eventDispatcher.dispatchEvent(new CustomEvent(CustomEvent.STARTED));
-		Assert.isFalse(commandExecuted);//'Command should NOT have reponded to event'
+		signal.dispatch();
+		Assert.isFalse(commandExecuted);
 	}
 	
 	@Test
 	public function normalCommandRemoved():Void
 	{
-		commandMap.mapEvent(CustomEvent.STARTED, EventCommand);
-		eventDispatcher.dispatchEvent(new CustomEvent(CustomEvent.STARTED));
-		Assert.isTrue(commandExecuted);//'Command should have reponded to event'
+		commandMap.mapSignal(signal, TestCommand);
+
+		signal.dispatch();
+		Assert.isTrue(commandExecuted);
 
 		resetCommandExecuted();
-		commandMap.unmapEvent(CustomEvent.STARTED, EventCommand);
-		eventDispatcher.dispatchEvent(new CustomEvent(CustomEvent.STARTED));
-		Assert.isFalse(commandExecuted);//'Command should NOT have reponded to event'
+		commandMap.unmapSignal(signal, TestCommand);
+		signal.dispatch();
+		Assert.isFalse(commandExecuted);
 	}
 	
-	@Test
-	public function unmapEvents():Void
-	{
-		commandMap.mapEvent(CustomEvent.EVENT0, EventCommand);
-		commandMap.mapEvent(CustomEvent.EVENT1, EventCommand);
-		commandMap.mapEvent(CustomEvent.EVENT2, EventCommand);
-		commandMap.mapEvent(CustomEvent.EVENT3, EventCommand);
-		commandMap.unmapEvents();
-		eventDispatcher.dispatchEvent(new CustomEvent(CustomEvent.EVENT0));
-		eventDispatcher.dispatchEvent(new CustomEvent(CustomEvent.EVENT1));
-		eventDispatcher.dispatchEvent(new CustomEvent(CustomEvent.EVENT2));
-		eventDispatcher.dispatchEvent(new CustomEvent(CustomEvent.EVENT3));
-		Assert.isFalse(commandExecuted);//'Command should NOT have reponded to event'
-	}
-	
-	@Test
-	public function manuallyExecute():Void
-	{
-		commandMap.execute(ManualCommand, {});
-		Assert.isTrue(commandExecuted);//'Command should have executed with custom payload'
-	}
-	
-	@Test
-	public function mappingNonCommandClassShouldFail():Void
-	{
-		var passed = false;
-
-		try
-		{
-			commandMap.mapEvent(CustomEvent.STARTED, Dynamic);
-		}
-		catch (e:Dynamic)
-		{
-			passed = Std.is(e, ContextError);
-		}
-
-		Assert.isTrue(passed);
-	}
-	
-	@Test
-	public function mappingSameThingTwiceShouldFail():Void
-	{
-		var passed = false;
-
-		try
-		{
-			commandMap.mapEvent(CustomEvent.STARTED, EventCommand);
-			commandMap.mapEvent(CustomEvent.STARTED, EventCommand);
-		}
-		catch (e:Dynamic)
-		{
-			passed = Std.is(e, ContextError);
-		}
-
-		Assert.isTrue(passed);
-	}
-	*/
 	public function markCommandExecuted():Void
 	{
 		commandExecuted = true;

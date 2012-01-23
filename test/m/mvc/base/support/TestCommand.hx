@@ -9,15 +9,12 @@ package m.mvc.base.support;
 
 import m.mvc.impl.support.ICommandTester;
 
-class ManualCommand
+class TestCommand implements m.mvc.api.ICommand
  {
 	public function new(){}
 	
 	@inject
 	public var testSuite:ICommandTester;
-	
-	@inject
-	public var payload:Dynamic;
 	
 	public function execute():Void
 	{
