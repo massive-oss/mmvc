@@ -11,32 +11,13 @@ import m.inject.IInjector;
 import m.mvc.api.IViewContainer;
 
 /**
- * A base ViewMap implementation
- */
+A base ViewMap implementation
+*/
 class ViewMapBase
 {
 	public var contextView(default, set_contextView):IViewContainer;
 	public var enabled(default, set_enabled):Bool;
 	
-	/**
-	 * @private
-	 */
-	var injector:IInjector;
-
-	/**
-	 * @private
-	 */
-	var useCapture:Bool;
-	
-	/**
-	 * @private
-	 */		
-	var viewListenerCount:Int;
-
-	//---------------------------------------------------------------------
-	// Constructor
-	//---------------------------------------------------------------------
-
 	/**
 	 * Creates a new <code>ViewMap</code> object
 	 *
@@ -50,20 +31,10 @@ class ViewMapBase
 
 		this.injector = injector;
 
-		// change this at your peril lest ye understand the problem and have a better solution
-		this.useCapture = true;
-
 		// this must come last, see the setter
 		this.contextView = contextView;
 	}
 
-	//---------------------------------------------------------------------
-	// API
-	//---------------------------------------------------------------------
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function set_contextView(value:IViewContainer):IViewContainer
 	{
 		if (value != contextView)
@@ -81,9 +52,6 @@ class ViewMapBase
 		return contextView;
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function set_enabled(value:Bool):Bool
 	{
 		if (value != enabled)
@@ -101,35 +69,13 @@ class ViewMapBase
 		return value;
 	}
 
-	//---------------------------------------------------------------------
-	// Internal
-	//---------------------------------------------------------------------
+	//------------------------------------------------------------------ private
 
-	/**
-	 * @private
-	 */
-	function addListeners():Void
-	{
-	}
+	var injector:IInjector;
+	var viewListenerCount:Int;
 
-	/**
-	 * @private
-	 */
-	function removeListeners():Void
-	{
-	}
-
-	/**
-	 * @private
-	 */
-	function onViewAdded(view:Dynamic):Void
-	{
-	}
-
-	/**
-	 * @private
-	 */
-	function onViewRemoved(view:Dynamic):Void
-	{
-	}
+	function addListeners():Void {}
+	function removeListeners():Void {}
+	function onViewAdded(view:Dynamic):Void {}
+	function onViewRemoved(view:Dynamic):Void {}
 }

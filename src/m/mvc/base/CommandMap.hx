@@ -54,6 +54,12 @@ class CommandMap implements ICommandMap
 		return signal;
 	}
 
+	public function unmapSignalClass(signalClass:SignalClass, commandClass:CommandClass)
+	{
+		unmapSignal(getSignalClassInstance(signalClass), commandClass);
+		injector.unmap(signalClass);
+	}
+
 	function getSignalClassInstance(signalClass:SignalClass):AnySignal
 	{
 		if (signalClassMap.exists(signalClass))
@@ -87,6 +93,7 @@ class CommandMap implements ICommandMap
 	{
 		var callbacksByCommandClass = signalMap.get(signal);
 		if (callbacksByCommandClass == null) return false;
+		
 		var callbackFunction = callbacksByCommandClass.get(commandClass);
 		return callbackFunction != null;
 	}
@@ -95,17 +102,14 @@ class CommandMap implements ICommandMap
 	{
 		var callbacksByCommandClass = signalMap.get(signal);
 		if (callbacksByCommandClass == null) return;
+
 		var callbackFunction = callbacksByCommandClass.get(commandClass);
 		if (callbackFunction == null) return;
+		
 		signal.remove(callbackFunction);
 		callbacksByCommandClass.delete(commandClass);
 	}
 	
-	public function unmapSignalClass(signalClass:SignalClass, commandClass:CommandClass)
-	{
-		unmapSignal(getSignalClassInstance(signalClass), commandClass);
-	}
-
 	function routeSignalToCommand(signal:AnySignal, valueObjects:Array<Dynamic>, commandClass:CommandClass, oneshot:Bool)
 	{
 		mapSignalValues(signal.valueClasses, valueObjects);
@@ -146,7 +150,7 @@ class CommandMap implements ICommandMap
 
 	public function release(command:ICommand)
 	{
-		if (detainedCommands.get(command) != null)
+		if (detainedCommands.exists(command))
 		{
 			detainedCommands.delete(command);
 		}

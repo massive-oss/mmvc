@@ -1,10 +1,3 @@
-/*
-* Copyright (c) 2009 the original author or authors
-* 
-* Permission is hereby granted to use, modify, and distribute this file 
-* in accordance with the terms of the license agreement accompanying it.
-*/
-
 package m.mvc.impl;
 
 import m.mvc.base.CommandMap;
@@ -22,35 +15,35 @@ import m.inject.Reflector;
 import m.mvc.api.IViewContainer;
 
 /**
- * Dispatched by the <code>startup()</code> method when it finishes
- * executing.
- * 
- * <p>One common pattern for application startup/bootstrapping makes use
- * of the <code>startupComplete</code> event. In this pattern, you do the
- * following:</p>
- * <ul>
- *   <li>Override the <code>startup()</code> method in your Context 
- *       subclass and set up application mappings in your 
- *       <code>startup()</code> override as you always do in Robotlegs.</li>
- *   <li>Create commands that perform startup/bootstrapping operations
- *       such as loading the initial data, checking for application updates,
- *       etc.</li>
- *   <li><p>Map those commands to the <code>ContextEvent.STARTUP_COMPLETE</code>
- *       event:</p>
- *       <listing>commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, LoadInitialDataCommand, ContextEvent, true):</listing>
- *       </li>
- *   <li>Dispatch the <code>startupComplete</code> (<code>ContextEvent.STARTUP_COMPLETE</code>)
- *       event from your <code>startup()</code> override. You can do this
- *       in one of two ways: dispatch the event yourself, or call 
- *       <code>super.startup()</code>. (The Context class's 
- *       <code>startup()</code> method dispatches the 
- *       <code>startupComplete</code> event.)</li>
- * </ul>
- * 
- * @eventType m.mvc.base.ContextEvent.STARTUP_COMPLETE
- * 
- * @see #startup()
- */
+Dispatched by the <code>startup()</code> method when it finishes 
+executing.
+
+<p>One common pattern for application startup/bootstrapping makes use of 
+the <code>startupComplete</code> event. In this pattern, you do the 
+following:</p>
+<ul>
+  <li>Override the <code>startup()</code> method in your Context 
+      subclass and set up application mappings in your 
+      <code>startup()</code> override as you always do in Robotlegs.</li>
+  <li>Create commands that perform startup/bootstrapping operations
+      such as loading the initial data, checking for application updates,
+      etc.</li>
+  <li><p>Map those commands to the <code>ContextEvent.STARTUP_COMPLETE</code>
+      event:</p>
+      <listing>commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, LoadInitialDataCommand, ContextEvent, true):</listing>
+      </li>
+  <li>Dispatch the <code>startupComplete</code> (<code>ContextEvent.STARTUP_COMPLETE</code>)
+      event from your <code>startup()</code> override. You can do this
+      in one of two ways: dispatch the event yourself, or call 
+      <code>super.startup()</code>. (The Context class's 
+      <code>startup()</code> method dispatches the 
+      <code>startupComplete</code> event.)</li>
+</ul>
+
+@eventType m.mvc.base.ContextEvent.STARTUP_COMPLETE
+
+@see #startup()
+*/
 
 /**
  * Abstract MVCS <code>IContext</code> implementation

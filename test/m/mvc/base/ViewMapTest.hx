@@ -26,7 +26,7 @@ class ViewMapTest
 	var viewMap:IViewMap;
 	
 	@Before
-	public function runBeforeEachTest():Void
+	public function before():Void
 	{
 		contextView = new TestContextView();
 		testView = new TestView();
@@ -38,7 +38,7 @@ class ViewMapTest
 	}
 	
 	@After
-	public function runAfterEachTest():Void
+	public function after():Void
 	{
 		contextView = null;
 		testView = null;
@@ -47,112 +47,112 @@ class ViewMapTest
 		viewMap = null;
 		injector = null;
 	}
-	/*
+	
 	@Test
-	public function mapType():Void
+	public function map_type():Void
 	{
 		viewMap.mapType(TestView);
 		var mapped = viewMap.hasType(TestView);
-		Assert.isTrue(mapped);//"Class should be mapped"
+		Assert.isTrue(mapped);
 	}
 	
 	@Test
-	public function unmapType():Void
+	public function unmap_type():Void
 	{
 		viewMap.mapType(TestView);
 		viewMap.unmapType(TestView);
 		var mapped = viewMap.hasType(TestView);
-		Assert.isFalse(mapped);//"Class should NOT be mapped"
+		Assert.isFalse(mapped);
 	}
 	
 	@Test
-	public function mapTypeAndAddToDisplay():Void
+	public function map_type_and_add_to_display():Void
 	{
 		viewMap.mapType(TestView);
 		contextView.addView(testView);
-		Assert.areEqual(INJECTION_STRING, testView.injectionPoint);//"Injection points should be satisfied"
+		Assert.areEqual(INJECTION_STRING, testView.injectionPoint);
 	}
 	
 	@Test
-	public function unmapTypeAndAddToDisplay():Void
+	public function unmap_type_and_add_to_display():Void
 	{
 		viewMap.mapType(TestView);
 		viewMap.unmapType(TestView);
 		contextView.addView(testView);
-		Assert.isNull(testView.injectionPoint);//"Injection points should NOT be satisfied after unmapping"
+		Assert.isNull(testView.injectionPoint);
 	}
 	
 	@Test
-	public function mapTypeAndAddToDisplayTwice():Void
+	public function map_type_and_add_to_display_twice():Void
 	{
 		viewMap.mapType(TestView);
 		contextView.addView(testView);
 		testView.injectionPoint = null;
 		contextView.removeView(testView);
 		contextView.addView(testView);
-		Assert.isNull(testView.injectionPoint);//"View should NOT be injected into twice"
+		Assert.isNull(testView.injectionPoint);
 	}
 	
 	@Test
-	public function mapTypeOfContextViewShouldInjectIntoIt():Void
+	public function map_type_of_context_view_should_inject_into_it():Void
 	{
 		viewMap.mapType(TestContextView);
-		Assert.areEqual(INJECTION_STRING, contextView.injectionPoint);//"Injection points in contextView should be satisfied"
+		Assert.areEqual(INJECTION_STRING, contextView.injectionPoint);
 	}
 	
 	@Test
-	public function mapTypeOfContextViewTwiceShouldInjectOnlyOnce():Void
+	public function map_type_of_context_view_twice_should_inject_only_once():Void
 	{
 		viewMap.mapType(TestContextView);
 		contextView.injectionPoint = null;
 		viewMap.mapType(TestContextView);
-		Assert.isNull(testView.injectionPoint);//"contextView should NOT be injected into twice"
+		Assert.isNull(testView.injectionPoint);
 	}
 	
 	@Test
-	public function mapPackage():Void
+	public function map_package():Void
 	{
 		viewMap.mapPackage('m.mvc');
 		var mapped = viewMap.hasPackage('m.mvc');
-		Assert.isTrue(mapped);//"Package should be mapped"
+		Assert.isTrue(mapped);
 	}
 	
 	@Test
-	public function unmapPackage():Void
+	public function unmap_package():Void
 	{
 		viewMap.mapPackage("m.mvc");
 		viewMap.unmapPackage("m.mvc");
 		var mapped = viewMap.hasPackage("m.mvc");
-		Assert.isFalse(mapped);//"Package should NOT be mapped"
+		Assert.isFalse(mapped);
 	}
 	
 	@Test
-	public function mappedPackageIsInjected():Void
+	public function mapped_package_is_injected():Void
 	{
 		viewMap.mapPackage("m.mvc");
 		contextView.addView(testView);
-		Assert.areEqual(INJECTION_STRING, testView.injectionPoint);//"Injection points should be satisfied"
+		Assert.areEqual(INJECTION_STRING, testView.injectionPoint);
 	}
 	
 	@Test
-	public function mappedAbsolutePackageIsInjected():Void
+	public function mapped_absolute_package_is_injected():Void
 	{
 		viewMap.mapPackage("m.mvc.base.support");
 		contextView.addView(testView);
-		Assert.areEqual(INJECTION_STRING, testView.injectionPoint);//"Injection points should be satisfied"
+		Assert.areEqual(INJECTION_STRING, testView.injectionPoint);
 	}
 	
 	@Test
-	public function unmappedPackageShouldNotBeInjected():Void
+	public function unmapped_package_should_not_be_injected():Void
 	{
 		viewMap.mapPackage("m.mvc");
 		viewMap.unmapPackage("m.mvc");
 		contextView.addView(testView);
-		Assert.isNull(testView.injectionPoint);//"Injection points should NOT be satisfied after unmapping"
+		Assert.isNull(testView.injectionPoint);
 	}
 	
 	@Test
-	public function mappedPackageNotInjectedTwiceWhenRemovedAndAdded():Void
+	public function mapped_package_not_injected_twice_when_removed_and_added():Void
 	{
 		viewMap.mapPackage("m.mvc");
 		contextView.addView(testView);
@@ -160,52 +160,64 @@ class ViewMapTest
 		contextView.removeView(testView);
 		contextView.addView(testView);
 		
-		Assert.isNull(testView.injectionPoint);//"View should NOT be injected into twice"
+		Assert.isNull(testView.injectionPoint);
 	}
 	
 	@Test
-	public function mapInterface():Void
+	public function map_interface():Void
 	{
 		viewMap.mapType(ITestView);
 		var mapped = viewMap.hasType(ITestView);
-		Assert.isTrue(mapped);//"Inteface should be mapped"
+		Assert.isTrue(mapped);
 	}
 	
 	@Test
-	public function unmapInterface():Void
+	public function unmap_interface():Void
 	{
 		viewMap.mapType(ITestView);
 		viewMap.unmapType(ITestView);
 		var mapped = viewMap.hasType(ITestView);
-		Assert.isFalse(mapped);//"Class should NOT be mapped"
+		Assert.isFalse(mapped);
 	}
 	
 	@Test
-	public function mappedInterfaceIsInjected():Void
+	public function mapped_interface_is_injected():Void
 	{
 		viewMap.mapType(ITestView);
 		contextView.addView(testView);
-		Assert.areEqual(INJECTION_STRING, testView.injectionPoint);//"Injection points should be satisfied"
+		Assert.areEqual(INJECTION_STRING, testView.injectionPoint);
 	}
 	
 	@Test
-	public function unmappedInterfaceShouldNotBeInjected():Void
+	public function unmapped_interface_should_not_be_injected():Void
 	{
 		viewMap.mapType(ITestView);
 		viewMap.unmapType(ITestView);
 		contextView.addView(testView);
-		Assert.isNull(testView.injectionPoint);//"Injection points should NOT be satisfied after unmapping"
+		Assert.isNull(testView.injectionPoint);
 	}
 	
 	@Test
-	public function mappedInterfaceNotInjectedTwiceWhenRemovedAndAdded():Void
+	public function mapped_interface_not_injected_twice_when_removed_and_added():Void
 	{
 		viewMap.mapType(ITestView);
 		contextView.addView(testView);
 		testView.injectionPoint = null;
 		contextView.removeView(testView);
 		contextView.addView(testView);
-		Assert.isNull(testView.injectionPoint);//"View should NOT be injected into twice"
+		Assert.isNull(testView.injectionPoint);
 	}
-	*/
+
+	@Test
+	public function setting_enabled_does_stuff():Void
+	{
+		viewMap.enabled = true;
+		viewMap.enabled = false;
+		viewMap.enabled = true;
+		
+		viewMap.contextView = contextView;
+		viewMap.contextView = null;
+		viewMap.contextView = contextView;
+		Assert.isTrue(true);
+	}
 }

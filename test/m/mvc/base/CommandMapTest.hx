@@ -1,32 +1,37 @@
 package m.mvc.base;
 
 import massive.munit.Assert;
-import m.mvc.base.CommandMap;
-import m.mvc.base.support.TestCommand;
-import m.mvc.base.support.TestSignal;
 import m.mvc.api.ICommandMap;
-import m.inject.IInjector;
-import m.inject.IReflector;
-import m.inject.Injector;
-import m.inject.Reflector;
+import m.mvc.base.CommandMap;
+import m.mvc.impl.Command;
+import m.mvc.base.support.TestCommand;
+import m.mvc.base.support.TestCommand1;
+import m.mvc.base.support.TestCommand2;
+import m.mvc.base.support.TestSignal;
+import m.mvc.base.support.TestSignal2;
 import m.mvc.impl.support.ICommandTester;
+import m.inject.IInjector;
+import m.inject.Injector;
 
 class CommandMapTest implements ICommandTester
 {
-	public function new(){}
-	
 	var commandExecuted:Bool;
+	var secondCommandExecuted:Bool;
 	var commandMap:ICommandMap;
 	var injector:IInjector;
-	var reflector:IReflector;
 	var signal:TestSignal;
+	var param1:Int;
+	var param2:String;
+
+	public function new(){}
 
 	@Before
 	public function before():Void
 	{
-		commandExecuted = false;
+		param1 = -1;
+		param2 = null;
+		secondCommandExecuted = commandExecuted = false;
 		injector = new Injector();
-		reflector = new Reflector();
 		commandMap = new CommandMap(injector);
 		injector.mapValue(ICommandTester, this);
 		signal = new TestSignal();
@@ -91,7 +96,7 @@ class CommandMapTest implements ICommandTester
 	}
 	
 	@Test
-	public function normalCommandRemoved():Void
+	public function unmapped_signal_does_not_repeat():Void
 	{
 		commandMap.mapSignal(signal, TestCommand);
 
@@ -104,11 +109,85 @@ class CommandMapTest implements ICommandTester
 		Assert.isFalse(commandExecuted);
 	}
 	
-	public function markCommandExecuted():Void
+	@Test
+	public function map_signal_class_configures_injector()
 	{
-		commandExecuted = true;
+		commandMap.mapSignalClass(TestSignal, TestCommand);
+		var instance = injector.getInstance(TestSignal);
+		Assert.isType(instance, TestSignal);
+	}
+
+	@Test
+	public function unmap_signal_class_unconfigures_injector()
+	{
+		commandMap.mapSignalClass(TestSignal, TestCommand);
+		commandMap.unmapSignalClass(TestSignal, TestCommand);
+		var passed = false;
+
+		try
+		{
+			var instance = injector.getInstance(TestSignal);
+		}
+		catch (e:InjectorException)
+		{
+			passed = true;
+		}
+		
+		Assert.isTrue(passed);
+	}
+
+	@Test
+	public function detain_release_does_nothing()
+	{
+		var command = new Command();
+		commandMap.detain(command);
+		commandMap.release(command);
+		// check releasing unretained command fails silently
+		commandMap.release(command);
+		Assert.isType(command, Command);
+	}
+
+	@Test
+	public function map_signal_to_two_commands_executes_both()
+	{
+		commandMap.mapSignal(signal, TestCommand);
+		commandMap.mapSignal(signal, TestCommand1);
+		signal.dispatch();
+
+	}
+
+	@Test
+	public function dispatch_mapped_signal_with_params_injects_into_command()
+	{
+		var signal2 = new TestSignal2();
+		commandMap.mapSignal(signal2, TestCommand2);
+		signal2.dispatch(10, "foobar");
+		Assert.areEqual(10, param1);
+		Assert.areEqual("foobar", param2);
+	}
+
+	@Test
+	public function unmap_non_existant_mapping_fails_silently()
+	{
+		commandMap.unmapSignal(signal, TestCommand);
+		commandMap.mapSignal(signal, TestCommand);
+		commandMap.unmapSignal(signal, TestCommand);
+		commandMap.unmapSignal(signal, TestCommand);
+		Assert.isTrue(true);
 	}
 	
+	public function markCommandExecuted():Void
+	{
+		if (commandExecuted) secondCommandExecuted = true;
+		commandExecuted = true;
+	}
+
+	public function markCommand2Executed(param1:Int, param2:String)
+	{
+		this.param1 = param1;
+		this.param2 = param2;
+	}
+
 	public function resetCommandExecuted():Void
 	{
 		commandExecuted = false;

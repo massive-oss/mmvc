@@ -2,24 +2,15 @@ package m.mvc.impl;
 
 import massive.munit.Assert;
 
-// dp: need to rethink this sans-evants
 class CommandTest
 {
 	public function new(){}
 	
-	@Before
-	public function before()
-	{
-	}
-	
-	@After
-	public function after()
-	{
-	}
-	
 	@Test
-	public function passingTest()
+	public function create_command()
 	{
-		Assert.isTrue(true);
+		var command = new Command();
+		Assert.isType(command, Command);
+		command.execute();
 	}
 }
