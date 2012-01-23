@@ -1,0 +1,979 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"dismiss",
+				"dismissSplash"
+			],
+			[
+				"mut",
+				"muted:Bool"
+			],
+			[
+				"play",
+				"play():Void"
+			],
+			[
+				"sour",
+				"source:String"
+			],
+			[
+				"add",
+				"addChild(child:Display):Void"
+			],
+			[
+				"Hid",
+				"HideOverlay"
+			],
+			[
+				"ad",
+				"add"
+			],
+			[
+				"Pla",
+				"PlayVideo"
+			],
+			[
+				"dis",
+				"dispatch"
+			],
+			[
+				"video",
+				"videos"
+			],
+			[
+				"Con",
+				"Config"
+			],
+			[
+				"inject",
+				"inject"
+			],
+			[
+				"tota",
+				"totalTime"
+			],
+			[
+				"el",
+				"elapsedTime"
+			],
+			[
+				"type",
+				"typedef"
+			],
+			[
+				"secon",
+				"seconds"
+			],
+			[
+				"fake",
+				"fakeDuration"
+			],
+			[
+				"content",
+				"contentAvailable"
+			],
+			[
+				"Web",
+				"WebMAF"
+			],
+			[
+				"json",
+				"jsonResult"
+			],
+			[
+				"ac",
+				"action"
+			],
+			[
+				"swi",
+				"switch"
+			],
+			[
+				"show",
+				"showDetail"
+			],
+			[
+				"node",
+				"nodeName:String"
+			],
+			[
+				"to",
+				"toString():String"
+			],
+			[
+				"toS",
+				"toString():String"
+			],
+			[
+				"center",
+				"centerY"
+			],
+			[
+				"clos",
+				"close"
+			],
+			[
+				"now",
+				"now"
+			],
+			[
+				"sor",
+				"sort"
+			],
+			[
+				"pre",
+				"previousDay"
+			],
+			[
+				"nex",
+				"nextDay"
+			],
+			[
+				"Mini",
+				"MiniNavigationView"
+			],
+			[
+				"sort",
+				"sortText"
+			],
+			[
+				"day",
+				"dayText"
+			],
+			[
+				"previo",
+				"previousText"
+			],
+			[
+				"next",
+				"nextButton"
+			],
+			[
+				"dayB",
+				"dayButton"
+			],
+			[
+				"nowBu",
+				"nowButton"
+			],
+			[
+				"close",
+				"closeButton"
+			],
+			[
+				"buttonA",
+				"buttonActioned"
+			],
+			[
+				"ActionNex",
+				"ActionNext"
+			],
+			[
+				"ActionPr",
+				"ActionPrevious"
+			],
+			[
+				"prev",
+				"previousButton"
+			],
+			[
+				"Action",
+				"ActionDay"
+			],
+			[
+				"dayBut",
+				"dayButton"
+			],
+			[
+				"Navigatio",
+				"NavigationAction"
+			],
+			[
+				"Signal",
+				"Signal0"
+			],
+			[
+				"field",
+				"fieldFunction"
+			],
+			[
+				"Base",
+				"haxe.BaseCode"
+			],
+			[
+				"Bas",
+				"haxe.BaseCode"
+			],
+			[
+				"sub",
+				"substr"
+			],
+			[
+				"comp",
+				"compile  (function)"
+			],
+			[
+				"compl",
+				"completions"
+			],
+			[
+				"Fas",
+				"haxe.xml.Fast"
+			],
+			[
+				"In",
+				"Int"
+			],
+			[
+				"constr",
+				"constructable"
+			],
+			[
+				"CONST",
+				"CONSTRUCTOR"
+			],
+			[
+				"Er",
+				"EReg"
+			],
+			[
+				"ma",
+				"matchedRight"
+			],
+			[
+				"Date",
+				"class DateTools"
+			],
+			[
+				"Fa",
+				"haxe.FastList.FastCell<T>"
+			],
+			[
+				"F",
+				"haxe.FastList.FastCell<T>"
+			],
+			[
+				"V",
+				"Void"
+			],
+			[
+				"Vo",
+				"Void"
+			],
+			[
+				"Void",
+				"Void"
+			],
+			[
+				"name",
+				"name"
+			],
+			[
+				"endWi",
+				"endsWith"
+			],
+			[
+				"FileSystem",
+				"FileSystem"
+			],
+			[
+				"Lin",
+				"getClassesInPath"
+			],
+			[
+				"exi",
+				"exists"
+			],
+			[
+				"Bool",
+				"Bool"
+			],
+			[
+				"Hash",
+				"Hash"
+			],
+			[
+				"Byt",
+				"haxe.io.BytesData"
+			],
+			[
+				"Str",
+				"String"
+			],
+			[
+				"String",
+				"StringBuf"
+			],
+			[
+				"Lib",
+				"Lib"
+			],
+			[
+				"join",
+				"join"
+			],
+			[
+				"Array",
+				"Array<T>"
+			],
+			[
+				"module",
+				"neko.vm.Module"
+			],
+			[
+				"neko",
+				"neko"
+			],
+			[
+				"getClass",
+				"getClassFiles"
+			],
+			[
+				"getClassPa",
+				"getClassPaths"
+			],
+			[
+				"Stri",
+				"String"
+			],
+			[
+				"spl",
+				"split"
+			],
+			[
+				"mat",
+				"matched"
+			],
+			[
+				"Arr",
+				"Array<T>"
+			],
+			[
+				"io",
+				"function"
+			],
+			[
+				"Boo",
+				"neko.db.Mysql.MysqlConnection"
+			],
+			[
+				"comple",
+				"completion"
+			],
+			[
+				"len",
+				"length"
+			],
+			[
+				"Li",
+				"Lib"
+			],
+			[
+				"des",
+				"destroy"
+			],
+			[
+				"Backg",
+				"background"
+			],
+			[
+				"httpHea",
+				"httpHeaders:Dynamic"
+			],
+			[
+				"set",
+				"setField(o:Dynamic, field:String, value:Dynamic)"
+			],
+			[
+				"s",
+				"parameters:Dynamic"
+			],
+			[
+				"po",
+				"post:Bool"
+			],
+			[
+				"common",
+				"common"
+			],
+			[
+				"con",
+				"config"
+			],
+			[
+				"profile",
+				"profile"
+			],
+			[
+				"get",
+				"getInstance(ofClass:Class<getInstance, named:String):getInstance.T"
+			],
+			[
+				"map",
+				"mapSignal(signal:m, commandClass:m, oneShot:Bool)"
+			],
+			[
+				"signal",
+				"Signal1"
+			],
+			[
+				"disp",
+				"dispatch"
+			],
+			[
+				"big",
+				"bigEndian"
+			],
+			[
+				"x",
+				"x:Float"
+			],
+			[
+				"Stack",
+				"Stack"
+			],
+			[
+				"abc",
+				"abc"
+			],
+			[
+				"Cont",
+				"Context"
+			],
+			[
+				"wr",
+				"writer"
+			],
+			[
+				"le",
+				"length:Int"
+			],
+			[
+				"Sta",
+				"Stack"
+			],
+			[
+				"visi",
+				"visible:Bool"
+			],
+			[
+				"vis",
+				"visible:Bool"
+			],
+			[
+				"selected",
+				"selectedProgram:Program"
+			],
+			[
+				"focu",
+				"focused:Bool"
+			],
+			[
+				"co",
+				"code:Int"
+			],
+			[
+				"colo",
+				"color:Int"
+			],
+			[
+				"aut",
+				"autoSize:Bool"
+			],
+			[
+				"displ",
+				"display"
+			],
+			[
+				"di",
+				"dispatch(value:cisco)"
+			],
+			[
+				"alp",
+				"alpha:Float"
+			],
+			[
+				"height",
+				"height"
+			],
+			[
+				"Rect",
+				"Rectangle"
+			],
+			[
+				"displa",
+				"display"
+			],
+			[
+				"As",
+				"AssetDisplay"
+			],
+			[
+				"duration",
+				"duration:Int"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 167.0,
+		"selected_items":
+		[
+			[
+				"tabs",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"settings",
+				"Preferences: User File Settings"
+			],
+			[
+				"file se",
+				"Preferences: User File Settings"
+			],
+			[
+				"file",
+				"Preferences: Default File Settings"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"pref",
+				"Preferences: Default Global Settings"
+			],
+			[
+				"pack",
+				"Preferences: Browse Packages"
+			],
+			[
+				"add",
+				"Project: Add Folder"
+			],
+			[
+				"mini",
+				"View: Toggle Minimap"
+			],
+			[
+				"pa",
+				"Preferences: Browse Packages"
+			],
+			[
+				"packag",
+				"Preferences: Browse Packages"
+			],
+			[
+				"folder",
+				"Project: Add Folder"
+			],
+			[
+				"package",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 394.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": true,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/ws/mui/Raxe.hx",
+		"/ws/mui/lib/mcore/src/m/data/ArrayList.hx",
+		"/ws/mui/lib/mcore/src/m/data/Collection.hx",
+		"/ws/mui/.gitignore",
+		"/ws/mui/project.sublime-project",
+		"/ws/mcore/.gitignore",
+		"/ws/mcore/src/m/util/DynamicUtil.hx",
+		"/ws/mcore/src/m/util/FloatUtil.hx",
+		"/ws/mcore/src/m/util/NumberUtil.hx",
+		"/ws/mcore/src/m/util/QueryStringUtil.hx",
+		"/ws/mcore/src/m/util/ReflectUtil.hx",
+		"/ws/mcore/src/m/util/StringUtil.hx",
+		"/ws/mcore/src/m/util/DateUtil.hx",
+		"/ws/mcore/src/m/util/TypeUtil.hx",
+		"/ws/mcore/src/m/util/ColorUtil.hx",
+		"/ws/mcore/src/m/util/ArrayUtil.hx",
+		"/ws/cisco/.gitmodules",
+		"/ws/cisco/.munit",
+		"/ws/cisco/module/ps3/js/massive/util/WebMAF.hx",
+		"/ws/cisco/src/cisco/Main.hx",
+		"/ws/cisco/src/cisco/startup/StartupCommand.hx",
+		"/ws/cisco/src/cisco/screen/ShowScreenCommand.hx",
+		"/ws/cisco/src/cisco/startup/LaunchCommand.hx",
+		"/ws/cisco/Raxe.hx",
+		"/Volumes/NO NAME/webmaf_settings.ini",
+		"/ws/cisco/release/put-epg.bat",
+		"/ws/cisco/resource/common/config.xml",
+		"/ws/cisco/src/cisco/style/BaseStyle.hx",
+		"/ws/cisco/module/ps3/js/massive/display/Video.hx",
+		"/ws/cisco/src/cisco/application/ApplicationView.hx",
+		"/ws/cisco/release/get-timestamp.bat",
+		"/ws/cisco/src/cisco/util/XmlUtil.hx",
+		"/ws/cisco/src/cisco/screen/ScreenContainerViewMediator.hx",
+		"/ws/cisco/resource/common/xml/feed0.xml",
+		"/ws/cisco/src/cisco/asset/LoadAssetsCommand.hx",
+		"/ws/cisco/src/cisco/overlay/HideOverlayCommand.hx",
+		"/ws/cisco/src/cisco/detail/DetailViewMediator.hx",
+		"/ws/cisco/src/cisco/application/ApplicationViewMediator.hx",
+		"/ws/cisco/src/cisco/application/ApplicationContext.hx",
+		"/ws/cisco/src/cisco/catalogue/ContentItemView.hx",
+		"/ws/cisco/src/cisco/catalogue/LoadCategoryCommand.hx",
+		"/ws/cisco/src/cisco/content/ContentQuery.hx",
+		"/ws/cisco/src/cisco/config/Config.hx",
+		"/ws/cisco/src/cisco/application/UpdateVideoFakeDuration.hx",
+		"/ws/cisco/src/cisco/alert/AlertOverlayView.hx",
+		"/ws/cisco/src/cisco/content/ContentParser.hx",
+		"/ws/cisco/src/cisco/overlay/OverlayView.hx",
+		"/ws/cisco/src/cisco/overlay/OverlayContainerView.hx",
+		"/ws/cisco/src/cisco/application/MenuActionedCommand.hx",
+		"/ws/cisco/build/index.html",
+		"/ws/cisco/module/ps3/core/massive/event/KeyMap.hx",
+		"/ws/cisco/src/cisco/guide/GuideScreenViewMediator.hx",
+		"/ws/cisco/src/cisco/application/PlayVideo.hx",
+		"/ws/cisco/src/cisco/config/LoadConfigCommand.hx",
+		"/ws/cisco/src/cisco/guide/Channel.hx",
+		"/ws/cisco/module/common/m/auth/OAuth.hx",
+		"/ws/cisco/src/cisco/feed/FeedItemView.hx",
+		"/ws/cisco/src/cisco/feed/FeedView.hx",
+		"/ws/cisco/src/cisco/guide/GuideScreenView.hx",
+		"/ws/cisco/src/cisco/content/LoadProductAssetCommand.hx",
+		"/ws/cisco/src/cisco/home/HomeScreenView.hx",
+		"/ws/cisco/src/cisco/auth/AuthenticateCommand.hx",
+		"/ws/cisco/src/cisco/detail/DetailView.hx",
+		"/ws/cisco/src/cisco/guide/ChannelModel.hx",
+		"/ws/cisco/src/cisco/guide/MiniNavigationView.hx",
+		"/ws/cisco/src/cisco/player/PlayerControllerViewMediator.hx",
+		"/ws/cisco/src/cisco/profile/SetNetworkPauseCommand.hx",
+		"/ws/cisco/src/cisco/player/ProgressBarView.hx",
+		"/ws/cisco/src/cisco/content/local/CatalogueParser.hx",
+		"/ws/cisco/build/CiscoVideoscape.ps3/js/CiscoVideoscape.tv.js",
+		"/ws/cisco/src/cisco/guide/DateDisplay.hx",
+		"/ws/cisco/src/cisco/guide/MiniNavigationButton.hx",
+		"/ws/cisco/build.hxml",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime/msublime.py",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime/Default.sublime-keymap",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime/test/Main.hx",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime/macro/complete_field.sublime-macro",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime/Default (OSX).sublime-keymap",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime/macro/complete_new.sublime-macro",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime/raxe_toggle_test.py",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime/macro/complete_type.sublime-macro",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime/haxe/build.hxml",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime/haxe/m/develop/CompleteType.hx",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime/haxe/m/develop/Target.hx",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime/haxe/m/develop/Main.hx",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime/complete.sublime-macro",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime/haxe/m/develop/TargetParser.hx",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime/test/build.hxml",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime/haxe/m/develop/CompleteField.hx",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime/test/project.sublime-project",
+		"/ws/temp/SublimeTest/project.sublime-project",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/msublime/haxe/CompleteType.hx",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/User/Base File.sublime-settings",
+		"/ws/temp/SublimeTest/project.sublime-workspace",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/Default/Base File.sublime-settings",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/Default/mark.py",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/Default/Meta Info Summary.cache",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/Default/Minimap.sublime-settings",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/Default/new_templates.py",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/Default/open_file_settings.py",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/Default/Startup.cache",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/msublime/haxe.sublime-build",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/Default/trim_trailing_white_space.py",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/Default/scroll.py",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/Default/Regex Widget.sublime-settings",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/Default/kill_ring.py",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/Ruby/Ruby.sublime-build",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/Ruby/unix_filter-..-(uni).sublime-snippet",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/msublime/CHANGELOG.md",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/msublime/haxe/Iterators.hx",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/msublime/haxe/TypeParser.hx",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/msublime/keymap/Default (Linux).sublime-keymap",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/msublime/msublime.py",
+		"/ws/temp/SublimeTest/Main.hx",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/msublime/build/HaXe.sublime-build",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/msublime/raxe.py",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/msublime/raxe_default.py",
+		"/usr/lib/haxe/lib/hscript/1,6/hscript/Parser.hx",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/msublime/haxe_event_listener.py",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/msublime/haxe_completions.py",
+		"/ws/temp/SublimeTest/build.hxml",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/msublime/language/haxe.tmLanguage",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/msublime/language/haxe.tmLanguage.cache",
+		"/ws/temp/SublimeTest/dump/Params.dump",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/Default/Global.sublime-settings",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/msublime/snippet/haxe class.sublime-snippet",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/msublime/haxe/build.hxml",
+		"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/msublime/haxe/Main.hx"
+	],
+	"find":
+	{
+		"height": 33.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"/ws/mcore/src/m/util",
+			"/ws/cisco/src",
+			"/ws/cisco",
+			"/Users/davidpeek/Library/Application Support/Sublime Text 2/Packages/MassiveSublime",
+			"/ws/cisco/src",
+			"/ws/cisco",
+			"/ws/cisco/src",
+			"/ws/raxe",
+			"/ws/cisco/src",
+			"/ws/cisco",
+			"/ws/mtemplate",
+			"/ws/cisco/src",
+			"/ws/cisco",
+			"/ws/mapp",
+			"/ws/cisco/src",
+			"/ws/mui/src/core/m",
+			"/ws/mui/indev/template/src",
+			"/ws/mui/src/core/m/app",
+			"/ws/mui/indev/template/src",
+			"/ws/mui/src/core/m/app",
+			"/ws/telstra/src2"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"generateDocsClass",
+			"massive.",
+			"Main.log",
+			"Agent",
+			"trace",
+			"defaultFont",
+			"system",
+			"green",
+			"grey",
+			"black",
+			"white",
+			"Color",
+			"white",
+			"focusGradient",
+			"focus1",
+			"darkColor",
+			";",
+			"greyColor",
+			"offWhiteColor",
+			"darkColor",
+			"greyColor",
+			"menuFocusColor",
+			"whiteColor",
+			"focus1Color",
+			"#if ps3",
+			"shortentTitle",
+			"#if ps3",
+			"Fake",
+			"#if ps3",
+			"LoadCategory",
+			"Loading ini",
+			"hideOverlay",
+			"HideOverlay",
+			"lastFocused",
+			"updateS",
+			"MenuActioned",
+			"menuActioned",
+			"playVideo",
+			"watchVideo",
+			"loadProductAssetCompleted",
+			"command",
+			"updateState",
+			"getPlaybackTime",
+			"callCommand",
+			"fakeDuration",
+			"webMAF",
+			"nativeCallback",
+			"callCommand",
+			"nativeCallback",
+			"callCommand",
+			"callbacks",
+			"callCommand",
+			"contentAvailable",
+			"#if ps3",
+			"OK",
+			"ENTER",
+			"OK",
+			"keyPressedHandler",
+			"OK",
+			"DOWN",
+			"action",
+			"buttonAction",
+			"parseBundleFeed",
+			"trace(xml",
+			"trace",
+			"resolveTarget",
+			"AssetVideo",
+			"url",
+			"calcula",
+			"createSignature",
+			"GET",
+			"requestTokenMethod",
+			"haxe.Http",
+			"Http",
+			"#404",
+			"404",
+			"onError",
+			"#if ps3",
+			"loadProductAssetHandler",
+			"playVideoActioned",
+			"doDefault",
+			"#if ps3",
+			"day",
+			"day()",
+			"focus()",
+			"focus",
+			"Signal0",
+			"comingUpActioned",
+			"backActioned",
+			"showPreviousScreen",
+			"BACK",
+			"startSpinner",
+			"stopSpinner",
+			"padding",
+			"print",
+			"main",
+			"prefix = ",
+			"print",
+			"TQuestion",
+			"?",
+			"parseType",
+			"parseTypeNext",
+			"CType",
+			"pack",
+			"console",
+			"spinner.png",
+			"Context",
+			"write",
+			"type",
+			"updateProfileModel",
+			"nextPhase",
+			"loadProductsComplete",
+			"Loading lib",
+			"length",
+			"step",
+			"152",
+			"150",
+			"151",
+			"family",
+			"152",
+			".url",
+			"img",
+			"AssetDisplay.library.resolveURI",
+			"icon",
+			"icon =",
+			".icon",
+			"loadStaticFeed",
+			"feedURL"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"m.",
+			"raxe-tasks",
+			"RAXE_TASKS_",
+			"eval",
+			"RAXE_TASKS_TEMP_DIR",
+			"RAXE_TASKS_PATH"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 27.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 320.0,
+	"status_bar_visible": true
+}

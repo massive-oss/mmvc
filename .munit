@@ -1,0 +1,6 @@
+version=0.9.1.8
+src=test
+bin=build/mmvc.test
+report=build/mmvc.test
+hxml=temp/test/test.hxml
+classPaths=src

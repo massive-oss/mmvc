@@ -22,7 +22,7 @@ class MediatorBase<T> implements IMediator
 	 * You should declare a dependency on a concrete view component in your
 	 * implementation instead of working with this property</p>
 	 */
-	var view:T;
+	public var view:T;
 	
 	/**
 	 * Internal

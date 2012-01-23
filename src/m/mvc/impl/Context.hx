@@ -51,8 +51,6 @@ import m.mvc.api.IViewContainer;
  * 
  * @see #startup()
  */
-/*[Event(name="startupComplete", type="m.mvc.base.ContextEvent")]*/
-
 
 /**
  * Abstract MVCS <code>IContext</code> implementation

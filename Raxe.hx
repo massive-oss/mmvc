@@ -38,6 +38,16 @@ class Raxe implements raxe.Module
 				server:"ui.massive.com.au",
 				username:"admin",
 				password:"noJJ2qSaCz5t"
+			},
+			haxe:
+			{
+				classPaths:
+				{
+					mcore:
+					{
+						path:"lib/mcore/src"
+					}
+				}
 			}
 		});
 		

@@ -1,0 +1,15 @@
+{
+	"folders":
+	[
+		{
+			"name": "MassiveMVC",
+			"path": ".",
+			"file_exclude_patterns": [".git*", ".munit", "*.sublime*", "raxe.n"],
+			"folder_exclude_patterns": ["temp"]
+		}
+	],
+	"settings":
+    {
+        "rulers": [72, 79]
+    }
+}
