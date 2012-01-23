@@ -29,7 +29,7 @@ class MediatorMapTest
 	var reflector:IReflector;
 	
 	@Before
-	public function runBeforeEachTest():Void
+	public function before():Void
 	{
 		contextView = new TestContextView();
 		injector = new Injector();
@@ -42,7 +42,7 @@ class MediatorMapTest
 	}
 	
 	@After
-	public function runAfterEachTest():Void
+	public function after():Void
 	{
 		injector.unmap(IMediatorMap);
 	}
