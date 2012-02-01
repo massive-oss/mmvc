@@ -62,7 +62,7 @@ class Raxe implements raxe.Module
 			raxe.Build.app.args.app.version = version;
 			t.task("default").invoke();
 
-			raxe.FTP.put("build/mmvc.haxelib.zip", "release/mmvc/github/mmvc_" + version + ".zip");
+			raxe.FTP.put("build/mmvc.haxelib.zip", "release/mmvc/prod/mmvc_" + version + ".zip");
 		}
 
 		app.task("configure").action = function(t:raxe.Task)
