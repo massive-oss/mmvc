@@ -4,6 +4,6 @@
 Icon
 Thumbs.db
 .DS_Store
-project.sublime-workspace
+*.sublime-workspace
 TestSuite.hx
 raxe.n
