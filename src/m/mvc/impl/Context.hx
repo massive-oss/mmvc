@@ -46,10 +46,12 @@ following:</p>
 */
 
 /**
- * Abstract MVCS <code>IContext</code> implementation
- */
+Abstract MVCS <code>IContext</code> implementation
+*/
 class Context implements IContext
 {
+	var autoStartup:Bool;
+
 	public var contextView(default, set_contextView):IViewContainer;
 	
 	public var commandMap(get_commandMap, null):ICommandMap;
@@ -63,61 +65,32 @@ class Context implements IContext
 	public var viewMap(get_viewMap, null):IViewMap;
 	
 	/**
-	 * @private
-	 */
-	var autoStartup:Bool;
+	Abstract Context Implementation
 	
-	//---------------------------------------------------------------------
-	//  Constructor
-	//---------------------------------------------------------------------
+	<p>Extend this class to create a Framework or Application context</p>
 	
-	/**
-	 * Abstract Context Implementation
-	 *
-	 * <p>Extend this class to create a Framework or Application context</p>
-	 *
-	 * @param contextView The root view node of the context. The context will listen for ADDED_TO_STAGE events on this node
-	 * @param autoStartup Should this context automatically invoke it's <code>startup</code> method when it's <code>contextView</code> arrives on Stage?
-	 */
-	public function new(?contextView:IViewContainer = null, ?autoStartup:Bool = true)
+	@param contextView The root view node of the context. The context will 
+	listen for ADDED_TO_STAGE events on this node
+	@param autoStartup Should this context automatically invoke it's 
+	<code>startup</code> method when it's <code>contextView</code> arrives 
+	on Stage?
+	*/
+	public function new(?contextView:IViewContainer=null, ?autoStartup:Bool=true)
 	{
 		this.autoStartup = autoStartup;
 		this.contextView = contextView;
 	}
 	
-	//---------------------------------------------------------------------
-	//  API
-	//---------------------------------------------------------------------
+	/**
+	The startup hook. Override this in your Application context.
+	*/
+	public function startup():Void {}
 	
 	/**
-	 * The Startup Hook
-	 *
-	 * <p>Override this in your Application context</p>
-	 * 
-	 * @event startupComplete ContextEvent.STARTUP_COMPLETE Dispatched at the end of the
-	 *                        <code>startup()</code> method's execution. This
-	 *                        is often used to trigger startup/bootstrapping
-	 *                        commands by wiring them to this event and 
-	 *                        calling <code>super.startup()</code> in the 
-	 *                        last line of your <code>startup()</code>
-	 *                        override.
-	 */
-	public function startup():Void
-	{
-	}
+	The Startup Hook. Override this in your Application context.
+	*/
+	public function shutdown():Void {}
 	
-	/**
-	 * The Startup Hook
-	 *
-	 * <p>Override this in your Application context</p>
-	 */
-	public function shutdown():Void
-	{
-	}
-	
-	/**
-	 * @private
-	 */
 	public function set_contextView(value:IViewContainer):IViewContainer
 	{
 		if (contextView != value)
@@ -136,8 +109,8 @@ class Context implements IContext
 	}
 	
 	/**
-	 * The <code>IInjector</code> for this <code>IContext</code>
-	 */
+	The <code>IInjector</code> for this <code>IContext</code>
+	*/
 	function get_injector():IInjector
 	{
 		if (injector == null)
@@ -149,8 +122,8 @@ class Context implements IContext
 	}
 	
 	/**
-	 * The <code>IReflector</code> for this <code>IContext</code>
-	 */
+	The <code>IReflector</code> for this <code>IContext</code>
+	*/
 	function get_reflector():IReflector
 	{
 		if (reflector == null)
@@ -162,8 +135,8 @@ class Context implements IContext
 	}
 	
 	/**
-	 * The <code>ICommandMap</code> for this <code>IContext</code>
-	 */
+	The <code>ICommandMap</code> for this <code>IContext</code>
+	*/
 	function get_commandMap():ICommandMap
 	{
 		if (commandMap == null)
@@ -175,8 +148,8 @@ class Context implements IContext
 	}
 	
 	/**
-	 * The <code>IMediatorMap</code> for this <code>IContext</code>
-	 */
+	The <code>IMediatorMap</code> for this <code>IContext</code>
+	*/
 	function get_mediatorMap():IMediatorMap
 	{
 		if (mediatorMap == null)
@@ -188,8 +161,8 @@ class Context implements IContext
 	}
 	
 	/**
-	 * The <code>IViewMap</code> for this <code>IContext</code>
-	 */
+	The <code>IViewMap</code> for this <code>IContext</code>
+	*/
 	function get_viewMap():IViewMap
 	{
 		if (viewMap == null)
@@ -201,12 +174,12 @@ class Context implements IContext
 	}
 	
 	/**
-	 * Injection Mapping Hook
-	 *
-	 * <p>Override this in your Framework context to change the default configuration</p>
-	 *
-	 * <p>Beware of collisions in your container</p>
-	 */
+	Injection Mapping Hook
+	
+	<p>Override this in your Framework context to change the default configuration</p>
+	
+	<p>Beware of collisions in your container</p>
+	*/
 	function mapInjections():Void
 	{
 		injector.mapValue(IReflector, reflector);
@@ -217,9 +190,6 @@ class Context implements IContext
 		injector.mapValue(IViewMap, viewMap);
 	}
 	
-	/**
-	 * @private
-	 */
 	function checkAutoStartup():Void
 	{
 		if (autoStartup && contextView != null)
@@ -228,18 +198,12 @@ class Context implements IContext
 		}
 	}
 	
-	/**
-	 * @private
-	 */
 	function createInjector():IInjector
 	{
 		injector = new Injector();
 		return injector;
 	}
 	
-	/**
-	 * @private
-	 */
 	function createChildInjector():IInjector
 	{
 		return injector.createChildInjector();

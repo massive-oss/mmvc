@@ -13,17 +13,17 @@ class ViewMap extends ViewMapBase, implements IViewMap
 	/**
 	 * Creates a new <code>ViewMap</code> object
 	 *
-	 * @param contextView The root view node of the context. The map will listen for ADDED_TO_STAGE events on this node
+	 * @param contextView The root view node of the context. The map will 
+	 listen for ADDED_TO_STAGE events on this node
 	 * @param injector An <code>IInjector</code> to use for this context
 	 */
 	public function new(contextView:IViewContainer, injector:IInjector)
 	{
 		super(contextView, injector);
 
-		// mappings - if you can do it with fewer dictionaries you get a prize
-		this.mappedPackages = new Array<Dynamic>();
-		this.mappedTypes = new Dictionary<Dynamic, Dynamic>();
-		this.injectedViews = new Dictionary<Dynamic, Dynamic>(true);
+		mappedPackages = new Array<Dynamic>();
+		mappedTypes = new Dictionary<Dynamic, Dynamic>();
+		injectedViews = new Dictionary<Dynamic, Dynamic>(true);
 	}
 	
 	public function mapPackage(packageName:String):Void
@@ -101,7 +101,7 @@ class ViewMap extends ViewMapBase, implements IViewMap
 		return Lambda.has(mappedPackages, packageName);
 	}
 
-	//------------------------------------------------------------------ private
+	//------------------------------------------------------------------------- private
 	
 	var mappedPackages:Array<Dynamic>;
 	var mappedTypes:Dictionary<Dynamic, Dynamic>;

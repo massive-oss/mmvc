@@ -21,35 +21,32 @@ class MediatorMap extends ViewMapBase, implements IMediatorMap
 	var reflector:IReflector;
 	
 	/**
-	 * Creates a new <code>MediatorMap</code> object
-	 *
-	 * @param contextView The root view node of the context. The map will listen for ADDED_TO_STAGE events on this node
-	 * @param injector An <code>IInjector</code> to use for this context
-	 * @param reflector An <code>IReflector</code> to use for this context
-	 */
+	Creates a new <code>MediatorMap</code> object
+	
+	@param contextView The root view node of the context. The map will listen 
+	for ADDED_TO_STAGE events on this node
+	@param injector An <code>IInjector</code> to use for this context
+	@param reflector An <code>IReflector</code> to use for this context
+	*/
 	public function new(contextView:IViewContainer, injector:IInjector, reflector:IReflector)
 	{
 		super(contextView, injector);
-		
 		this.reflector = reflector;
 		
-		// mappings - if you can do it with fewer dictionaries you get a prize
-		this.mediatorByView = new Dictionary(true);
-		this.mappingConfigByView = new Dictionary(true);
-		this.mappingConfigByViewClassName = new Dictionary();
-		this.mediatorsMarkedForRemoval = new Dictionary();
-		this.hasMediatorsMarkedForRemoval = false;
+		mediatorByView = new Dictionary(true);
+		mappingConfigByView = new Dictionary(true);
+		mappingConfigByViewClassName = new Dictionary();
+		mediatorsMarkedForRemoval = new Dictionary();
+		hasMediatorsMarkedForRemoval = false;
 	}
 	
-	//---------------------------------------------------------------------
-	//  API
-	//---------------------------------------------------------------------
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function mapView(viewClassOrName:Dynamic, mediatorClass:Class<Dynamic>, ?injectViewAs:Dynamic=null, ?autoCreate:Bool=true, ?autoRemove:Bool=true):Void
 	{
+		#if cpp
+		autoCreate = true;
+		autoRemove = true;
+		#end
+
 		var viewClassName:String = reflector.getFQCN(viewClassOrName);
 		
 		if (mappingConfigByViewClassName.get(viewClassName) != null)
@@ -101,9 +98,6 @@ class MediatorMap extends ViewMapBase, implements IMediatorMap
 		}
 	}
 	
-	/**
-	 * @inheritDoc
-	 */
 	public function unmapView(viewClassOrName:Dynamic):Void
 	{
 		var viewClassName = reflector.getFQCN(viewClassOrName);
@@ -122,17 +116,11 @@ class MediatorMap extends ViewMapBase, implements IMediatorMap
 		mappingConfigByViewClassName.delete(viewClassName);
 	}
 	
-	/**
-	 * @inheritDoc
-	 */
 	public function createMediator(viewComponent:Dynamic):IMediator
 	{
 		return createMediatorUsing(viewComponent);
 	}
 	
-	/**
-	 * @inheritDoc
-	 */
 	public function registerMediator(viewComponent:Dynamic, mediator:IMediator):Void
 	{
 		mediatorByView.set(viewComponent, mediator);
@@ -142,9 +130,6 @@ class MediatorMap extends ViewMapBase, implements IMediatorMap
 		mediator.preRegister();
 	}
 	
-	/**
-	 * @inheritDoc
-	 */
 	public function removeMediator(mediator:IMediator):IMediator
 	{
 		if (mediator != null)
@@ -159,42 +144,27 @@ class MediatorMap extends ViewMapBase, implements IMediatorMap
 		return mediator;
 	}
 	
-	/**
-	 * @inheritDoc
-	 */
 	public function removeMediatorByView(viewComponent:Dynamic):IMediator
 	{
 		return removeMediator(retrieveMediator(viewComponent));
 	}
 	
-	/**
-	 * @inheritDoc
-	 */
 	public function retrieveMediator(viewComponent:Dynamic):IMediator
 	{
 		return mediatorByView.get(viewComponent);
 	}
 	
-	/**
-	 * @inheritDoc
-	 */
 	public function hasMapping(viewClassOrName:Dynamic):Bool
 	{
 		var viewClassName:String = reflector.getFQCN(viewClassOrName);
 		return mappingConfigByViewClassName.get(viewClassName) != null;
 	}
 	
-	/**
-	 * @inheritDoc
-	 */
 	public function hasMediatorForView(viewComponent:Dynamic):Bool
 	{
 		return mediatorByView.get(viewComponent) != null;
 	}
 	
-	/**
-	 * @inheritDoc
-	 */
 	public function hasMediator(mediator:IMediator):Bool
 	{
 		for (key in mediatorByView)
@@ -208,8 +178,6 @@ class MediatorMap extends ViewMapBase, implements IMediatorMap
 		return false;
 	}
 	
-	// helper
-		
 	override function addListeners():Void
 	{
 		if (contextView != null && enabled)
