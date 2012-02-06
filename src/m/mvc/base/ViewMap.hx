@@ -11,12 +11,12 @@ An abstract <code>IViewMap</code> implementation
 class ViewMap extends ViewMapBase, implements IViewMap
 {
 	/**
-	 * Creates a new <code>ViewMap</code> object
-	 *
-	 * @param contextView The root view node of the context. The map will 
-	 listen for ADDED_TO_STAGE events on this node
-	 * @param injector An <code>IInjector</code> to use for this context
-	 */
+	Creates a new <code>ViewMap</code> object
+	
+	@param contextView The root view node of the context. The map will listen 
+	for ADDED_TO_STAGE events on this node
+	@param injector An <code>IInjector</code> to use for this context
+	*/
 	public function new(contextView:IViewContainer, injector:IInjector)
 	{
 		super(contextView, injector);

@@ -1,6 +1,5 @@
 package m.mvc.api;
 
-
 /**
 The Robotlegs Mediator contract
 */
@@ -13,9 +12,8 @@ interface IMediator
 	function preRegister():Void;
 	
 	/**
-	Should be invoked by the <code>IMediator</code> itself when it is 
-	ready to be interacted with
-	
+	Should be invoked by the <code>IMediator</code> itself when it is ready to 
+	be interacted with.
 	<p>Override and place your initialization code here</p>
 	*/
 	function onRegister():Void;
@@ -27,16 +25,14 @@ interface IMediator
 	function preRemove():Void;
 	
 	/**
-	Should be invoked by the <code>IMediator</code> itself when it is 
-	ready to for cleanup
-	
+	Should be invoked by the <code>IMediator</code> itself when it is ready to 
+	for cleanup.
 	<p>Override and place your cleanup code here</p>
 	*/
 	function onRemove():Void;
 	
 	/**
 	The <code>IMediator</code>'s view component
-	
 	@return The view component
 	*/
 	function getViewComponent():Dynamic;

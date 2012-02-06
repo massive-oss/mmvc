@@ -12,11 +12,11 @@ class ViewMapBase
 	public var enabled(default, set_enabled):Bool;
 	
 	/**
-	 * Creates a new <code>ViewMap</code> object
-	 *
-	 * @param contextView The root view node of the context. The map will listen for ADDED_TO_STAGE events on this node
-	 * @param injector An <code>IInjector</code> to use for this context
-	 */
+	Creates a new <code>ViewMap</code> object
+	
+	@param contextView The root view node of the context. The map will listen for ADDED_TO_STAGE events on this node
+	@param injector An <code>IInjector</code> to use for this context
+	*/
 	public function new(contextView:IViewContainer, injector:IInjector)
 	{
 		viewListenerCount = 0;
