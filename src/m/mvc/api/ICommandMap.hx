@@ -8,6 +8,7 @@ typedef SignalClass = Class<AnySignal>;
 
 interface ICommandMap
 {
+	public var injector:m.inject.IInjector;
     function mapSignal(signal:AnySignal, commandClass:CommandClass, oneShot:Bool=false):Void;
 
     function mapSignalClass(signalClass:SignalClass, commandClass:CommandClass, oneShot:Bool=false):AnySignal;
