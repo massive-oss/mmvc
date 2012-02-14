@@ -48,6 +48,10 @@ class Raxe implements raxe.Module
 						path:"lib/mcore/src"
 					}
 				}
+			},
+			markdown:
+			{
+				title:"MassiveMVC"
 			}
 		});
 		

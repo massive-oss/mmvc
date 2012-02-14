@@ -1,20 +1,29 @@
-MassiveMVC
+Overview 
 ====================
 
-A light but powerful IOC framework ported from RobotLegs and enhanced with signals and macros.
+**MassiveMVC** (mmvc) is a light but powerful IOC framework utilizing Signals and macro based injection.
 
-#### Links
+### Links
+
+MMVC is based off RobotLegs, with enhanced with signals and macros.
+
 * <http://www.robotlegs.org/>
 * <http://joelhooks.com/2010/02/14/robotlegs-as3-signals-and-the-signalcommandmap-example/>
 
 
-#### About Massive Signals
+### Dependencies
 
-MassiveMVC leverages the MassiveCore Signal package as a substitue for event triggered commands. For more information on signals refer to <https://github.com/massiveinteractive/MassiveCore>
+MassiveMVC leverages several libraries available in MassiveCore. For more information refer to <http://ui.massive.com.au/api/1.5.0/mcore/>
 
+* **Signals** - m.signal package as a substitue for event triggered commands.
+* **IOC Injector** - m.inject package (and RTTI macros)
+
+
+Getting Started
+====================
 
 Context
----------------------
+-----------------
 
 The context provides the central wiring/mapping of common elements within a contextual scope (eg application).
 
@@ -65,17 +74,17 @@ Mediators are mapped to Views via the mediatorMap
 
 
 Command
----------------------
+-----------------
 
 To do...
 
 Actor
----------------------
+-----------------
 
 To do...
 
 Mediator
----------------------
+-----------------
 
 To do...
 
