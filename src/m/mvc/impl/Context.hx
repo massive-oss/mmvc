@@ -251,6 +251,8 @@ class Context implements IContext
 	 */
 	function createChildInjector():IInjector
 	{
-		return injector.createChildInjector();
+		return injector;
+		//TEMP HACK FOR TAB
+		//return injector.createChildInjector();
 	}
 }

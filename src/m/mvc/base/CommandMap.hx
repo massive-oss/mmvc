@@ -8,7 +8,7 @@ import m.data.Dictionary;
 
 class CommandMap implements ICommandMap
 {
-	public var injector:IInjector;
+	var injector:IInjector;
 	var signalMap:Dictionary<Dynamic, Dynamic>;
 	var signalClassMap:Dictionary<Dynamic, Dynamic>;
 	var detainedCommands:Dictionary<Dynamic, Dynamic>;
@@ -80,12 +80,6 @@ class CommandMap implements ICommandMap
 		
 		injectorForSignalInstance.mapValue(signalClass, signal);
 		signalClassMap.set(signalClass, signal);
-		
-		if (signalClass == tab.application.submodule.SubmoduleStartupComplete)
-		{
-			trace(":createSignalClassInstance injector.hasMapping(signalClass) = " + Std.string(injector.hasMapping(signalClass)));
-			trace(":createSignalClassInstance injectorForSignalInstance.getInstance(signalClass) = " + Std.string(injectorForSignalInstance.hasMapping(signalClass)));
-		}
 
 		return signal;
 	}
