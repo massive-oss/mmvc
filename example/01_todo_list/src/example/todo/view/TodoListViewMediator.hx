@@ -3,6 +3,7 @@ package example.todo.view;
 import example.todo.signal.LoadTodoList;
 import example.todo.model.TodoList;
 import example.todo.model.Todo;
+import example.todo.view.TodoListView;
 
 class TodoListViewMediator extends m.mvc.impl.Mediator<TodoListView>
 {
@@ -29,5 +30,6 @@ class TodoListViewMediator extends m.mvc.impl.Mediator<TodoListView>
 	{
 		//
 	}
+
 
 }

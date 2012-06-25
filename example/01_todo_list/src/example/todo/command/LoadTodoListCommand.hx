@@ -27,7 +27,7 @@ class LoadTodoListCommand extends m.mvc.impl.Command
 		loader = new JSONLoader();
 		loader.completed.addOnce(completed);
 		loader.failed.addOnce(failed);
-		loader.load("data.json");
+		loader.load("data/data.json");
 	}
 
 	function completed(data:Dynamic)

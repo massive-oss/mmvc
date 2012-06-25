@@ -1229,8 +1229,8 @@ example.app.ApplicationContext.prototype = $extend(m.mvc.impl.Context.prototype,
 if(!example.core) example.core = {}
 example.core.View = $hxClasses["example.core.View"] = function() {
 	this["index"] = -1;
-	var type = Type.getClassName(Type.getClass(this)).split(".");
-	this.id = type.pop() + example.core.View.idCounter++;
+	this.type = Type.getClassName(Type.getClass(this)).split(".").pop();
+	this.id = "view" + example.core.View.idCounter++;
 	this.children = [];
 	this.signal = new m.signal.Signal2();
 	this.initialize();
@@ -1244,8 +1244,9 @@ example.core.View.prototype = {
 	,element: null
 	,tagName: null
 	,children: null
+	,type: null
 	,toString: function() {
-		return this.id;
+		return this.type + "(" + this.id + ")";
 	}
 	,dispatch: function(event,view) {
 		if(view == null) view = this;
@@ -1262,6 +1263,7 @@ example.core.View.prototype = {
 	,removeChild: function(view) {
 		var removed = this.children.remove(view);
 		if(removed) {
+			view.remove();
 			view.signal.remove(this.dispatch.$bind(this));
 			view.parent = null;
 			view.set_index(-1);
@@ -1273,6 +1275,9 @@ example.core.View.prototype = {
 		if(this.tagName == null) this.tagName = "div";
 		this.element = js.Lib.document.createElement(this.tagName);
 		this.element.setAttribute("id",this.id);
+		this.element.className = this.type;
+	}
+	,remove: function() {
 	}
 	,set_index: function(value) {
 		if(this.index != value) {
@@ -1413,8 +1418,9 @@ example.core.DataView.__name__ = ["example","core","DataView"];
 example.core.DataView.__super__ = example.core.View;
 example.core.DataView.prototype = $extend(example.core.View.prototype,{
 	data: null
-	,setData: function(data) {
-		if(this.data != data) {
+	,setData: function(data,force) {
+		if(force == null) force = false;
+		if(this.data != data || force == true) {
 			this.data = data;
 			this.dataChanged();
 			this.update();
@@ -1459,7 +1465,7 @@ example.todo.command.LoadTodoListCommand.prototype = $extend(m.mvc.impl.Command.
 		this.loader = new m.loader.JSONLoader();
 		this.loader.completed.addOnce(this.completed.$bind(this));
 		this.loader.failed.addOnce(this.failed.$bind(this));
-		this.loader.load("data.json");
+		this.loader.load("data/data.json");
 	}
 	,completed: function(data) {
 		this.loader.failed.remove(this.failed.$bind(this));
@@ -1633,7 +1639,25 @@ example.todo.view.TodoListView = $hxClasses["example.todo.view.TodoListView"] = 
 example.todo.view.TodoListView.__name__ = ["example","todo","view","TodoListView"];
 example.todo.view.TodoListView.__super__ = example.core.DataView;
 example.todo.view.TodoListView.prototype = $extend(example.core.DataView.prototype,{
-	dataChanged: function() {
+	dispatch: function(event,view) {
+		switch(event) {
+		case "actioned":
+			var todoView = (function($this) {
+				var $r;
+				var $t = view;
+				if(Std["is"]($t,example.todo.view.TodoView)) $t; else throw "Class cast error";
+				$r = $t;
+				return $r;
+			}(this));
+			var data = todoView.data;
+			data.done = !data.done;
+			todoView.setData(data,true);
+			break;
+		default:
+			example.core.DataView.prototype.dispatch.call(this,event,view);
+		}
+	}
+	,dataChanged: function() {
 		example.core.DataView.prototype.dataChanged.call(this);
 		var _g = 0, _g1 = this.children;
 		while(_g < _g1.length) {
@@ -1660,12 +1684,25 @@ example.todo.view.TodoView.__name__ = ["example","todo","view","TodoView"];
 example.todo.view.TodoView.__super__ = example.core.DataView;
 example.todo.view.TodoView.prototype = $extend(example.core.DataView.prototype,{
 	label: null
+	,done: null
 	,dataChanged: function() {
 		example.core.DataView.prototype.dataChanged.call(this);
 		this.label = this.data != null?this.data.name:"";
+		this.done = this.data != null && this.data.done;
+	}
+	,initialize: function() {
+		example.core.DataView.prototype.initialize.call(this);
+		this.element.onclick = this.js_onClick.$bind(this);
+	}
+	,remove: function() {
+		this.element.onclick = null;
 	}
 	,update: function() {
 		this.element.innerHTML = this.label;
+		this.element.className = this.type + (this.done?" done":"");
+	}
+	,js_onClick: function(event) {
+		this.dispatch("actioned",this);
 	}
 	,__class__: example.todo.view.TodoView
 });

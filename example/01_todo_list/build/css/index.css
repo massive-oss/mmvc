@@ -1,0 +1,11 @@
+
+li.TodoView
+{
+	padding-left:20px;
+	background: url('../img/none.png') no-repeat 0 0;
+}
+
+li.done
+{
+	background: url('../img/done.png') no-repeat 0 0;
+}

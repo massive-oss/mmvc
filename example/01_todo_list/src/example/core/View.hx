@@ -34,13 +34,14 @@ class View
 	#end
 
 	var children:Array<View>;
+	var type:String;
 
 	public function new()
 	{
 		Reflect.setField(this, "index", -1);
 
-		var type = Type.getClassName(Type.getClass(this)).split(".");
-		id = type.pop() + (idCounter ++);
+		type = Type.getClassName(Type.getClass(this)).split(".").pop();
+		id = "view" + (idCounter ++);
 		
 		children = [];
 		signal = new Signal2<String, View>();
@@ -48,10 +49,9 @@ class View
 		initialize();
 	}
 
-
 	public function toString():String
 	{
-		return id;
+		return type + "(" + id + ")";
 	}
 
 	public function dispatch(event:String, view:View)
@@ -83,6 +83,8 @@ class View
 
 		if(removed)
 		{
+			
+			view.remove();
 			view.signal.remove(this.dispatch);
 			view.parent = null;
 			view.index = -1;
@@ -106,7 +108,13 @@ class View
 		if(tagName == null) tagName = "div";
 		element = Lib.document.createElement(tagName);
 		element.setAttribute("id", id);
+		element.className = type;
 		#end
+	}
+
+	function remove()
+	{
+		//override in sub class
 	}
 
 	function set_index(value:Int):Int
@@ -136,9 +144,9 @@ class DataView<T> extends View
 		super();
 		setData(data);
 	}
-	public function setData(data:T)
+	public function setData(data:T, ?force:Bool=false)
 	{
-		if(this.data != data)
+		if(this.data != data || force == true)
 		{
 			this.data = data;
 			dataChanged();
