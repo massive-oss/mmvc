@@ -22,8 +22,7 @@ class TodoListViewMediator extends m.mvc.impl.Mediator<TodoListView>
 
 	function completed(list:TodoList)
 	{
-		trace(list.length);
-		//view.populate(list);
+		view.setData(list);
 	}
 
 	function failed(error:Dynamic)

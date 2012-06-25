@@ -10,6 +10,7 @@
 -cp src
 -cp ../../src
 -cp /ws/MassiveCore/src
+-swf-version 11
 -swf build/example.swf
 
 --next

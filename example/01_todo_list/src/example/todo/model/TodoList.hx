@@ -11,6 +11,11 @@ class TodoList
 		this.items = items;
 	}
 
+	public function getItems():Array<Todo>
+	{
+		return items;
+	}
+
 	public function add(todo:Todo)
 	{
 		items.push(todo);

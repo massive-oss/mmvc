@@ -13,6 +13,6 @@ class ApplicationViewMediator extends m.mvc.impl.Mediator<ApplicationView>
 
 	override function onRegister()
 	{
-		view.initialize();
+		view.createViews();
 	}
 }

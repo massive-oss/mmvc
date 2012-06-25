@@ -1226,6 +1226,66 @@ example.app.ApplicationContext.prototype = $extend(m.mvc.impl.Context.prototype,
 	}
 	,__class__: example.app.ApplicationContext
 });
+if(!example.core) example.core = {}
+example.core.View = $hxClasses["example.core.View"] = function() {
+	this["index"] = -1;
+	var type = Type.getClassName(Type.getClass(this)).split(".");
+	this.id = type.pop() + example.core.View.idCounter++;
+	this.children = [];
+	this.signal = new m.signal.Signal2();
+	this.initialize();
+};
+example.core.View.__name__ = ["example","core","View"];
+example.core.View.prototype = {
+	id: null
+	,parent: null
+	,index: null
+	,signal: null
+	,element: null
+	,tagName: null
+	,children: null
+	,toString: function() {
+		return this.id;
+	}
+	,dispatch: function(event,view) {
+		if(view == null) view = this;
+		this.signal.dispatch(event,view);
+	}
+	,addChild: function(view) {
+		view.signal.add(this.dispatch.$bind(this));
+		view.parent = this;
+		view.set_index(this.children.length);
+		this.children.push(view);
+		this.element.appendChild(view.element);
+		this.dispatch("added",view);
+	}
+	,removeChild: function(view) {
+		var removed = this.children.remove(view);
+		if(removed) {
+			view.signal.remove(this.dispatch.$bind(this));
+			view.parent = null;
+			view.set_index(-1);
+			this.element.removeChild(view.element);
+			this.dispatch("removed",view);
+		}
+	}
+	,initialize: function() {
+		if(this.tagName == null) this.tagName = "div";
+		this.element = js.Lib.document.createElement(this.tagName);
+		this.element.setAttribute("id",this.id);
+	}
+	,set_index: function(value) {
+		if(this.index != value) {
+			this.index = value;
+			this.update();
+		}
+		return this.index;
+	}
+	,update: function() {
+	}
+	,__class__: example.core.View
+	,__properties__: {set_index:"set_index"}
+}
 m.mvc.api.IViewContainer = $hxClasses["m.mvc.api.IViewContainer"] = function() { }
 m.mvc.api.IViewContainer.__name__ = ["m","mvc","api","IViewContainer"];
 m.mvc.api.IViewContainer.prototype = {
@@ -1235,21 +1295,39 @@ m.mvc.api.IViewContainer.prototype = {
 	,__class__: m.mvc.api.IViewContainer
 }
 example.app.ApplicationView = $hxClasses["example.app.ApplicationView"] = function() {
+	example.core.View.call(this);
 };
 example.app.ApplicationView.__name__ = ["example","app","ApplicationView"];
 example.app.ApplicationView.__interfaces__ = [m.mvc.api.IViewContainer];
-example.app.ApplicationView.prototype = {
+example.app.ApplicationView.__super__ = example.core.View;
+example.app.ApplicationView.prototype = $extend(example.core.View.prototype,{
 	viewAdded: null
 	,viewRemoved: null
+	,createViews: function() {
+		var todoView = new example.todo.view.TodoListView();
+		this.addChild(todoView);
+	}
+	,dispatch: function(event,view) {
+		switch(event) {
+		case "added":
+			this.viewAdded(view);
+			break;
+		case "removed":
+			this.viewRemoved(view);
+			break;
+		default:
+			example.core.View.prototype.dispatch.call(this,event,view);
+		}
+	}
 	,isAdded: function(view) {
-		return false;
+		return true;
 	}
 	,initialize: function() {
-		var todoView = new example.todo.view.TodoListView();
-		this.viewAdded(todoView);
+		example.core.View.prototype.initialize.call(this);
+		js.Lib.document.body.appendChild(this.element);
 	}
 	,__class__: example.app.ApplicationView
-}
+});
 m.mvc.api.IMediator = $hxClasses["m.mvc.api.IMediator"] = function() { }
 m.mvc.api.IMediator.__name__ = ["m","mvc","api","IMediator"];
 m.mvc.api.IMediator.prototype = {
@@ -1318,9 +1396,34 @@ example.app.ApplicationViewMediator.__name__ = ["example","app","ApplicationView
 example.app.ApplicationViewMediator.__super__ = m.mvc.impl.Mediator;
 example.app.ApplicationViewMediator.prototype = $extend(m.mvc.impl.Mediator.prototype,{
 	onRegister: function() {
-		this.view.initialize();
+		this.view.createViews();
 	}
 	,__class__: example.app.ApplicationViewMediator
+});
+example.core.ViewEvent = $hxClasses["example.core.ViewEvent"] = function() { }
+example.core.ViewEvent.__name__ = ["example","core","ViewEvent"];
+example.core.ViewEvent.prototype = {
+	__class__: example.core.ViewEvent
+}
+example.core.DataView = $hxClasses["example.core.DataView"] = function(data) {
+	example.core.View.call(this);
+	this.setData(data);
+};
+example.core.DataView.__name__ = ["example","core","DataView"];
+example.core.DataView.__super__ = example.core.View;
+example.core.DataView.prototype = $extend(example.core.View.prototype,{
+	data: null
+	,setData: function(data) {
+		if(this.data != data) {
+			this.data = data;
+			this.dataChanged();
+			this.update();
+			this.dispatch("dataChanged",this);
+		}
+	}
+	,dataChanged: function() {
+	}
+	,__class__: example.core.DataView
 });
 m.mvc.api.ICommand = $hxClasses["m.mvc.api.ICommand"] = function() { }
 m.mvc.api.ICommand.__name__ = ["m","mvc","api","ICommand"];
@@ -1399,6 +1502,9 @@ example.todo.model.TodoList.__name__ = ["example","todo","model","TodoList"];
 example.todo.model.TodoList.prototype = {
 	items: null
 	,length: null
+	,getItems: function() {
+		return this.items;
+	}
 	,add: function(todo) {
 		this.items.push(todo);
 	}
@@ -1520,18 +1626,49 @@ example.todo.signal.LoadTodoList.prototype = $extend(m.signal.Signal0.prototype,
 	,__class__: example.todo.signal.LoadTodoList
 });
 if(!example.todo.view) example.todo.view = {}
-example.todo.view.TodoListView = $hxClasses["example.todo.view.TodoListView"] = function() {
+example.todo.view.TodoListView = $hxClasses["example.todo.view.TodoListView"] = function(data) {
+	this.tagName = "ul";
+	example.core.DataView.call(this,data);
 };
 example.todo.view.TodoListView.__name__ = ["example","todo","view","TodoListView"];
-example.todo.view.TodoListView.prototype = {
-	__class__: example.todo.view.TodoListView
-}
-example.todo.view.TodoView = $hxClasses["example.todo.view.TodoView"] = function() {
+example.todo.view.TodoListView.__super__ = example.core.DataView;
+example.todo.view.TodoListView.prototype = $extend(example.core.DataView.prototype,{
+	dataChanged: function() {
+		example.core.DataView.prototype.dataChanged.call(this);
+		var _g = 0, _g1 = this.children;
+		while(_g < _g1.length) {
+			var child = _g1[_g];
+			++_g;
+			this.removeChild(child);
+		}
+		var _g = 0, _g1 = this.data.getItems();
+		while(_g < _g1.length) {
+			var todo = _g1[_g];
+			++_g;
+			var view = new example.todo.view.TodoView(todo);
+			this.addChild(view);
+		}
+	}
+	,__class__: example.todo.view.TodoListView
+});
+example.todo.view.TodoView = $hxClasses["example.todo.view.TodoView"] = function(data) {
+	this.tagName = "li";
+	this.label = "";
+	example.core.DataView.call(this,data);
 };
 example.todo.view.TodoView.__name__ = ["example","todo","view","TodoView"];
-example.todo.view.TodoView.prototype = {
-	__class__: example.todo.view.TodoView
-}
+example.todo.view.TodoView.__super__ = example.core.DataView;
+example.todo.view.TodoView.prototype = $extend(example.core.DataView.prototype,{
+	label: null
+	,dataChanged: function() {
+		example.core.DataView.prototype.dataChanged.call(this);
+		this.label = this.data != null?this.data.name:"";
+	}
+	,update: function() {
+		this.element.innerHTML = this.label;
+	}
+	,__class__: example.todo.view.TodoView
+});
 example.todo.view.TodoListViewMediator = $hxClasses["example.todo.view.TodoListViewMediator"] = function() {
 	m.mvc.impl.Mediator.call(this);
 };
@@ -1545,7 +1682,7 @@ example.todo.view.TodoListViewMediator.prototype = $extend(m.mvc.impl.Mediator.p
 		this.loadTodoList.dispatch();
 	}
 	,completed: function(list) {
-		haxe.Log.trace(list.get_length(),{ fileName : "TodoListViewMediator.hx", lineNumber : 25, className : "example.todo.view.TodoListViewMediator", methodName : "completed"});
+		this.view.setData(list);
 	}
 	,failed: function(error) {
 	}
@@ -4147,9 +4284,14 @@ Xml.ecdata_end = new EReg("\\]\\]>","");
 Xml.edoctype_elt = new EReg("[\\[|\\]>]","");
 Xml.ecomment_end = new EReg("-->","");
 m.mvc.api.IContext.__meta__ = { obj : { 'interface' : null}};
+example.core.View.idCounter = 0;
 m.mvc.api.IViewContainer.__meta__ = { obj : { 'interface' : null}};
 m.mvc.api.IMediator.__meta__ = { obj : { 'interface' : null}};
 m.mvc.impl.Mediator.__meta__ = { fields : { injector : { name : ["injector"], type : ["m.inject.IInjector"], inject : null}, contextView : { name : ["contextView"], type : ["m.mvc.api.IViewContainer"], inject : null}, mediatorMap : { name : ["mediatorMap"], type : ["m.mvc.api.IMediatorMap"], inject : null}}};
+example.core.ViewEvent.ADDED = "added";
+example.core.ViewEvent.REMOVED = "removed";
+example.core.ViewEvent.ACTIONED = "actioned";
+example.core.ViewEvent.DATA_CHANGED = "dataChanged";
 m.mvc.api.ICommand.__meta__ = { obj : { 'interface' : null}};
 m.mvc.impl.Command.__meta__ = { fields : { contextView : { name : ["contextView"], type : ["m.mvc.api.IViewContainer"], inject : null}, commandMap : { name : ["commandMap"], type : ["m.mvc.api.ICommandMap"], inject : null}, injector : { name : ["injector"], type : ["m.inject.IInjector"], inject : null}, mediatorMap : { name : ["mediatorMap"], type : ["m.mvc.api.IMediatorMap"], inject : null}}};
 example.todo.command.LoadTodoListCommand.__meta__ = { fields : { list : { name : ["list"], type : ["example.todo.model.TodoList"], inject : null}, signal : { name : ["signal"], type : ["example.todo.signal.LoadTodoList"], inject : null}}};
