@@ -1,0 +1,3 @@
+-cmd cd 01_simple_example
+-cmd haxe build.hxml
+-cmd cd ../
