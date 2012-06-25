@@ -8,40 +8,115 @@ import js.Dom;
 #end
 import m.signal.Signal;
 
-class ViewEvent
-{
-	inline public static var ADDED:String = "added";
-	inline public static var REMOVED:String = "removed";
-	inline public static var ACTIONED:String = "actioned";
-	inline public static var DATA_CHANGED:String = "dataChanged";
-}
+/**
+Simple implementation of a cross platform View class that composes a
+native element/sprite depending on platform.
 
+Contains a basic display lifecycle (initialize, update, remove)
+Contains a basic display heirachy (addChild, removeChild)
+Contains basic dispatching and bubbling via a Signal (dispatch)
+
+Each target has a platform specific element for accessing the raw display API (flash: sprite, js: element)
+
+@see m.signal.Signal
+@see DataView
+
+*/
 class View
 {
+	/**
+	Event type dispatched when view is added to stage
+	@see View.addChild()
+	*/
+	inline public static var ADDED:String = "added";
+
+	/**
+	Event type dispatched when view is removed from stage
+	@see View.removeChild()
+	*/
+	inline public static var REMOVED:String = "removed";
+
+	/**
+	Event type dispatched when view is actioned (e.g. clicked)
+	*/
+	inline public static var ACTIONED:String = "actioned";
+
+	/**
+	private counter to maintain unique identifieds for created views
+	*/
 	static var idCounter:Int = 0;
 
+	/**
+	Unique identifier (viewXXX);
+	*/
 	public var id(default, null):String;
+	
+	/**
+	reference to parent view (if available)
+	@see View.addChild()
+	@see View.removeChild()
+	*/
 	public var parent(default, null):View;
+
+	/**
+	reference to the index relative to siblings
+	defaults to -1 when view has no parent 
+	@see View.addChild()
+	*/
 	public var index(default, set_index):Int;
 
+
+	/**
+	Signal used for dispatching view events
+	Usage:
+		view.addListener(viewHandler);
+		...
+		function viewHandler(event:String, view:View);
+	*/
 	public var signal(default, null):Signal2<String, View>;
 
 	#if flash
+
+		/**
+		native flash sprite representing this view in the display list
+		*/
 		public var sprite(default, null):Sprite;
+
 	#elseif js
+
+		/**
+		native html element representing this view in the DOM
+		*/
 		public var element(default, null):HtmlDom;
+		
+		/**
+		Optional tag name to use when creating element via Lib.document.createElement
+		defaults to 'div'
+		*/
 		var tagName:String;
 	#end
 
+	/**
+	Contains all children currently added to view
+	*/
 	var children:Array<View>;
-	var type:String;
+
+	/**
+	String representation of unqualified class name
+	(e.g. example.core.View.className == "View");
+	*/
+	var className:String;
 
 	public function new()
 	{
+		//create unique identifier for this view
+		id = "view" + (idCounter ++);
+
+
+		//set default index without triggering setter
 		Reflect.setField(this, "index", -1);
 
-		type = Type.getClassName(Type.getClass(this)).split(".").pop();
-		id = "view" + (idCounter ++);
+		className = Type.getClassName(Type.getClass(this)).split(".").pop();
 		
 		children = [];
 		signal = new Signal2<String, View>();
@@ -51,15 +126,28 @@ class View
 
 	public function toString():String
 	{
-		return type + "(" + id + ")";
+		return className + "(" + id + ")";
 	}
 
+	/**
+	dispatches a view event via the signal
+	@param event 	string event type
+	@param view 	originating view object
+	*/
 	public function dispatch(event:String, view:View)
 	{
 		if(view == null) view = this;
 		signal.dispatch(event, view);
 	}
 
+
+	/**
+	Adds a child view to the display heirachy.
+	
+	Dispatches an ADDED event on completion.
+
+	@param view 	child to add
+	*/
 	public function addChild(view:View)
 	{
 		view.signal.add(this.dispatch);
@@ -74,16 +162,25 @@ class View
 		element.appendChild(view.element);
 		#end
 
-		dispatch(ViewEvent.ADDED, view);
+		dispatch(ADDED, view);
 	}
 
+
+	/**
+	Removes an existing child view from the display heirachy.
+	
+	Dispatches an REMOVED event on completion.
+
+	@param view 	child to remove
+	*/
 	public function removeChild(view:View)
 	{
 		var removed = children.remove(view);
 
 		if(removed)
 		{
-			
+			var oldIndex = view.index;
+
 			view.remove();
 			view.signal.remove(this.dispatch);
 			view.parent = null;
@@ -95,11 +192,21 @@ class View
 			element.removeChild(view.element);
 			#end
 
-			dispatch(ViewEvent.REMOVED, view);
+			for(i in oldIndex...children.length)
+			{
+				var view = children[i];
+				view.index = i;
+			}
+
+			dispatch(REMOVED, view);
 		}
 	}
 
 	///// internal //////
+
+	/**
+	Initializes platform specific properties and state
+	*/
 	function initialize()
 	{
 		#if flash
@@ -108,15 +215,30 @@ class View
 		if(tagName == null) tagName = "div";
 		element = Lib.document.createElement(tagName);
 		element.setAttribute("id", id);
-		element.className = type;
+		element.className = className;
 		#end
 	}
 
+	/**
+	Removes platform specific properties and state
+	*/
 	function remove()
 	{
 		//override in sub class
 	}
 
+	/**
+	Updates platform specific properties and state
+	*/
+	function update()
+	{
+		//override in sub class
+	}
+
+	/**
+	Sets index and triggers an update when index changes
+	@param value 	target index
+	*/
 	function set_index(value:Int):Int
 	{
 		if(index != value)
@@ -128,38 +250,4 @@ class View
 		return index;
 	}
 
-	function update()
-	{
-		
-	}
-
-}
-
-class DataView<T> extends View
-{
-	public var data(default, null):T;
-
-	public function new(?data:T)
-	{
-		super();
-		setData(data);
-	}
-	public function setData(data:T, ?force:Bool=false)
-	{
-		if(this.data != data || force == true)
-		{
-			this.data = data;
-			dataChanged();
-			update();
-			dispatch(ViewEvent.DATA_CHANGED, this);
-		}
-	}
-
-	/**
-	Executed on initialization and when data is changed
-	*/
-	function dataChanged()
-	{
-		
-	}
 }

@@ -1,11 +1,31 @@
-
-li.TodoView
+*
 {
+	padding:0;
+	margin:0;
+}
+
+
+.TodoView
+{
+	margin:10px;
 	padding-left:20px;
 	background: url('../img/none.png') no-repeat 0 0;
 }
 
-li.done
+.done
 {
 	background: url('../img/done.png') no-repeat 0 0;
+}
+
+.TodoStatsView
+{
+	background-color: #CCC;
+	padding: 10px;
+	margin: 0px;
+}
+
+.TodoStatsView a
+{
+	padding: 4px;border: solid #AAA 2px;
+	margin-left: 10px;
 }

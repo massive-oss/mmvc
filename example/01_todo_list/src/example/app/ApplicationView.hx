@@ -2,6 +2,17 @@ package example.app;
 
 import example.core.View;
 
+/**
+Main Application View.
+
+Implements IViewContainer to provide view added/removed events back to the Context.mediatorMap
+
+Extends core view class for basic event bubbling across platforms
+
+@see example.core.View
+@see m.mvc.api.IViewContainer
+*/
+
 class ApplicationView extends View, implements m.mvc.api.IViewContainer
 {
 	public var viewAdded:Dynamic -> Void;
@@ -12,22 +23,30 @@ class ApplicationView extends View, implements m.mvc.api.IViewContainer
 		super();
 	}
 
+	/**
+	Called by ApplicationViewMediator once application is wired up to the context
+	@see ApplicationViewMediator.onRegister;
+	*/
 	public function createViews()
 	{
 		var todoView = new example.todo.view.TodoListView();
 		addChild(todoView);
 	}
 
+	/**
+	Overrides signal bubbling to trigger view added/removed handlers for IViewContainer
+	@param event 	a string event type
+	@param view 	instance of view that originally dispatched the event
+	*/
 	override public function dispatch(event:String, view:View)
 	{
-		//trace(event + ": " + view.toString());
 		switch(event)
 		{
-			case ViewEvent.ADDED:
+			case View.ADDED:
 			{
 				viewAdded(view);
 			}
-			case ViewEvent.REMOVED:
+			case View.REMOVED:
 			{
 				viewRemoved(view);
 			}
@@ -38,22 +57,24 @@ class ApplicationView extends View, implements m.mvc.api.IViewContainer
 		}
 	}
 
+	/**
+	Required by IViewContainer
+	*/
 	public function isAdded(view:Dynamic):Bool
 	{
 		return true;
 	}
 
-	////
-
+	/**
+	Overrides View.initialize to add to top level platform specific sprite/element
+	*/
 	override function initialize()
 	{
 		super.initialize();
 		#if flash
-		flash.Lib.current.addChild(sprite);
+			flash.Lib.current.addChild(sprite);
 		#elseif js
-		js.Lib.document.body.appendChild(element);
+			js.Lib.document.body.appendChild(element);
 		#end
 	}
-
-	
 }

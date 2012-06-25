@@ -1,27 +1,64 @@
 package example.todo.view;
 
 import example.core.View;
+import example.core.DataView;
 import example.todo.model.Todo;
 import example.todo.model.TodoList;
 
+/**
+Main TodoList view containing a list of Todo items
+
+Updates individual todo item state when user clicks on a todo item
+
+@see example.core.DataView
+@see example.todo.view.TodoView
+@see example.todo.model.TodoList
+*/
 class TodoListView extends DataView<TodoList>
 {
+	inline public static var CREATE_TODO = "CREATE_TODO";
+	var statsView:TodoStatsView;
+
+	/**
+	Overrides constructor to set js tag name to unordered list (ul)
+
+	@param data 	default TodoList
+	@see example.core.DataView
+	*/
 	public function new(?data:TodoList)
 	{
 		#if js tagName = "ul"; #end
 		super(data);
 	}
 
+	/**
+	Displays an error in the stats view
+	*/
+	public function showError(message:String)
+	{
+		statsView.setData(message);
+	}
+
+	/**
+	Overrides dispatched to handle ACTIONED events from child views.
+
+	@see example.core.DataView
+	*/
 	override public function dispatch(event:String, view:View)
 	{
 		switch(event)
 		{
-			case ViewEvent.ACTIONED:
+			case View.ACTIONED:
 			{
-				var todoView = cast(view, TodoView);
-				var data = todoView.data;
-				data.done = !data.done;
-				todoView.setData(data, true);
+				if(Std.is(view, TodoView))
+				{
+					var todoView = cast view;
+					toggleTodoViewState(todoView);	
+				}
+				else if(Std.is(view, TodoStatsView))
+				{
+					super.dispatch(CREATE_TODO, this);
+				}
 			}
 			default:
 			{
@@ -30,117 +67,97 @@ class TodoListView extends DataView<TodoList>
 		}
 	}
 
-	override function dataChanged()
+	/**
+	Toggles the done state of a single TodoView
+
+	@param view 	TodoView to toggle done state		
+	*/
+	function toggleTodoViewState(view:TodoView)
 	{
-		super.dataChanged();
+		var data = view.data;
+		data.done = !data.done;
+		view.setData(data, true);
 
-		for(child in children)
-		{
-			removeChild(child);	
-		}
+		updateStats();
 
-		for(todo in data.getItems())
-		{
-			var view = new TodoView(todo);
-			addChild(view);
-		}
-	}
-}
-
-#if js
-import js.Dom;
-#end
-
-class TodoView extends DataView<Todo>
-{
-	var label:String;
-	var done:Bool;
-
-	#if flash
-	var textField:flash.text.TextField;
-	var icon:flash.display.Bitmap;
-	#end
-
-	public function new(?data:Todo)
-	{
-		#if js tagName = "li"; #end
-
-		label = "";
-		super(data);
 	}
 
-	override function dataChanged()
-	{
-		super.dataChanged();
-		label = data != null ? data.name : "";
-		done = data != null && data.done;
-	}
 
+	/**
+	Overrides initialized to create stats view
+	@see example.core.View
+	*/
 	override function initialize()
 	{
 		super.initialize();
 
-		#if flash
-			icon = new flash.display.Bitmap();
-			sprite.addChild(icon);
-
-			textField = new flash.text.TextField();
-			textField.x = 20;
-			sprite.addChild(textField);
-			sprite.addEventListener(flash.events.MouseEvent.CLICK, flash_onClick);
-		#elseif js
-			element.onclick = js_onClick;
-		#end
+		statsView = new TodoStatsView();
+		addChild(statsView);
 	}
 
-	override function remove()
+
+	/**
+	Overrides dataChanged to add/remove listeners to collection change event
+
+	@see example.core.DataView
+	*/
+	override function dataChanged()
 	{
-		#if flash
-			sprite.removeEventListener(flash.events.MouseEvent.CLICK, flash_onClick);
-		#elseif js
-			element.onclick = null;
-		#end
-		//override in sub class
+		super.dataChanged();
+
+		if(this.previousData != null)
+			this.previousData.changed.remove(collectionChanged);
+		
+		if(data != null)
+			data.changed.add(collectionChanged);
+
+		collectionChanged();
 	}
 
-	override function update()
+	/**
+	updates child views based on current size of data
+	*/
+	function collectionChanged()
 	{
-		#if flash
-			sprite.y = index*25;
-			textField.text = label;
+		updateStats();
 
-			var uri = "img/" + (done ? "done" : "none") + ".png";
-			var loader = new flash.display.Loader();
-			loader.contentLoaderInfo.addEventListener(flash.events.Event.COMPLETE, flash_onBitmapLoaderComplete);
-			loader.load(new flash.net.URLRequest(uri));
-			
-		#elseif js
-			element.innerHTML = label;
-			element.className = type + (done? " done" : "");
-		#else
-			trace("ID: " + toString() + ", label: " + label + ", index: " + index);
-		#end
+		for(child in children.concat([]))
+		{
+			if(Std.is(child, TodoView))
+			{
+				removeChild(child);	
+			}
+		}
+
+		if(data != null)
+		{
+			for(todo in data)
+			{
+				var view = new TodoView(todo);
+				addChild(view);
+			}
+		}
 	}
 
-	#if flash
-
-		function flash_onBitmapLoaderComplete (event:flash.events.Event)
+	/**
+	Updates the stats view based on the number of done Todo items
+	*/
+	function updateStats()
+	{
+		if(data == null)
 		{
-			var content = cast (event.target, flash.display.LoaderInfo).content;
-		    icon.bitmapData = cast(content, flash.display.Bitmap).bitmapData;
+			statsView.setData("No data available");
+			return;
 		}
+		var remaining = data.getRemaining();
 
-		function flash_onClick(event:flash.events.MouseEvent)
+		var stats = switch(data.size)
 		{
-			dispatch(ViewEvent.ACTIONED, this);
+			case 0: "No Todo Items";
+			default: remaining + " of " + data.size + " Todo Items complete";
 		}
 
-	#elseif js
-
-		function js_onClick(event:js.Event)
-		{	
-			dispatch(ViewEvent.ACTIONED, this);
-		}
-
-	#end
+		statsView.setData(stats);	
+	}
 }
+

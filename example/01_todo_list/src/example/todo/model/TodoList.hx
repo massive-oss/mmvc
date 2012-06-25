@@ -1,43 +1,30 @@
 package example.todo.model;
 
-class TodoList
+/**
+List of Todo items.
+
+@see example.todo.model.Todo
+@see m.data.ArrayList
+*/
+
+class TodoList extends m.data.ArrayList<Todo>
 {
-	public var items(default, null):Array<Todo>;
-	public var length(get_length, null):Int;
-
-	public function new(?items:Array<Todo>=null)
+	public function new(?values:Array<Todo>=null)
 	{
-		if(items == null) items = [];
-		this.items = items;
+		super(values);
 	}
 
-	public function getItems():Array<Todo>
-	{
-		return items;
-	}
-
-	public function add(todo:Todo)
-	{
-		items.push(todo);
-	}
-
-	public function remove(todo:Todo)
-	{
-		items.remove(todo);
-	}
-
+	/**
+	returns number of incomplete items (done == false)
+	*/
 	public function getRemaining():Int
 	{
-		var count = 0;
-		for(todo in items)
+		var incomplete = this.filter(
+		function(todo:Todo)
 		{
-			if(!todo.done) count ++;
-		}
-		return count;
-	}
+			return todo.done;
+		});
 
-	function get_length():Int
-	{
-		return items.length;
+		return incomplete.size;
 	}
 }

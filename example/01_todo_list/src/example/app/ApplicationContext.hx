@@ -11,12 +11,18 @@ import example.app.ApplicationViewMediator;
 import example.todo.signal.LoadTodoList;
 import example.todo.command.LoadTodoListCommand;
 import example.todo.model.TodoList;
-
 import example.todo.view.TodoListView;
 import example.todo.view.TodoListViewMediator;
 
 
-
+/**
+Application wide context providing mapping for
+<ul>
+	<li>Signals to commands</li>
+	<li>Models</li>
+	<li>Views to ViewMediators</li>
+</ul> 
+*/
 class ApplicationContext extends m.mvc.impl.Context
 {
 	public function new(?contextView:IViewContainer=null)
@@ -26,14 +32,13 @@ class ApplicationContext extends m.mvc.impl.Context
 
 	override public function startup()
 	{
+		// wiring for todo model
 		commandMap.mapSignalClass(LoadTodoList, LoadTodoListCommand);
-
 		injector.mapSingleton(TodoList);
-
 		mediatorMap.mapView(TodoListView, TodoListViewMediator);
 
 
-		// main application view mediator
+		// wiring for main application module
 		mediatorMap.mapView(ApplicationView, ApplicationViewMediator);
 		
 	}

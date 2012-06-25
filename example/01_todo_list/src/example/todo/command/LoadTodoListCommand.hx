@@ -7,6 +7,14 @@ import example.todo.model.Todo;
 import m.loader.Loader;
 import m.loader.JSONLoader;
 
+/**
+Loads an existing todo list from the file system,
+
+Dispatches LoadTodoList.completed or failed signal based on result of loader.
+
+@see example.todo.signal.LoadTodoList
+@see m.loader.JSONLoader
+*/
 class LoadTodoListCommand extends m.mvc.impl.Command
 {
 	@inject
@@ -22,6 +30,9 @@ class LoadTodoListCommand extends m.mvc.impl.Command
 		super();
 	}
 
+	/**
+	loads a json file
+	*/
 	override public function execute():Void
 	{
 		loader = new JSONLoader();
@@ -30,6 +41,12 @@ class LoadTodoListCommand extends m.mvc.impl.Command
 		loader.load("data/data.json");
 	}
 
+	/**
+	Converts the raw json object into Todo items
+	Dispatches completed signal on completion.
+
+	@param data 	raw json object
+	*/
 	function completed(data:Dynamic)
 	{
 		loader.failed.remove(failed);
@@ -46,6 +63,9 @@ class LoadTodoListCommand extends m.mvc.impl.Command
 		signal.completed.dispatch(list);
 	}
 
+	/**
+	Dispatches failed signal if JSONLoader is unsuccessful
+	*/
 	function failed(error:LoaderError)
 	{
 		loader.completed.remove(completed);

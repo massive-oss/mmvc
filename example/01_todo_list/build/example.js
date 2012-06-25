@@ -1228,9 +1228,9 @@ example.app.ApplicationContext.prototype = $extend(m.mvc.impl.Context.prototype,
 });
 if(!example.core) example.core = {}
 example.core.View = $hxClasses["example.core.View"] = function() {
-	this["index"] = -1;
-	this.type = Type.getClassName(Type.getClass(this)).split(".").pop();
 	this.id = "view" + example.core.View.idCounter++;
+	this["index"] = -1;
+	this.className = Type.getClassName(Type.getClass(this)).split(".").pop();
 	this.children = [];
 	this.signal = new m.signal.Signal2();
 	this.initialize();
@@ -1244,9 +1244,9 @@ example.core.View.prototype = {
 	,element: null
 	,tagName: null
 	,children: null
-	,type: null
+	,className: null
 	,toString: function() {
-		return this.type + "(" + this.id + ")";
+		return this.className + "(" + this.id + ")";
 	}
 	,dispatch: function(event,view) {
 		if(view == null) view = this;
@@ -1263,11 +1263,18 @@ example.core.View.prototype = {
 	,removeChild: function(view) {
 		var removed = this.children.remove(view);
 		if(removed) {
+			var oldIndex = view.index;
 			view.remove();
 			view.signal.remove(this.dispatch.$bind(this));
 			view.parent = null;
 			view.set_index(-1);
 			this.element.removeChild(view.element);
+			var _g1 = oldIndex, _g = this.children.length;
+			while(_g1 < _g) {
+				var i = _g1++;
+				var view1 = this.children[i];
+				view1.set_index(i);
+			}
 			this.dispatch("removed",view);
 		}
 	}
@@ -1275,9 +1282,11 @@ example.core.View.prototype = {
 		if(this.tagName == null) this.tagName = "div";
 		this.element = js.Lib.document.createElement(this.tagName);
 		this.element.setAttribute("id",this.id);
-		this.element.className = this.type;
+		this.element.className = this.className;
 	}
 	,remove: function() {
+	}
+	,update: function() {
 	}
 	,set_index: function(value) {
 		if(this.index != value) {
@@ -1285,8 +1294,6 @@ example.core.View.prototype = {
 			this.update();
 		}
 		return this.index;
-	}
-	,update: function() {
 	}
 	,__class__: example.core.View
 	,__properties__: {set_index:"set_index"}
@@ -1405,11 +1412,6 @@ example.app.ApplicationViewMediator.prototype = $extend(m.mvc.impl.Mediator.prot
 	}
 	,__class__: example.app.ApplicationViewMediator
 });
-example.core.ViewEvent = $hxClasses["example.core.ViewEvent"] = function() { }
-example.core.ViewEvent.__name__ = ["example","core","ViewEvent"];
-example.core.ViewEvent.prototype = {
-	__class__: example.core.ViewEvent
-}
 example.core.DataView = $hxClasses["example.core.DataView"] = function(data) {
 	example.core.View.call(this);
 	this.setData(data);
@@ -1418,9 +1420,11 @@ example.core.DataView.__name__ = ["example","core","DataView"];
 example.core.DataView.__super__ = example.core.View;
 example.core.DataView.prototype = $extend(example.core.View.prototype,{
 	data: null
+	,previousData: null
 	,setData: function(data,force) {
 		if(force == null) force = false;
 		if(this.data != data || force == true) {
+			this.previousData = this.data;
 			this.data = data;
 			this.dataChanged();
 			this.update();
@@ -1488,6 +1492,7 @@ example.todo.command.LoadTodoListCommand.prototype = $extend(m.mvc.impl.Command.
 });
 if(!example.todo.model) example.todo.model = {}
 example.todo.model.Todo = $hxClasses["example.todo.model.Todo"] = function(name) {
+	if(name == null) name = "New todo";
 	this.name = name;
 	this.done = false;
 };
@@ -1500,39 +1505,166 @@ example.todo.model.Todo.prototype = {
 	}
 	,__class__: example.todo.model.Todo
 }
-example.todo.model.TodoList = $hxClasses["example.todo.model.TodoList"] = function(items) {
-	if(items == null) items = [];
-	this.items = items;
+if(!m.data) m.data = {}
+m.data.Collection = $hxClasses["m.data.Collection"] = function() { }
+m.data.Collection.__name__ = ["m","data","Collection"];
+m.data.Collection.prototype = {
+	changed: null
+	,size: null
+	,add: null
+	,addAll: null
+	,clear: null
+	,contains: null
+	,isEmpty: null
+	,iterator: null
+	,remove: null
+	,filter: null
+	,toArray: null
+	,__class__: m.data.Collection
+	,__properties__: {get_size:"get_size"}
+}
+m.data.CollectionBase = $hxClasses["m.data.CollectionBase"] = function() {
+	this.source = [];
+	this.changed = new m.signal.Signal0();
+};
+m.data.CollectionBase.__name__ = ["m","data","CollectionBase"];
+m.data.CollectionBase.__interfaces__ = [m.data.Collection];
+m.data.CollectionBase.prototype = {
+	changed: null
+	,size: null
+	,get_size: function() {
+		return this.source.length;
+	}
+	,add: function(value) {
+		this.source.push(value);
+		this.notifyChanged();
+	}
+	,addAll: function(values) {
+		if(values == null || values.length == 0) return;
+		var _g = 0;
+		while(_g < values.length) {
+			var value = values[_g];
+			++_g;
+			this.source.push(value);
+		}
+		this.notifyChanged();
+	}
+	,clear: function() {
+		if(this.isEmpty()) return;
+		this.source.splice(0,this.source.length);
+		this.notifyChanged();
+	}
+	,contains: function(value) {
+		var _g = 0, _g1 = this.source;
+		while(_g < _g1.length) {
+			var v = _g1[_g];
+			++_g;
+			if(v == value) return true;
+		}
+		return false;
+	}
+	,isEmpty: function() {
+		return this.source.length == 0;
+	}
+	,iterator: function() {
+		return this.source.iterator();
+	}
+	,remove: function(value) {
+		var hasChanged = false;
+		var i = this.source.length;
+		while(i-- > 0) if(this.source[i] == value) {
+			this.source.splice(0,1);
+			hasChanged = true;
+		}
+		if(hasChanged) this.notifyChanged();
+		return hasChanged;
+	}
+	,filter: function(predicate) {
+		var collectionType = Type.getClass(this);
+		var collection = m.util.TypeUtil.createInstance(collectionType,[]);
+		var filteredValues = [];
+		var $it0 = this.iterator();
+		while( $it0.hasNext() ) {
+			var value = $it0.next();
+			if(predicate(value)) filteredValues.push(value);
+		}
+		collection.addAll(filteredValues);
+		return collection;
+	}
+	,toArray: function() {
+		return this.source.copy();
+	}
+	,toString: function() {
+		return m.util.ArrayUtil.toString(this.source);
+	}
+	,source: null
+	,notifyChanged: function() {
+		this.changed.dispatch();
+	}
+	,__class__: m.data.CollectionBase
+	,__properties__: {get_size:"get_size"}
+}
+m.data.ArrayList = $hxClasses["m.data.ArrayList"] = function(values) {
+	m.data.CollectionBase.call(this);
+	if(values != null) this.addAll(values);
+};
+m.data.ArrayList.__name__ = ["m","data","ArrayList"];
+m.data.ArrayList.__super__ = m.data.CollectionBase;
+m.data.ArrayList.prototype = $extend(m.data.CollectionBase.prototype,{
+	first: null
+	,get_first: function() {
+		if(this.isEmpty()) return null;
+		return this.source[0];
+	}
+	,last: null
+	,get_last: function() {
+		if(this.isEmpty()) return null;
+		return this.source[this.get_size() - 1];
+	}
+	,length: null
+	,get_length: function() {
+		return this.source.length;
+	}
+	,insert: function(index,value) {
+		if(index < 0 || index > this.get_size()) throw new m.data.IndexOutOfBoundsException();
+		this.source.insert(index,value);
+		this.notifyChanged();
+	}
+	,get: function(index) {
+		if(index < 0 || index >= this.get_size()) throw new m.data.IndexOutOfBoundsException();
+		return this.source[index];
+	}
+	,indexOf: function(value) {
+		var _g1 = 0, _g = this.source.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			if(this.source[i] == value) return i;
+		}
+		return -1;
+	}
+	,removeAt: function(index) {
+		if(index < 0 || index >= this.get_size()) throw new m.data.IndexOutOfBoundsException();
+		var value = this.source.splice(index,1)[0];
+		this.notifyChanged();
+		return value;
+	}
+	,__class__: m.data.ArrayList
+	,__properties__: $extend(m.data.CollectionBase.prototype.__properties__,{get_length:"get_length",get_last:"get_last",get_first:"get_first"})
+});
+example.todo.model.TodoList = $hxClasses["example.todo.model.TodoList"] = function(values) {
+	m.data.ArrayList.call(this,values);
 };
 example.todo.model.TodoList.__name__ = ["example","todo","model","TodoList"];
-example.todo.model.TodoList.prototype = {
-	items: null
-	,length: null
-	,getItems: function() {
-		return this.items;
-	}
-	,add: function(todo) {
-		this.items.push(todo);
-	}
-	,remove: function(todo) {
-		this.items.remove(todo);
-	}
-	,getRemaining: function() {
-		var count = 0;
-		var _g = 0, _g1 = this.items;
-		while(_g < _g1.length) {
-			var todo = _g1[_g];
-			++_g;
-			if(!todo.done) count++;
-		}
-		return count;
-	}
-	,get_length: function() {
-		return this.items.length;
+example.todo.model.TodoList.__super__ = m.data.ArrayList;
+example.todo.model.TodoList.prototype = $extend(m.data.ArrayList.prototype,{
+	getRemaining: function() {
+		var incomplete = this.filter(function(todo) {
+			return todo.done;
+		});
+		return incomplete.get_size();
 	}
 	,__class__: example.todo.model.TodoList
-	,__properties__: {get_length:"get_length"}
-}
+});
 if(!m.signal) m.signal = {}
 m.signal.Signal = $hxClasses["m.signal.Signal"] = function(valueClasses) {
 	if(valueClasses == null) valueClasses = [];
@@ -1639,41 +1771,132 @@ example.todo.view.TodoListView = $hxClasses["example.todo.view.TodoListView"] = 
 example.todo.view.TodoListView.__name__ = ["example","todo","view","TodoListView"];
 example.todo.view.TodoListView.__super__ = example.core.DataView;
 example.todo.view.TodoListView.prototype = $extend(example.core.DataView.prototype,{
-	dispatch: function(event,view) {
+	statsView: null
+	,showError: function(message) {
+		this.statsView.setData(message);
+	}
+	,dispatch: function(event,view) {
 		switch(event) {
 		case "actioned":
-			var todoView = (function($this) {
-				var $r;
-				var $t = view;
-				if(Std["is"]($t,example.todo.view.TodoView)) $t; else throw "Class cast error";
-				$r = $t;
-				return $r;
-			}(this));
-			var data = todoView.data;
-			data.done = !data.done;
-			todoView.setData(data,true);
+			if(Std["is"](view,example.todo.view.TodoView)) {
+				var todoView = view;
+				this.toggleTodoViewState(todoView);
+			} else if(Std["is"](view,example.todo.view.TodoStatsView)) example.core.DataView.prototype.dispatch.call(this,"CREATE_TODO",this);
 			break;
 		default:
 			example.core.DataView.prototype.dispatch.call(this,event,view);
 		}
 	}
+	,toggleTodoViewState: function(view) {
+		var data = view.data;
+		data.done = !data.done;
+		view.setData(data,true);
+		this.updateStats();
+	}
+	,initialize: function() {
+		example.core.DataView.prototype.initialize.call(this);
+		this.statsView = new example.todo.view.TodoStatsView();
+		this.addChild(this.statsView);
+	}
 	,dataChanged: function() {
 		example.core.DataView.prototype.dataChanged.call(this);
-		var _g = 0, _g1 = this.children;
+		if(this.previousData != null) this.previousData.changed.remove(this.collectionChanged.$bind(this));
+		if(this.data != null) this.data.changed.add(this.collectionChanged.$bind(this));
+		this.collectionChanged();
+	}
+	,collectionChanged: function() {
+		this.updateStats();
+		var _g = 0, _g1 = this.children.concat([]);
 		while(_g < _g1.length) {
 			var child = _g1[_g];
 			++_g;
-			this.removeChild(child);
+			if(Std["is"](child,example.todo.view.TodoView)) this.removeChild(child);
 		}
-		var _g = 0, _g1 = this.data.getItems();
-		while(_g < _g1.length) {
-			var todo = _g1[_g];
-			++_g;
-			var view = new example.todo.view.TodoView(todo);
-			this.addChild(view);
+		if(this.data != null) {
+			var $it0 = this.data.iterator();
+			while( $it0.hasNext() ) {
+				var todo = $it0.next();
+				var view = new example.todo.view.TodoView(todo);
+				this.addChild(view);
+			}
 		}
 	}
+	,updateStats: function() {
+		if(this.data == null) {
+			this.statsView.setData("No data available");
+			return;
+		}
+		var remaining = this.data.getRemaining();
+		var stats = (function($this) {
+			var $r;
+			switch($this.data.get_size()) {
+			case 0:
+				$r = "No Todo Items";
+				break;
+			default:
+				$r = remaining + " of " + $this.data.get_size() + " Todo Items complete";
+			}
+			return $r;
+		}(this));
+		this.statsView.setData(stats);
+	}
 	,__class__: example.todo.view.TodoListView
+});
+example.todo.view.TodoListViewMediator = $hxClasses["example.todo.view.TodoListViewMediator"] = function() {
+	m.mvc.impl.Mediator.call(this);
+};
+example.todo.view.TodoListViewMediator.__name__ = ["example","todo","view","TodoListViewMediator"];
+example.todo.view.TodoListViewMediator.__super__ = m.mvc.impl.Mediator;
+example.todo.view.TodoListViewMediator.prototype = $extend(m.mvc.impl.Mediator.prototype,{
+	loadTodoList: null
+	,list: null
+	,onRegister: function() {
+		this.view.signal.add(this.viewHandler.$bind(this));
+		this.loadTodoList.completed.addOnce(this.completed.$bind(this));
+		this.loadTodoList.failed.addOnce(this.failed.$bind(this));
+		this.loadTodoList.dispatch();
+	}
+	,completed: function(list) {
+		this.list = list;
+		this.view.setData(list);
+	}
+	,failed: function(error) {
+		this.view.showError(Std.string(error));
+	}
+	,viewHandler: function(event,view) {
+		if(event == "CREATE_TODO") this.list.add(new example.todo.model.Todo());
+	}
+	,__class__: example.todo.view.TodoListViewMediator
+});
+example.todo.view.TodoStatsView = $hxClasses["example.todo.view.TodoStatsView"] = function(data) {
+	example.core.DataView.call(this,data);
+};
+example.todo.view.TodoStatsView.__name__ = ["example","todo","view","TodoStatsView"];
+example.todo.view.TodoStatsView.__super__ = example.core.DataView;
+example.todo.view.TodoStatsView.prototype = $extend(example.core.DataView.prototype,{
+	label: null
+	,button: null
+	,initialize: function() {
+		example.core.DataView.prototype.initialize.call(this);
+		this.label = js.Lib.document.createElement("label");
+		this.label.innerHTML = this.data != null?this.data:"Loading items...";
+		this.element.appendChild(this.label);
+		this.button = js.Lib.document.createElement("a");
+		this.button.innerHTML = "New item";
+		this.button.onclick = this.js_onClick.$bind(this);
+		this.element.appendChild(this.button);
+	}
+	,remove: function() {
+		example.core.DataView.prototype.remove.call(this);
+		this.button.onclick = null;
+	}
+	,update: function() {
+		if(this.data != null) this.label.innerHTML = this.data;
+	}
+	,js_onClick: function(event) {
+		this.dispatch("actioned",this);
+	}
+	,__class__: example.todo.view.TodoStatsView
 });
 example.todo.view.TodoView = $hxClasses["example.todo.view.TodoView"] = function(data) {
 	this.tagName = "li";
@@ -1699,31 +1922,12 @@ example.todo.view.TodoView.prototype = $extend(example.core.DataView.prototype,{
 	}
 	,update: function() {
 		this.element.innerHTML = this.label;
-		this.element.className = this.type + (this.done?" done":"");
+		this.element.className = this.className + (this.done?" done":"");
 	}
 	,js_onClick: function(event) {
 		this.dispatch("actioned",this);
 	}
 	,__class__: example.todo.view.TodoView
-});
-example.todo.view.TodoListViewMediator = $hxClasses["example.todo.view.TodoListViewMediator"] = function() {
-	m.mvc.impl.Mediator.call(this);
-};
-example.todo.view.TodoListViewMediator.__name__ = ["example","todo","view","TodoListViewMediator"];
-example.todo.view.TodoListViewMediator.__super__ = m.mvc.impl.Mediator;
-example.todo.view.TodoListViewMediator.prototype = $extend(m.mvc.impl.Mediator.prototype,{
-	loadTodoList: null
-	,onRegister: function() {
-		this.loadTodoList.completed.addOnce(this.completed.$bind(this));
-		this.loadTodoList.failed.addOnce(this.failed.$bind(this));
-		this.loadTodoList.dispatch();
-	}
-	,completed: function(list) {
-		this.view.setData(list);
-	}
-	,failed: function(error) {
-	}
-	,__class__: example.todo.view.TodoListViewMediator
 });
 var haxe = haxe || {}
 haxe.Http = $hxClasses["haxe.Http"] = function(url) {
@@ -2641,7 +2845,6 @@ js.Lib.setErrorHandler = function(f) {
 js.Lib.prototype = {
 	__class__: js.Lib
 }
-if(!m.data) m.data = {}
 m.data.Dictionary = $hxClasses["m.data.Dictionary"] = function(weakKeys) {
 	if(weakKeys == null) weakKeys = false;
 	this._keys = [];
@@ -2750,6 +2953,17 @@ m.exception.Exception.prototype = {
 	,__class__: m.exception.Exception
 	,__properties__: {get_message:"get_message",get_name:"get_name"}
 }
+m.data.IndexOutOfBoundsException = $hxClasses["m.data.IndexOutOfBoundsException"] = function(message,id) {
+	if(id == null) id = 0;
+	if(message == null) message = "";
+	m.exception.Exception.call(this,message,id,{ fileName : "IndexOutOfBoundsException.hx", lineNumber : 15, className : "m.data.IndexOutOfBoundsException", methodName : "new"});
+	this.name = "IndexOutOfBoundsException";
+};
+m.data.IndexOutOfBoundsException.__name__ = ["m","data","IndexOutOfBoundsException"];
+m.data.IndexOutOfBoundsException.__super__ = m.exception.Exception;
+m.data.IndexOutOfBoundsException.prototype = $extend(m.exception.Exception.prototype,{
+	__class__: m.data.IndexOutOfBoundsException
+});
 m.exception.ArgumentException = $hxClasses["m.exception.ArgumentException"] = function(message,cause,info) {
 	if(message == null) message = "";
 	m.exception.Exception.call(this,message,cause,info);
@@ -4141,6 +4355,20 @@ m.signal.SlotList.prototype = {
 	,__properties__: {get_length:"get_length"}
 }
 if(!m.util) m.util = {}
+m.util.ArrayUtil = $hxClasses["m.util.ArrayUtil"] = function() { }
+m.util.ArrayUtil.__name__ = ["m","util","ArrayUtil"];
+m.util.ArrayUtil.toString = function(source) {
+	return source.toString();
+}
+m.util.ArrayUtil.shuffle = function(source) {
+	var copy = source.copy();
+	var shuffled = [];
+	while(copy.length > 0) shuffled.push(copy.splice(Std.random(copy.length),1)[0]);
+	return shuffled;
+}
+m.util.ArrayUtil.prototype = {
+	__class__: m.util.ArrayUtil
+}
 m.util.ReflectUtil = $hxClasses["m.util.ReflectUtil"] = function() { }
 m.util.ReflectUtil.__name__ = ["m","util","ReflectUtil"];
 m.util.ReflectUtil.setProperty = function(object,property,value) {
@@ -4321,18 +4549,20 @@ Xml.ecdata_end = new EReg("\\]\\]>","");
 Xml.edoctype_elt = new EReg("[\\[|\\]>]","");
 Xml.ecomment_end = new EReg("-->","");
 m.mvc.api.IContext.__meta__ = { obj : { 'interface' : null}};
+example.core.View.ADDED = "added";
+example.core.View.REMOVED = "removed";
+example.core.View.ACTIONED = "actioned";
 example.core.View.idCounter = 0;
 m.mvc.api.IViewContainer.__meta__ = { obj : { 'interface' : null}};
 m.mvc.api.IMediator.__meta__ = { obj : { 'interface' : null}};
 m.mvc.impl.Mediator.__meta__ = { fields : { injector : { name : ["injector"], type : ["m.inject.IInjector"], inject : null}, contextView : { name : ["contextView"], type : ["m.mvc.api.IViewContainer"], inject : null}, mediatorMap : { name : ["mediatorMap"], type : ["m.mvc.api.IMediatorMap"], inject : null}}};
-example.core.ViewEvent.ADDED = "added";
-example.core.ViewEvent.REMOVED = "removed";
-example.core.ViewEvent.ACTIONED = "actioned";
-example.core.ViewEvent.DATA_CHANGED = "dataChanged";
+example.core.DataView.DATA_CHANGED = "dataChanged";
 m.mvc.api.ICommand.__meta__ = { obj : { 'interface' : null}};
 m.mvc.impl.Command.__meta__ = { fields : { contextView : { name : ["contextView"], type : ["m.mvc.api.IViewContainer"], inject : null}, commandMap : { name : ["commandMap"], type : ["m.mvc.api.ICommandMap"], inject : null}, injector : { name : ["injector"], type : ["m.inject.IInjector"], inject : null}, mediatorMap : { name : ["mediatorMap"], type : ["m.mvc.api.IMediatorMap"], inject : null}}};
 example.todo.command.LoadTodoListCommand.__meta__ = { fields : { list : { name : ["list"], type : ["example.todo.model.TodoList"], inject : null}, signal : { name : ["signal"], type : ["example.todo.signal.LoadTodoList"], inject : null}}};
+m.data.Collection.__meta__ = { obj : { 'interface' : null}};
 m.signal.Signal.__meta__ = { fields : { createSlot : { IgnoreCover : null}}};
+example.todo.view.TodoListView.CREATE_TODO = "CREATE_TODO";
 example.todo.view.TodoListViewMediator.__meta__ = { fields : { loadTodoList : { name : ["loadTodoList"], type : ["example.todo.signal.LoadTodoList"], inject : null}}};
 haxe.Http.__meta__ = { obj : { IgnoreCover : null}};
 js.Lib.onerror = null;
