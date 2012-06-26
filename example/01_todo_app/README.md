@@ -7,7 +7,7 @@ This is a simple application demonstrating the main components of MMVC, running 
 Overview
 -----------
 
-This is a partially implemented Todo application, demonstrates the core elements of MMVC
+This is a partially implemented Todo application, demonstrating the core elements of MMVC
 
 * configuring application via a Context (`ApplicationContext`)
 * loads a list of Todos from a file via a Command (`LoadTodoListCommand`)
