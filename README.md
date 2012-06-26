@@ -1,24 +1,45 @@
 Overview 
 ====================
 
-**MassiveMVC** (mmvc) is a light but powerful IOC framework utilizing Signals and macro based injection.
+### Intro
 
-### Links
+**MassiveMVC** (MMVC) is a light but powerful IOC framework utilizing Signals and macro based injection.
+
 
 MMVC is based off RobotLegs, adapted to better leverage features of the Haxe language like Generics, Macros, etc
-
 
 * <http://www.robotlegs.org/>
 * <http://joelhooks.com/2010/02/14/robotlegs-as3-signals-and-the-signalcommandmap-example/>
 
 
+### Installation
+
+MMVC is available via Haxelib
+
+	haxelib install mmvc
+
+
 ### Dependencies
 
-MassiveMVC leverages several libraries available in MassiveCore. For more information refer to <http://ui.massive.com.au/api/1.5.0/mcore/>
+MassiveMVC leverages several libraries available in MassiveCore (MCore), including:
 
 * **Signals** - m.signal package as a substitue for event triggered commands.
 * **IOC Injector** - m.inject package (and RTTI macros)
 
+To manually install MCore via haxelib (only if compiling against source)
+
+	haxelib install mcore
+
+For more information on MCore see <http://github.com/massiveinteractive/MassiveCore>
+
+### Examples
+
+If you are familiar with RobotLegs, you may want to jump directly into the example reference app in the example directory. This contains a simple Todo list application demonstrating the main components of MMVC, running across JS, Flash and Neko targets.
+
+Otherwise read on :)
+
+
+--------------
 
 Getting Started
 ====================
@@ -31,9 +52,15 @@ MMVC is a Dependency Injection framework based off RobotLegs (see <https://githu
 
 It provides a robust, modular, testable pattern for the Model-View-Controller design pattern.
 
-
 It's recommended to first read the above RobotLegs documentation if you are unfamiliar with the concepts outlined below.
 
+
+* Injectors
+* Context
+* Actors and Models
+* Signals 
+* Commands
+* View Mediators
 
 
 Injectors
