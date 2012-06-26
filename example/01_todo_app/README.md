@@ -15,6 +15,15 @@ This is a partially implemented Todo application, demonstrates the core elements
 * triggering commands via a Signal and listens to responses (`LoadTodoList`)
 * instanciating Mediators for registered Views (`ApplicationViewMediator`, `TodoListViewMediator`)
 
+
+Building the app
+-------------
+
+Compile the js, flash and neko targets via the hxml file:
+
+	haxe build.hxml
+
+
 Application Structure
 ---------------------
 
