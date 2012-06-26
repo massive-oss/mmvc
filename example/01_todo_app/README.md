@@ -1,8 +1,19 @@
-Todo List
+Todo App
 ============
 
 This is a simple application demonstrating the main components of MMVC, running across JS, Flash and Neko targets.
 
+
+Overview
+-----------
+
+This is a partially implemented Todo application, demonstrates the core elements of MMVC
+
+* configuring application via a Context (`ApplicationContext`)
+* loads a list of Todos from a file via a Command (`LoadTodoListCommand`)
+* updating contents of a managed Model (`TodoList`) 
+* triggering commands via a Signal and listens to responses (`LoadTodoList`)
+* instanciating Mediators for registered Views (`ApplicationViewMediator`, `TodoListViewMediator`)
 
 Application Structure
 ---------------------
@@ -38,4 +49,3 @@ The application source contains the following classes:
 					TodoView 				// View for inidividual Todo items
 					TodoStatsView 			// Summary of current todo list + button to create new Todo
 	
-

@@ -16,12 +16,15 @@ import example.todo.view.TodoListViewMediator;
 
 
 /**
-Application wide context providing mapping for
+Application wide context.
+<p>Provides mapping of following classes:
 <ul>
 	<li>Signals to commands</li>
 	<li>Models</li>
 	<li>Views to ViewMediators</li>
 </ul> 
+</p>
+@see m.mvc.impl.Context
 */
 class ApplicationContext extends m.mvc.impl.Context
 {
@@ -30,19 +33,27 @@ class ApplicationContext extends m.mvc.impl.Context
 		super(contextView);
 	}
 
+	/**
+	Overrides startup to configure all context commands, models and mediators
+	@see m.mvc.impl.Context
+	*/
 	override public function startup()
 	{
 		// wiring for todo model
 		commandMap.mapSignalClass(LoadTodoList, LoadTodoListCommand);
-		injector.mapSingleton(TodoList);
-		mediatorMap.mapView(TodoListView, TodoListViewMediator);
 
+		injector.mapSingleton(TodoList);
+		
+		mediatorMap.mapView(TodoListView, TodoListViewMediator);
 
 		// wiring for main application module
 		mediatorMap.mapView(ApplicationView, ApplicationViewMediator);
-		
 	}
 
+	/**
+	Overrides shutdown to remove/cleanup mappings
+	@see m.mvc.impl.Context
+	*/
 	override public function shutdown()
 	{
 		

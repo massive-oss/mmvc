@@ -32,7 +32,6 @@ class TodoView extends DataView<Todo>
 	public function new(?data:Todo)
 	{
 		#if js tagName = "li"; #end
-
 		label = "";
 		super(data);
 	}

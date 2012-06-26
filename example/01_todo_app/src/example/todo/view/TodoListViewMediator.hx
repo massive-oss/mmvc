@@ -20,7 +20,6 @@ class TodoListViewMediator extends m.mvc.impl.Mediator<TodoListView>
 {
 	@inject public var loadTodoList:LoadTodoList;
 
-
 	var list:TodoList;
 
 	public function new()
@@ -31,26 +30,39 @@ class TodoListViewMediator extends m.mvc.impl.Mediator<TodoListView>
 	/**
 	Dispatches loadTodoList on registration of mediator
 	@see m.mvc.impl.Mediator
+	@see m.mvc.base.MediatorBase.mediate()
 	*/
 	override function onRegister()
 	{
-		view.signal.add(viewHandler);
-		loadTodoList.completed.addOnce(completed);
-		loadTodoList.failed.addOnce(failed);
+		//using mediate() to store listeners for easy cleanup during removal
+		mediate(view.signal.add(viewHandler));
+		mediate(loadTodoList.completed.addOnce(loadCompleted));
+		mediate(loadTodoList.failed.addOnce(loadFailed));
+
 		loadTodoList.dispatch();
+	}
+
+	/**
+	Override onRemove to remove any unmediated listeners
+	@see m.mvc.impl.Mediator
+	*/
+	override public function onRemove():Void
+	{
+		super.onRemove();
+		//remove un mediated listeners
 	}
 
 	/**
 	callback for successful load of TodoList
 	@see example.todo.signal.LoadTodoList
 	*/
-	function completed(list:TodoList)
+	function loadCompleted(list:TodoList)
 	{
 		this.list = list;
 		view.setData(list);
 	}
 
-	function failed(error:Dynamic)
+	function loadFailed(error:Dynamic)
 	{
 		view.showError(Std.string(error));
 	}
@@ -65,6 +77,4 @@ class TodoListViewMediator extends m.mvc.impl.Mediator<TodoListView>
 			list.add(new Todo());
 		}
 	}
-
-
 }

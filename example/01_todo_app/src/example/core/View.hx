@@ -112,7 +112,6 @@ class View
 		//create unique identifier for this view
 		id = "view" + (idCounter ++);
 
-
 		//set default index without triggering setter
 		Reflect.setField(this, "index", -1);
 

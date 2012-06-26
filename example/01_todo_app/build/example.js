@@ -1408,7 +1408,11 @@ example.app.ApplicationViewMediator.__name__ = ["example","app","ApplicationView
 example.app.ApplicationViewMediator.__super__ = m.mvc.impl.Mediator;
 example.app.ApplicationViewMediator.prototype = $extend(m.mvc.impl.Mediator.prototype,{
 	onRegister: function() {
+		m.mvc.impl.Mediator.prototype.onRegister.call(this);
 		this.view.createViews();
+	}
+	,onRemove: function() {
+		m.mvc.impl.Mediator.prototype.onRemove.call(this);
 	}
 	,__class__: example.app.ApplicationViewMediator
 });
@@ -1851,16 +1855,19 @@ example.todo.view.TodoListViewMediator.prototype = $extend(m.mvc.impl.Mediator.p
 	loadTodoList: null
 	,list: null
 	,onRegister: function() {
-		this.view.signal.add(this.viewHandler.$bind(this));
-		this.loadTodoList.completed.addOnce(this.completed.$bind(this));
-		this.loadTodoList.failed.addOnce(this.failed.$bind(this));
+		this.mediate(this.view.signal.add(this.viewHandler.$bind(this)));
+		this.mediate(this.loadTodoList.completed.addOnce(this.loadCompleted.$bind(this)));
+		this.mediate(this.loadTodoList.failed.addOnce(this.loadFailed.$bind(this)));
 		this.loadTodoList.dispatch();
 	}
-	,completed: function(list) {
+	,onRemove: function() {
+		m.mvc.impl.Mediator.prototype.onRemove.call(this);
+	}
+	,loadCompleted: function(list) {
 		this.list = list;
 		this.view.setData(list);
 	}
-	,failed: function(error) {
+	,loadFailed: function(error) {
 		this.view.showError(Std.string(error));
 	}
 	,viewHandler: function(event,view) {

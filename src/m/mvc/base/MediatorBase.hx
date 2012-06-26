@@ -63,6 +63,12 @@ class MediatorBase<T> implements IMediator
 		view = viewComponent;
 	}
 
+	/**
+	Stores reference to any signal listeners, ensuring they are removed during onRemove
+
+	Usage:
+		mediate(something.completed.add(completed));
+	*/
 	function mediate(slot:AnySlot)
 	{
 		slots.push(slot);
