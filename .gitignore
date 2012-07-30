@@ -1,5 +1,4 @@
-/build/*
-/temp/*
+bin
 
 Icon
 Thumbs.db
@@ -7,3 +6,9 @@ Thumbs.db
 *.sublime-workspace
 TestSuite.hx
 raxe.n
+
+example.js
+example.n
+example.swf
+
+workspace.json

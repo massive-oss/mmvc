@@ -1,6 +1,6 @@
-version=0.9.1.8
-src=test
-bin=build/mmvc.test
-report=build/mmvc.test
-hxml=temp/test/test.hxml
-classPaths=src
+version=0.9.4.2
+src=src/test
+bin=bin/test
+report=bin/test-report
+hxml=src/test/targets.hxml
+classPaths=src/lib

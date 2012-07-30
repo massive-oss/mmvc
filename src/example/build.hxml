@@ -1,0 +1,21 @@
+-main Main
+-cp src
+-lib mmvc
+-lib mcore
+-js build/example.js
+
+--next
+
+-main Main
+-cp src
+-lib mmvc
+-lib mcore
+-swf build/example.swf
+
+--next
+
+-main Main
+-cp src
+-lib mmvc
+-lib mcore
+-neko build/example.n

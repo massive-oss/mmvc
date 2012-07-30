@@ -1,6 +1,0 @@
-[submodule "lib/raxe"]
-	path = lib/raxe
-	url = ssh://git@github.com/massiveinteractive/Raxe.git
-[submodule "lib/mcore"]
-	path = lib/mcore
-	url = ssh://git@github.com/massiveinteractive/MassiveCore.git

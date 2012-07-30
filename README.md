@@ -23,8 +23,8 @@ MMVC is available via Haxelib
 
 MassiveMVC leverages several libraries available in MassiveCore (MCore), including:
 
-* **Signals** - m.signal package as a substitue for event triggered commands.
-* **IOC Injector** - m.inject package (and RTTI macros)
+* **Signals** - msignal package as a substitue for event triggered commands.
+* **IOC Injector** - minject package (and RTTI macros)
 
 To manually install MCore via haxelib (only if compiling against source)
 
@@ -70,7 +70,7 @@ Injectors provide a dependency injection mechanism for framework classes.
 
 	@inject something:Something; 
 
-> Injection is implemented via macros using MCore's Injector. See MCore's m.inject package for more details and examples
+> Injection is implemented via macros using MCore's Injector. See MCore's minject package for more details and examples
 
 
 
@@ -81,11 +81,11 @@ The context provides the central wiring/mapping of common elements within a cont
 
 ### Creating a Context 
 
-Contexts must extend m.mvc.impl.Context and override the startup method to map appropriate actors, commands and mediators
+Contexts must extend mmvc.impl.Context and override the startup method to map appropriate actors, commands and mediators
 
 Generally a context is defined at an application level
 
-	class ApplicationContext extends m.mvc.impl.Context
+	class ApplicationContext extends mmvc.impl.Context
 	{
 		public function new(?contextView:IViewContainer=null, ?autoStartup:Bool=true)
 		{
@@ -123,7 +123,7 @@ Mediators are mapped to Views via the mediatorMap
 
 Usually an application context is instanciated within the main view of an application:
 
-	class ApplicationView implements m.mvc.api.IViewContainer
+	class ApplicationView implements mmvc.api.IViewContainer
 	{
 		static var context:ApplicationContext;
 
@@ -163,10 +163,10 @@ Actors are mapped via the injector:
 
 By default actors don't require any interface or inheritance to be mapped in the context.
 
-However if a actors requires references to other application parts it should extend m.mvc.impl.Actor
+However if a actors requires references to other application parts it should extend mmvc.impl.Actor
 
 
-	class DanceModel extends m.mvc.impl.Actor
+	class DanceModel extends mmvc.impl.Actor
 	{
 		public inline static var STYLE_WALTZ = "waltz";
 		public inline static var STYLE_FOXTROT = "foxtrot";
@@ -188,7 +188,7 @@ Signal
 
 Signals are highly scalable and lightweight alternative to Events. MCore Signals leverage Haxe generics to provide a strictly typed contract between dispatcher (Signal) and it's listeners.
 
-> See MCore's m.signal package for more details and examples on working with Signals
+> See MCore's msignal package for more details and examples on working with Signals
 
 Application signals represent unique actions or events within an application.
 
@@ -207,7 +207,7 @@ They can also be mapped as a standalone actor
 
 A simple example Signal with a signal dispatcher argument:
 
-	class Dance extends m.signal.Signal1<String>
+	class Dance extends msignal.Signal1<String>
 	{
 		inline static public var FOX_TROT = "foxtrot";
 		inline static public var WALTZ = "waltz";
@@ -242,7 +242,7 @@ A good way to achieve this is through child signals.
 
 This example adds a completed signal to dispatch once the dance has been completed.
 
-	class Dance extends m.signal.Signal1<String>
+	class Dance extends msignal.Signal1<String>
 	{
 		public var completed:Signal1<String>;
 
@@ -288,7 +288,7 @@ Commands are triggered by dispatching the associated Signal from elsewhere withi
 ### Example
 
 
-	class DanceCommand extends m.mvc.impl.Command
+	class DanceCommand extends mmvc.impl.Command
 	{
 		@inject
 		public var danceModel:DanceModel;
@@ -356,7 +356,7 @@ The associated view instance can be accesed view the 'view' property
 
 This is an example demonstrating integration with both application and view events within a mediator
 
-	class DanceViewMediator extends m.mvc.impl.Mediator<DanceView>
+	class DanceViewMediator extends mmvc.impl.Mediator<DanceView>
 	{
 		@inject model:DanceModel;
 
