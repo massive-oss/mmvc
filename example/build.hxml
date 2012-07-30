@@ -1,0 +1,3 @@
+-cmd cd 01_todo_app
+-cmd haxe build.hxml
+-cmd cd ../

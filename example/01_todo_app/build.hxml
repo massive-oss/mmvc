@@ -1,0 +1,25 @@
+-main Main
+-cp src
+-cp ../../src
+-cp /ws/MassiveCore/src
+-js build/example.js
+
+--next
+
+-main Main
+-cp src
+-cp ../../src
+-cp /ws/MassiveCore/src
+-swf-version 11
+-swf build/example.swf
+
+--next
+
+-main Main
+-cp src
+-cp ../../src
+-cp /ws/MassiveCore/src
+-neko build/example.n
+
+-cmd cd build
+-cmd neko example.n

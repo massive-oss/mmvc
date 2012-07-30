@@ -1,0 +1,9 @@
+{
+	"items":
+	[
+		{"name":"Item 1", "done":true},
+		{"name":"Item 2", "done":true},
+		{"name":"Item 3", "done":false},
+		{"name":"Item 4", "done":false}
+	]
+}
