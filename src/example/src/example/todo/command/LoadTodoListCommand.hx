@@ -4,8 +4,8 @@ import example.todo.signal.LoadTodoList;
 import example.todo.model.TodoList;
 import example.todo.model.Todo;
 
-import m.loader.Loader;
-import m.loader.JSONLoader;
+import mcore.loader.Loader;
+import mcore.loader.JSONLoader;
 
 /**
 Loads an existing todo list from the file system,
@@ -35,10 +35,10 @@ class LoadTodoListCommand extends mmvc.impl.Command
 	*/
 	override public function execute():Void
 	{
-		loader = new JSONLoader();
+		loader = new JSONLoader("data/data.json");
 		loader.completed.addOnce(completed);
 		loader.failed.addOnce(failed);
-		loader.load("data/data.json");
+		loader.load();
 	}
 
 	/**
