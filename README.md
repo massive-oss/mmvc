@@ -3,38 +3,24 @@ Overview
 
 ### Intro
 
-**MassiveMVC** (MMVC) is a light but powerful IOC framework utilizing Signals and macro based injection.
+MassiveMVC is a light but powerful IOC framework utilizing Signals and macro based injection
 
-
-MMVC is based off RobotLegs, adapted to better leverage features of the Haxe language like Generics, Macros, etc
-
-* <http://www.robotlegs.org/>
-* <http://joelhooks.com/2010/02/14/robotlegs-as3-signals-and-the-signalcommandmap-example/>
-
+MassiveMVC is a port of the excellent AS3 [RobotLegs](https://github.com/robotlegs/robotlegs-framework/tree/master) framework, optimised to better leverage features of the Haxe language like generics, macros. It also does away with event based command mapping, instead favouring signal based mapping based on [Joel Hooks SignalCommandMap](http://joelhooks.com/2010/02/14/robotlegs-as3-signals-and-the-signalcommandmap-example/) concept. This enables portability away from the Flash platform.
 
 ### Installation
 
-MMVC is available via Haxelib
+MMVC is available from Haxelib
 
 	haxelib install mmvc
 
 
 ### Dependencies
 
-MassiveMVC leverages several libraries available in MassiveCore (MCore), including:
-
-* **Signals** - msignal package as a substitue for event triggered commands.
-* **IOC Injector** - minject package (and RTTI macros)
-
-To manually install MCore via haxelib (only if compiling against source)
-
-	haxelib install mcore
-
-For more information on MCore see <http://github.com/massiveinteractive/MassiveCore>
+MassiveMVC depends on two other Massive libraries also available from haxelib: [msignal](https://github.com/massiveinteractive/msignal) and [minject](https://github.com/massiveinteractive/minject).
 
 ### Examples
 
-If you are familiar with RobotLegs, you may want to jump directly into the example reference app in the example directory. This contains a simple Todo list application demonstrating the main components of MMVC, running across JS, Flash and Neko targets.
+If you are familiar with RobotLegs, you may want to jump directly into the example reference app in the example directory. This contains a simple todo list application demonstrating the main components of MMVC, running across JS, Flash and Neko targets.
 
 Otherwise read on :)
 
@@ -54,14 +40,12 @@ It provides a robust, modular, testable pattern for the Model-View-Controller de
 
 It's recommended to first read the above RobotLegs documentation if you are unfamiliar with the concepts outlined below.
 
-
 * Injectors
 * Context
 * Actors and Models
 * Signals 
 * Commands
 * View Mediators
-
 
 Injectors
 -----------
@@ -70,9 +54,7 @@ Injectors provide a dependency injection mechanism for framework classes.
 
 	@inject something:Something; 
 
-> Injection is implemented via macros using MCore's Injector. See MCore's minject package for more details and examples
-
-
+> Injection is performed by MassiveInject. For more information checkout the [documentation](https://github.com/massiveinteractive/minject/blob/master/README.md) and [examples](https://github.com/downloads/massiveinteractive/minject/example.zip).
 
 Context
 -----------------
@@ -119,7 +101,7 @@ Mediators are mapped to Views via the mediatorMap
 	mediatorMap.mapView(DanceView, DanceViewMediator);
 
 
-### Initializeing the Context
+### Initializing the Context
 
 Usually an application context is instanciated within the main view of an application:
 
@@ -146,10 +128,10 @@ Or externally in the Main haxe file
 	
 
 
-Actors (Models)
+Actors (models and services)
 -----------------
 
-Actor is a generic term for an application class that is wired into the Context. Generally these take the form of **Models** (typed Appication data structures)
+Actor is a generic term for an application class that is wired into the Context. Generally these take the form of **models** or **services**
 
 
 ### Mapping Actors
@@ -186,9 +168,9 @@ However if a actors requires references to other application parts it should ext
 Signal
 ----------
 
-Signals are highly scalable and lightweight alternative to Events. MCore Signals leverage Haxe generics to provide a strictly typed contract between dispatcher (Signal) and it's listeners.
+Signals are highly scalable and lightweight alternative to Events. MassiveSignal leverages Haxe generics to provide a strictly typed contract between dispatcher (Signal) and it's listeners.
 
-> See MCore's msignal package for more details and examples on working with Signals
+> See MassiveSignals's [documentation](https://github.com/massiveinteractive/msignal/blob/master/README.md) and [examples](https://github.com/downloads/massiveinteractive/msignal/examples.zip) for more details and examples on working with Signals.
 
 Application signals represent unique actions or events within an application.
 
