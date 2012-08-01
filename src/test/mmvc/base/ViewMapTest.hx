@@ -7,8 +7,8 @@ import minject.Reflector;
 import mmvc.base.support.TestView;
 import mmvc.base.support.ITestView;
 import mmvc.base.support.TestContextView;
-import minject.IInjector;
-import minject.IReflector;
+import minject.Injector;
+import minject.Reflector;
 import mmvc.api.IViewMap;
 import mmvc.api.IViewContainer;
 
@@ -21,8 +21,8 @@ class ViewMapTest
 	
 	var contextView:TestContextView;
 	var testView:TestView;
-	var injector:IInjector;
-	var reflector:IReflector;
+	var injector:Injector;
+	var reflector:Reflector;
 	var viewMap:IViewMap;
 	
 	@Before

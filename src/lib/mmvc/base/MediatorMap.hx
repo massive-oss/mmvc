@@ -1,9 +1,9 @@
 package mmvc.base;
 
-import minject.IInjector;
+import minject.Injector;
 import mmvc.api.IMediator;
 import mmvc.api.IMediatorMap;
-import minject.IReflector;
+import minject.Reflector;
 import mcore.data.Dictionary;
 import mmvc.api.IViewContainer;
 import haxe.Timer;
@@ -18,17 +18,17 @@ class MediatorMap extends ViewMapBase, implements IMediatorMap
 	var mappingConfigByViewClassName:Dictionary<Dynamic, MappingConfig>;
 	var mediatorsMarkedForRemoval:Dictionary<Dynamic, Dynamic>;
 	var hasMediatorsMarkedForRemoval:Bool;
-	var reflector:IReflector;
+	var reflector:Reflector;
 	
 	/**
 	Creates a new <code>MediatorMap</code> object
 	
 	@param contextView The root view node of the context. The map will listen 
 	for ADDED_TO_STAGE events on this node
-	@param injector An <code>IInjector</code> to use for this context
-	@param reflector An <code>IReflector</code> to use for this context
+	@param injector An <code>Injector</code> to use for this context
+	@param reflector An <code>Reflector</code> to use for this context
 	*/
-	public function new(contextView:IViewContainer, injector:IInjector, reflector:IReflector)
+	public function new(contextView:IViewContainer, injector:Injector, reflector:Reflector)
 	{
 		super(contextView, injector);
 		this.reflector = reflector;

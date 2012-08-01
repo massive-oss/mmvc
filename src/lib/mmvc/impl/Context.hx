@@ -5,9 +5,9 @@ import mmvc.base.MediatorMap;
 import mmvc.base.ViewMap;
 import mmvc.api.ICommandMap;
 import mmvc.api.IContext;
-import minject.IInjector;
+import minject.Injector;
 import mmvc.api.IMediatorMap;
-import minject.IReflector;
+import minject.Reflector;
 import mmvc.api.IViewMap;
 import mmvc.api.IViewContainer;
 import minject.Injector;
@@ -56,11 +56,11 @@ class Context implements IContext
 	
 	public var commandMap(get_commandMap, null):ICommandMap;
 
-	public var injector(get_injector, null):IInjector;
+	public var injector(get_injector, null):Injector;
 	
 	public var mediatorMap(get_mediatorMap, null):IMediatorMap;
 	
-	public var reflector(get_reflector, null):IReflector;
+	public var reflector(get_reflector, null):Reflector;
 	
 	public var viewMap(get_viewMap, null):IViewMap;
 	
@@ -109,9 +109,9 @@ class Context implements IContext
 	}
 	
 	/**
-	The <code>IInjector</code> for this <code>IContext</code>
+	The <code>Injector</code> for this <code>IContext</code>
 	*/
-	function get_injector():IInjector
+	function get_injector():Injector
 	{
 		if (injector == null)
 		{
@@ -122,9 +122,9 @@ class Context implements IContext
 	}
 	
 	/**
-	The <code>IReflector</code> for this <code>IContext</code>
+	The <code>Reflector</code> for this <code>IContext</code>
 	*/
-	function get_reflector():IReflector
+	function get_reflector():Reflector
 	{
 		if (reflector == null)
 		{
@@ -182,8 +182,8 @@ class Context implements IContext
 	*/
 	function mapInjections():Void
 	{
-		injector.mapValue(IReflector, reflector);
-		injector.mapValue(IInjector, injector);
+		injector.mapValue(Reflector, reflector);
+		injector.mapValue(Injector, injector);
 		injector.mapValue(IViewContainer, contextView);
 		injector.mapValue(ICommandMap, commandMap);
 		injector.mapValue(IMediatorMap, mediatorMap);
@@ -198,13 +198,13 @@ class Context implements IContext
 		}
 	}
 	
-	function createInjector():IInjector
+	function createInjector():Injector
 	{
 		injector = new Injector();
 		return injector;
 	}
 	
-	function createChildInjector():IInjector
+	function createChildInjector():Injector
 	{
 		return injector.createChildInjector();
 	}

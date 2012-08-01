@@ -4,13 +4,13 @@ import mcore.data.Dictionary;
 import msignal.Signal;
 import mmvc.api.ICommandMap;
 import mmvc.api.IGuardedCommandMap;
-import minject.IInjector;
+import minject.Injector;
 import mmvc.api.IGuard;
 import mmvc.api.ICommand;
 
 class GuardedCommandMap extends CommandMap, implements IGuardedCommandMap
 {
-	public function new(injector:IInjector)
+	public function new(injector:Injector)
 	{
 		super(injector);
 	}

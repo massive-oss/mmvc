@@ -13,8 +13,8 @@ class ContextError
 	
 	public static var E_EVENTMAP_NOSNOOPING:String = 'Listening to the context eventDispatcher is not enabled for this EventMap';
 	
-	public static var E_CONTEXT_INJECTOR:String = 'The ContextBase does not specify a concrete IInjector. Please override the injector getter in your concrete or abstract Context.';
-	public static var E_CONTEXT_REFLECTOR:String = 'The ContextBase does not specify a concrete IReflector. Please override the reflector getter in your concrete or abstract Context.';
+	public static var E_CONTEXT_INJECTOR:String = 'The ContextBase does not specify a concrete Injector. Please override the injector getter in your concrete or abstract Context.';
+	public static var E_CONTEXT_REFLECTOR:String = 'The ContextBase does not specify a concrete Reflector. Please override the reflector getter in your concrete or abstract Context.';
 	
 	public var message:String;
 	public var id:Int;

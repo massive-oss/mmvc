@@ -1,7 +1,7 @@
 package mmvc.base;
 
 import mcore.data.Dictionary;
-import minject.IInjector;
+import minject.Injector;
 import mmvc.api.IViewMap;
 import mmvc.api.IViewContainer;
 
@@ -15,9 +15,9 @@ class ViewMap extends ViewMapBase, implements IViewMap
 	
 	@param contextView The root view node of the context. The map will listen 
 	for ADDED_TO_STAGE events on this node
-	@param injector An <code>IInjector</code> to use for this context
+	@param injector An <code>Injector</code> to use for this context
 	*/
-	public function new(contextView:IViewContainer, injector:IInjector)
+	public function new(contextView:IViewContainer, injector:Injector)
 	{
 		super(contextView, injector);
 

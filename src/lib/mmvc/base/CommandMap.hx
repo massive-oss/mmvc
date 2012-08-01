@@ -1,19 +1,19 @@
 package mmvc.base;
 
 import msignal.Signal;
-import minject.IInjector;
+import minject.Injector;
 import mmvc.api.ICommand;
 import mmvc.api.ICommandMap;
 import mcore.data.Dictionary;
 
 class CommandMap implements ICommandMap
 {
-	var injector:IInjector;
+	var injector:Injector;
 	var signalMap:Dictionary<Dynamic, Dynamic>;
 	var signalClassMap:Dictionary<Dynamic, Dynamic>;
 	var detainedCommands:Dictionary<Dynamic, Dynamic>;
 
-	public function new(injector:IInjector)
+	public function new(injector:Injector)
 	{
 		this.injector = injector;
 
@@ -77,9 +77,9 @@ class CommandMap implements ICommandMap
 		var injectorForSignalInstance = injector;
 		var signal:AnySignal;
 		
-		if (injector.hasMapping(IInjector))
+		if (injector.hasMapping(Injector))
 		{
-			injectorForSignalInstance = injector.getInstance(IInjector);
+			injectorForSignalInstance = injector.getInstance(Injector);
 		}
 		
 		signal = injectorForSignalInstance.instantiate(signalClass);

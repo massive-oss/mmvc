@@ -3,14 +3,14 @@ package mmvc.base;
 
 import massive.munit.Assert;
 import massive.munit.async.AsyncFactory;
-import minject.IInjector;
+import minject.Injector;
 import minject.Injector;
 import minject.Reflector;
 import mmvc.api.IMediator;
 import mmvc.api.IMediatorMap;
 import mmvc.api.IViewContainer;
 import mmvc.base.ContextError;
-import minject.IReflector;
+import minject.Reflector;
 import mmvc.impl.support.TestContextView;
 import mmvc.impl.support.TestContextViewMediator;
 import mmvc.impl.support.ViewComponent;
@@ -25,8 +25,8 @@ class MediatorMapTest
 	var contextView:TestContextView;
 	var commandExecuted:Bool;
 	var mediatorMap:MediatorMap;
-	var injector:IInjector;
-	var reflector:IReflector;
+	var injector:Injector;
+	var reflector:Reflector;
 	
 	@Before
 	public function before():Void
@@ -37,7 +37,7 @@ class MediatorMapTest
 		mediatorMap = new MediatorMap(contextView, injector, reflector);
 		
 		injector.mapValue(IViewContainer, contextView);
-		injector.mapValue(IInjector, injector);
+		injector.mapValue(Injector, injector);
 		injector.mapValue(IMediatorMap, mediatorMap);
 	}
 	

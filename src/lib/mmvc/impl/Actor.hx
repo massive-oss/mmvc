@@ -1,6 +1,6 @@
 package mmvc.impl;
 
-import minject.IInjector;
+import minject.Injector;
 
 /**
 Abstract MVCS <code>IActor</code> implementation.
@@ -23,7 +23,7 @@ injection supplied is a candidate for extending <code>Actor</code>.</p>
 */
 class Actor
 {
-	@inject public var injector:IInjector;
+	@inject public var injector:Injector;
 
 	public function new():Void {}
 }

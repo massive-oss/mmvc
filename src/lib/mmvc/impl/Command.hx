@@ -1,6 +1,6 @@
 package mmvc.impl;
 
-import minject.IInjector;
+import minject.Injector;
 import mmvc.api.ICommandMap;
 import mmvc.api.ICommand;
 import mmvc.api.IMediatorMap;
@@ -15,7 +15,7 @@ class Command implements ICommand
 	
 	@inject public var commandMap:ICommandMap;
 	
-	@inject public var injector:IInjector;
+	@inject public var injector:Injector;
 	
 	@inject public var mediatorMap:IMediatorMap;
 	

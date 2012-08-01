@@ -1,6 +1,6 @@
 package mmvc.impl.support;
 
-import minject.IInjector;
+import minject.Injector;
 import mmvc.api.IViewContainer;
 import mmvc.impl.Context;
 
@@ -21,7 +21,7 @@ class TestContext extends Context
 		super.startup();
 	}
 	
-	public function getInjector():IInjector
+	public function getInjector():Injector
 	{
 		return this.injector;
 	}

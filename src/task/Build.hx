@@ -41,7 +41,7 @@ class Build extends mtask.core.BuildBase
 		target.url = "http://github.com/massiveinteractive/mmvc";
 		target.license.organization = "Massive Interactive";
 		target.username = "massive";
-		target.description = "A light but powerful port of the AS3 RobotLegs IOC MVC framework utilizing signals and macro based injection.";
+		target.description = "A light but powerful port of the AS3 RobotLegs IOC MVC framework utilizing signals.";
 		
 		target.addDependency("msignal", "1.0.0");
 		target.addDependency("minject", "1.0.0");
@@ -59,39 +59,20 @@ class Build extends mtask.core.BuildBase
 		}
 	}
 
-	// function exampleHaxe(target:Haxe)
-	// {
-	// 	target.addPath("src/lib");
-	// 	target.addPath("src/example");
-	// 	target.main = "InjectionExample";
-	// }
-
-	// @target function example(target:Directory)
-	// {
-	// 	var exampleJS = new WebJS();
-	// 	exampleHaxe(exampleJS.app);
-	// 	target.addTarget("example-js", exampleJS);
-
-	// 	var exampleSWF = new WebSWF();
-	// 	exampleHaxe(exampleSWF.app);
-	// 	target.addTarget("example-swf", exampleSWF);
-
-	// 	var exampleNeko = new Neko();
-	// 	exampleHaxe(exampleNeko);
-	// 	target.addTarget("example-neko", exampleNeko);
-
-	// 	target.afterBuild = function()
-	// 	{
-	// 		cp("src/example/*", target.path);
-	// 		zip(target.path);
-	// 	}
-	// }
+	@target function example(target:Directory)
+	{
+		target.afterBuild = function()
+		{
+			cp("src/example/*", target.path);
+			zip(target.path);
+		}
+	}
 
 	@task function release()
 	{
 		require("clean");
 		require("test");
-		require("build haxelib"/*, "build example"*/);
+		require("build haxelib", "build example");
 	}
 
 	@task function test()

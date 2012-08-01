@@ -10,7 +10,7 @@ import mmvc.base.support.TestCommand2;
 import mmvc.base.support.TestSignal;
 import mmvc.base.support.TestSignal2;
 import mmvc.impl.support.ICommandTester;
-import minject.IInjector;
+import minject.Injector;
 import minject.Injector;
 
 class CommandMapTest implements ICommandTester
@@ -18,7 +18,7 @@ class CommandMapTest implements ICommandTester
 	var commandExecuted:Bool;
 	var secondCommandExecuted:Bool;
 	var commandMap:ICommandMap;
-	var injector:IInjector;
+	var injector:Injector;
 	var signal:TestSignal;
 	var param1:Int;
 	var param2:String;
