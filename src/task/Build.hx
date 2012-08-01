@@ -47,8 +47,8 @@ class Build extends mtask.core.BuildBase
 		target.addDependency("minject", "1.0.0");
 		
 		target.addTag("cross");
-		target.addTag("utility");
 		target.addTag("massive");
+		target.addTag("mvc");
 
 		target.afterCompile = function()
 		{
