@@ -20,7 +20,7 @@ MassiveMVC depends on two other Massive libraries also available from haxelib: [
 
 ### Examples
 
-If you are familiar with RobotLegs, you may want to jump directly into the example reference app in the example directory. This contains a simple todo list application demonstrating the main components of MMVC, running across JS, Flash and Neko targets.
+If you are familiar with RobotLegs, you may want to jump directly into the example [reference app](https://github.com/downloads/massiveinteractive/mmvc/example.zip). This contains a simple todo list application demonstrating the main components of MMVC, running across JS, Flash and Neko targets.
 
 Otherwise read on :)
 
