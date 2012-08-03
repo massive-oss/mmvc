@@ -55,7 +55,11 @@ class Build extends mtask.core.BuildBase
 			cp("src/lib/*", target.path);
 			cmd("haxe", ["-cp", "src/lib", "-js", target.path + "/haxedoc.js", "-lib", "msignal:1.0.0", "-lib", "minject:1.0.0",
 				"-xml", target.path + "/haxedoc.xml", "mmvc.impl.Context"]);
-			rm(target.path + "/haxedoc.js");
+			
+			var path = target.path + "/haxedoc.xml";
+			var xml = Xml.parse(read(path));
+			var filtered = filterTypes(xml, ["mmvc"]);
+			write(path, filtered.toString());
 		}
 	}
 
@@ -79,4 +83,34 @@ class Build extends mtask.core.BuildBase
 	{
 		cmd("haxelib", ["run", "munit", "test", "-js", "-swf"]);
 	}
+
+	/**
+	Filters a Haxe 'types' Xml document on the path of each type.
+
+	filters should be an array of strings to match against the beginning of 
+	each type path. eg ["mmvc","msignal","Array","List"]
+	*/
+	function filterTypes(types:Xml, filters:Array<String>):Xml
+	{
+		var filtered = Xml.createDocument();
+		var root = Xml.createElement("haxe");
+		filtered.addChild(root);
+
+		for (element in types.firstElement().elements())
+		{
+			var path = element.get("path");
+
+			for (filter in filters)
+			{
+				if (path.indexOf(filter) == 0)
+				{
+					root.addChild(element);
+					break;
+				}
+			}
+		}
+
+		return filtered;
+	}
 }
+
