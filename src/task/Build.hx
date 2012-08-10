@@ -37,14 +37,14 @@ class Build extends mtask.core.BuildBase
 	{
 		target.name = build.project.id;
 		target.version = build.project.version;
-		target.versionDescription = "Initial release. See http://github.com/massiveinteractive/mmvc for documentation and examples.";
+		target.versionDescription = "Initial release.";
 		target.url = "http://github.com/massiveinteractive/mmvc";
 		target.license.organization = "Massive Interactive";
 		target.username = "massive";
-		target.description = "A light but powerful port of the AS3 RobotLegs IOC MVC framework utilizing signals.";
+		target.description = "A Haxe port of the ActionScript 3 RobotLegs MVC framework with signals and Haxe refinements. Supports AVM1, AVM2, JavaScript, Neko and C++.";
 		
-		target.addDependency("msignal", "1.0.0");
-		target.addDependency("minject", "1.0.0");
+		target.addDependency("msignal");
+		target.addDependency("minject");
 		
 		target.addTag("cross");
 		target.addTag("massive");
@@ -53,7 +53,7 @@ class Build extends mtask.core.BuildBase
 		target.afterCompile = function()
 		{
 			cp("src/lib/*", target.path);
-			cmd("haxe", ["-cp", "src/lib", "-js", target.path + "/haxedoc.js", "-lib", "msignal:1.0.0", "-lib", "minject:1.0.0",
+			cmd("haxe", ["-cp", "src/lib", "-js", target.path + "/haxedoc.js", "-lib", "msignal", "-lib", "minject",
 				"-xml", target.path + "/haxedoc.xml", "mmvc.impl.Context"]);
 			Haxe.filterXml(target.path + "/haxedoc.xml", ["mmvc"]);
 		}
