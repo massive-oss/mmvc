@@ -4,9 +4,9 @@
 -lib hamcrest
 -lib msignal
 -lib minject
--cp src/lib
+-cp src
 
--cp src/test
+-cp test
 -swf-version 9
 -swf bin/test/as3_test.swf
 --next
@@ -16,9 +16,9 @@
 -lib hamcrest
 -lib msignal
 -lib minject
--cp src/lib
+-cp src
 
--cp src/test
+-cp test
 -swf-version 8
 -swf bin/test/as2_test.swf
 --next
@@ -28,9 +28,9 @@
 -lib hamcrest
 -lib msignal
 -lib minject
--cp src/lib
+-cp src
 
--cp src/test
+-cp test
 -js bin/test/js_test.js
 
 --next
@@ -41,7 +41,7 @@
 -lib hamcrest
 -lib msignal
 -lib minject
--cp src/lib
+-cp src
 
--cp src/test
+-cp test
 -neko bin/test/neko_test.n
