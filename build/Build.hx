@@ -52,8 +52,8 @@ class Build extends mtask.core.BuildBase
 
 		target.afterCompile = function()
 		{
-			cp("src/lib/*", target.path);
-			cmd("haxe", ["-cp", "src/lib", "-js", target.path + "/haxedoc.js", "-lib", "msignal", "-lib", "minject",
+			cp("src/*", target.path);
+			cmd("haxe", ["-cp", "src", "-js", target.path + "/haxedoc.js", "-lib", "msignal", "-lib", "minject",
 				"-xml", target.path + "/haxedoc.xml", "mmvc.impl.Context"]);
 			Haxe.filterXml(target.path + "/haxedoc.xml", ["mmvc"]);
 		}
@@ -63,7 +63,7 @@ class Build extends mtask.core.BuildBase
 	{
 		target.afterBuild = function()
 		{
-			cp("src/example/*", target.path);
+			cp("example/*", target.path);
 			zip(target.path);
 		}
 	}
