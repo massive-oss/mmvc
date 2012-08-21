@@ -123,8 +123,7 @@ class TodoStatsView extends DataView<String>
 				textField.text = data;
 			#elseif js
 				label.innerHTML = data;
-			#elseif neko
-
+			#elseif (sys||neko||cpp)
 				Sys.println(data);
 			#else
 				trace("ID: " + toString() + ", data: " + data);

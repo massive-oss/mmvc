@@ -12,3 +12,7 @@ example.n
 example.swf
 
 workspace.json
+
+/example/build/Main
+/example/build/example_cpp/
+.mcover

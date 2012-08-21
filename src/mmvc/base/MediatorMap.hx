@@ -64,11 +64,6 @@ class MediatorMap extends ViewMapBase, implements IMediatorMap
 	
 	public function mapView(viewClassOrName:Dynamic, mediatorClass:Class<Dynamic>, ?injectViewAs:Dynamic=null, ?autoCreate:Bool=true, ?autoRemove:Bool=true):Void
 	{
-		#if cpp
-		autoCreate = true;
-		autoRemove = true;
-		#end
-
 		var viewClassName:String = reflector.getFQCN(viewClassOrName);
 		
 		if (mappingConfigByViewClassName.get(viewClassName) != null)

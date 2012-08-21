@@ -23,6 +23,7 @@ SOFTWARE.
 
 package mmvc.base;
 
+import massive.munit.util.Timer;
 import massive.munit.Assert;
 import massive.munit.async.AsyncFactory;
 import minject.Injector;
@@ -220,7 +221,7 @@ class MediatorMapTest
 		
 	// 	var data = {view:viewComponent, mediator: mediator};
 	// 	var handler = factory.createHandler(this, callback(verifyMediatorSurvival, data), 300);
-	// 	haxe.Timer.delay(handler, 200);
+	// 	Timer.delay(handler, 200);
 	// }
 	
 	// function verifyMediatorSurvival(data:Dynamic):Void
@@ -260,7 +261,7 @@ class MediatorMapTest
 		
 		var data = {view: viewComponent, mediator: mediator};
 		var handler = factory.createHandler(this, callback(verifyMediatorRemoval, data), 300);
-		haxe.Timer.delay(handler, 200);
+		Timer.delay(handler, 200);
 	}
 	
 	function verifyMediatorRemoval(data:Dynamic):Void

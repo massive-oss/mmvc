@@ -123,7 +123,7 @@ class TodoView extends DataView<Todo>
 		#elseif js
 			element.innerHTML = label;
 			element.className = className + (done? " done" : "");
-		#elseif neko
+		#elseif (sys||neko||cpp)
 			if(index > -1)
 			{
 				var msg = label + (done ? " (completed)" : "");

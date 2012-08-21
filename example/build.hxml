@@ -16,3 +16,14 @@
 -cp src
 -lib mmvc
 -neko build/example.n
+
+
+--next
+
+-main Main
+-cp src
+-lib mmvc
+-cpp build/example_cpp
+
+-cmd cp -rf build/example_cpp/Main build/Main
+-cmd build/Main
