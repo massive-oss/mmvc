@@ -1,7 +1,4 @@
-Overview 
-====================
-
-### Intro
+## Overview 
 
 MassiveMVC is a light but powerful IOC framework utilizing Signals and macro based injection
 
@@ -25,14 +22,10 @@ If you are familiar with RobotLegs, you may want to jump directly into the examp
 Otherwise read on :)
 
 
---------------
-
-Getting Started
-====================
+## Getting Started
 
 
-What is MMVC
--------------
+### What is MMVC
 
 MMVC is a Dependency Injection framework based off RobotLegs (see <https://github.com/robotlegs/robotlegs-framework/wiki/Best-Practices> for more information).
 
@@ -47,8 +40,7 @@ It's recommended to first read the above RobotLegs documentation if you are unfa
 * Commands
 * View Mediators
 
-Injectors
------------
+### Injectors
 
 Injectors provide a dependency injection mechanism for framework classes.
 
@@ -56,8 +48,7 @@ Injectors provide a dependency injection mechanism for framework classes.
 
 > Injection is performed by MassiveInject. For more information checkout the [documentation](https://github.com/massiveinteractive/minject/blob/master/README.md) and [examples](https://github.com/downloads/massiveinteractive/minject/example.zip).
 
-Context
------------------
+### Context
 
 The context provides the central wiring/mapping of common elements within a contextual scope (eg application).
 
@@ -80,7 +71,7 @@ Generally a context is defined at an application level
 		}
 	}
 
-### Wiring the Context
+#### Wiring the Context
 
 Models are mapped via the injector:
 
@@ -101,7 +92,7 @@ Mediators are mapped to Views via the mediatorMap
 	mediatorMap.mapView(DanceView, DanceViewMediator);
 
 
-### Initializing the Context
+#### Initializing the Context
 
 Usually an application context is instanciated within the main view of an application:
 
@@ -128,20 +119,19 @@ Or externally in the Main haxe file
 	
 
 
-Actors (models and services)
------------------
+### Actors (models and services)
 
 Actor is a generic term for an application class that is wired into the Context. Generally these take the form of **models** or **services**
 
 
-### Mapping Actors
+#### Mapping Actors
 
 Actors are mapped via the injector:
 
 	injector.mapSigleton(DanceModel);
 
 
-### Example
+#### Example
 
 By default actors don't require any interface or inheritance to be mapped in the context.
 
@@ -165,8 +155,7 @@ However if a actors requires references to other application parts it should ext
 	}
 
 
-Signal
-----------
+### Signal
 
 Signals are highly scalable and lightweight alternative to Events. MassiveSignal leverages Haxe generics to provide a strictly typed contract between dispatcher (Signal) and it's listeners.
 
@@ -175,7 +164,7 @@ Signals are highly scalable and lightweight alternative to Events. MassiveSignal
 Application signals represent unique actions or events within an application.
 
 
-### Mapping Signals
+#### Mapping Signals
 
 The can be mapped to an associated Command via the Context
 
@@ -185,7 +174,7 @@ They can also be mapped as a standalone actor
 
 	injector.mapSingleton(DoSomething);
 
-### Example
+#### Example
 
 A simple example Signal with a signal dispatcher argument:
 
@@ -216,7 +205,7 @@ To add a listener to the signal
 	}
 
 
-### Responder Signals
+#### Responder Signals
 
 Within an application is is often usefull to be able to receive callbacks once a signal has finished or completed.
 
@@ -247,27 +236,26 @@ To listen for completion of the Dance
 
 
 
-Command
------------------
+### Command
 
 Commands represent the controller tier of the Application. Commands are generally stateless, short lived objects that provide a single, granular activity within an application.
 
 
-### Mapping Commands
+#### Mapping Commands
 
 Commands are mapped to actions (Signals) using the commandMap in the Context
 
 	commandMap.mapSignalClass(Dance, DanceCommand);
 
 
-### Triggering Commands
+#### Triggering Commands
 
 
 Commands are triggered by dispatching the associated Signal from elsewhere within the application (generally a Mediator or other Command)
 
 	dance.dispatch(Dance.FOX_TROT);
 
-### Example
+#### Example
 
 
 	class DanceCommand extends mmvc.impl.Command
@@ -297,8 +285,7 @@ Commands are triggered by dispatching the associated Signal from elsewhere withi
 
 
 
-Views & Mediator
------------------
+### Views & Mediator
 
 Mediators are used to handle framework interaction with specific View classes, and decouple views from other application components.
 
@@ -309,14 +296,14 @@ This includes:
 * injecting external actors and models into the view during registration  
 
 
-### Mapping Mediators
+#### Mapping Mediators
 
 Mediators are mapped to Views via the mediatorMap
 
 	mediatorMap.mapView(DanceView, DanceViewMediator);
 
 
-### Mediating Views
+#### Mediating Views
 
 Mediator instances are created automatically when the IViewContainer (generally an ApplicationView) calls the added handler.
 
@@ -328,13 +315,13 @@ To manually do this call the handler directly
 
 	applicationView.added(viewInstance);
 
-### Accessing a Meditor's view 
+#### Accessing a Meditor's view 
 
 The associated view instance can be accesed view the 'view' property
 
 	this.view.doSomething(); 
 
-### Example
+#### Example
 
 This is an example demonstrating integration with both application and view events within a mediator
 
