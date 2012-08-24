@@ -1,17 +1,14 @@
-bin
+/bin
+/.temp
 
 Icon
 Thumbs.db
 .DS_Store
-*.sublime-workspace
 TestSuite.hx
-raxe.n
 
 example.js
 example.n
 example.swf
-
-workspace.json
 
 /example/build/Main
 /example/build/example_cpp/

@@ -35,14 +35,10 @@ class Build extends mtask.core.BuildBase
 
 	@target function haxelib(target:HaxeLib)
 	{
-		target.name = build.project.id;
-		target.version = build.project.version;
-		target.versionDescription = "Initial release.";
 		target.url = "http://github.com/massiveinteractive/mmvc";
-		target.license.organization = "Massive Interactive";
-		target.username = "massive";
 		target.description = "A Haxe port of the ActionScript 3 RobotLegs MVC framework with signals and Haxe refinements. Supports AVM1, AVM2, JavaScript, Neko and C++.";
-		
+		target.versionDescription = "Initial release.";
+
 		target.addDependency("msignal");
 		target.addDependency("minject");
 		
