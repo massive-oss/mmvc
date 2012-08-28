@@ -67,9 +67,10 @@ class Build extends mtask.core.BuildBase
 
 	@task function release()
 	{
-		require("clean");
-		require("test");
-		require("build haxelib", "build example");
+		invoke("clean");
+		invoke("test");
+		invoke("build haxelib");
+		invoke("build example");
 	}
 
 	@task function test()
