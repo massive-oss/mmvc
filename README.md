@@ -106,6 +106,7 @@ Usually an application context is instanciated within the main view of an applic
 		}
 	}
 
+
 Or externally in the Main haxe file
 	
 	class Main
@@ -117,6 +118,16 @@ Or externally in the Main haxe file
 		}
 	}
 	
+
+**Important Caveat**
+
+The IViewContainer (ApplicationView) should be the last mapping in the Context.startup function otherwise other mappings may not be configured:
+
+	function startup()
+	{
+		//map everything else
+		mediatorMap.mapView(ApplicationView, ApplicationViewMediator);
+	}
 
 
 ### Actors (models and services)
