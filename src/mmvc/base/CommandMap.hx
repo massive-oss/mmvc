@@ -134,8 +134,11 @@ class CommandMap implements ICommandMap
 	
 	function routeSignalToCommand(signal:AnySignal, valueObjects:Array<Dynamic>, commandClass:CommandClass, oneshot:Bool)
 	{
+		injector.mapValue(AnySignal ,signal);
+
 		mapSignalValues(signal.valueClasses, valueObjects);
 		var command = createCommandInstance(commandClass);
+		injector.unmap(AnySignal);
 		unmapSignalValues(signal.valueClasses, valueObjects);
 		command.execute();
 		
