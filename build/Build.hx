@@ -21,10 +21,7 @@ SOFTWARE.
 */
 
 import mtask.target.HaxeLib;
-import mtask.target.Neko;
 import mtask.target.Directory;
-import mtask.target.Web;
-import mtask.target.Haxe;
 
 class Build extends mtask.core.BuildBase
 {
@@ -46,22 +43,18 @@ class Build extends mtask.core.BuildBase
 		target.addTag("massive");
 		target.addTag("mvc");
 
-		target.afterCompile = function()
+		target.afterCompile = function(path)
 		{
-			cp("src/*", target.path);
-			cmd("haxe", ["-cp", "src", "-js", target.path + "/haxedoc.js", "-lib", 
-				"msignal", "-lib", "minject", "--no-output",
-				"-xml", target.path + "/haxedoc.xml", "mmvc.impl.Context"]);
-			Haxe.filterXml(target.path + "/haxedoc.xml", ["mmvc"]);
+			cp("src/*", path);
 		}
 	}
 
 	@target function example(target:Directory)
 	{
-		target.afterBuild = function()
+		target.beforeCompile = function(path)
 		{
-			cp("example/*", target.path);
-			zip(target.path);
+			mkdir(path);
+			cp("example/*", path);
 		}
 	}
 

@@ -1,0 +1,6 @@
+-js haxedoc.js
+--no-output
+-cp src
+-lib msignal
+-lib minject
+--macro include('mmvc')
