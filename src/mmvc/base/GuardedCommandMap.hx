@@ -37,19 +37,19 @@ class GuardedCommandMap extends CommandMap, implements IGuardedCommandMap
 		super(injector);
 	}
 
-	@IgnoreCover
+	@:IgnoreCover
 	public function mapGuardedSignal(signal:AnySignal, commandClass:CommandClass, guards:GuardClassArray, oneShot:Bool=false):Void
 	{
 		mapGuardedSignalWithFallback(signal, commandClass, null, guards, oneShot);
 	}
 
-	@IgnoreCover
+	@:IgnoreCover
 	public function mapGuardedSignalClass(signalClass:SignalClass, commandClass:CommandClass, guards:GuardClassArray, oneShot:Bool=false):AnySignal
 	{
 		return mapGuardedSignalClassWithFallback(signalClass, commandClass, null, guards, oneShot);
 	}
 	
-	@IgnoreCover
+	@:IgnoreCover
 	public function mapGuardedSignalWithFallback(signal:AnySignal, commandClass:CommandClass, fallbackCommandClass:CommandClass, guards:GuardClassArray, oneShot:Bool=false):Void
 	{
 		if (hasSignalCommand(signal, commandClass))
@@ -79,7 +79,7 @@ class GuardedCommandMap extends CommandMap, implements IGuardedCommandMap
 		signal.add(callbackFunction);
 	}
 
-	@IgnoreCover
+	@:IgnoreCover
 	public function mapGuardedSignalClassWithFallback(signalClass:SignalClass, commandClass:CommandClass, fallbackCommandClass:CommandClass, guards:GuardClassArray, oneShot:Bool=false):AnySignal
 	{
 		var signal = getSignalClassInstance(signalClass);
@@ -87,7 +87,7 @@ class GuardedCommandMap extends CommandMap, implements IGuardedCommandMap
 		return signal;
 	}
 
-	@IgnoreCover
+	@:IgnoreCover
 	function routeSignalToGuardedCommand(signal:AnySignal, valueObjects:Array<Dynamic>, commandClass:CommandClass, fallbackCommandClass:CommandClass, oneshot:Bool, guardClasses:GuardClassArray):Void
 	{
 		mapSignalValues(signal.valueClasses, valueObjects);

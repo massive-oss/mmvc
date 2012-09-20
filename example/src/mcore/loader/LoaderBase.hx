@@ -103,7 +103,7 @@ class LoaderBase<T> implements Loader<T>
 	}
 
 	#if debug
-	@IgnoreCover
+	@:IgnoreCover
 	function checkListeners()
 	{
 		var className = Type.getClassName(Type.getClass(this));
