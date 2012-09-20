@@ -68,12 +68,12 @@ class MediatorMap extends ViewMapBase, implements IMediatorMap
 		
 		if (mappingConfigByViewClassName.get(viewClassName) != null)
 		{
-			throw new ContextError(ContextError.E_MEDIATORMAP_OVR + ' - ' + mediatorClass);
+			throw new ContextError("Mediator Class has already been mapped to a View Class in this context - " + mediatorClass);
 		}
 		
 		if (reflector.classExtendsOrImplements(mediatorClass, IMediator) == false)
 		{
-			throw new ContextError(ContextError.E_MEDIATORMAP_NOIMPL + ' - ' + mediatorClass);
+			throw new ContextError("Mediator Class does not implement IMediator - " + mediatorClass);
 		}
 		
 		var config = new MappingConfig();
