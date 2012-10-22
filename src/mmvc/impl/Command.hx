@@ -21,7 +21,7 @@ SOFTWARE.
 */
 
 package mmvc.impl;
-
+import msignal.Signal;
 import minject.Injector;
 import mmvc.api.ICommandMap;
 import mmvc.api.ICommand;
@@ -40,7 +40,9 @@ class Command implements ICommand
 	@inject public var injector:Injector;
 	
 	@inject public var mediatorMap:IMediatorMap;
-	
+
+	@inject public var signal:AnySignal;
+
 	public function new():Void {}
 	
 	public function execute():Void {}

@@ -43,7 +43,7 @@ class LoadTodoListCommand extends mmvc.impl.Command
 	public var list:TodoList;
 
 	@inject
-	public var signal:LoadTodoList;
+	public var loadTodoList:LoadTodoList;
 
 	var loader:JSONLoader;
 
@@ -82,7 +82,7 @@ class LoadTodoListCommand extends mmvc.impl.Command
 			list.add(todo);
 		}
 
-		signal.completed.dispatch(list);
+		loadTodoList.completed.dispatch(list);
 	}
 
 	/**
@@ -92,6 +92,6 @@ class LoadTodoListCommand extends mmvc.impl.Command
 	{
 		loader.completed.remove(completed);
 
-		signal.failed.dispatch(Std.string(error));
+		loadTodoList.failed.dispatch(Std.string(error));
 	}
 }
