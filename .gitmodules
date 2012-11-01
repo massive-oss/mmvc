@@ -3,4 +3,4 @@
 	url = ssh://git@github.com/massiveinteractive/Raxe.git
 [submodule "lib/mcore"]
 	path = lib/mcore
-	url = ssh://git@github.com/massiveinteractive/MassiveCore.git
+	url = ssh://git@github.com/massiveinteractive/mcore.git
