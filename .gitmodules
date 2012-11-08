@@ -1,3 +1,6 @@
 [submodule "lib/raxe"]
 	path = lib/raxe
 	url = ssh://git@github.com/massiveinteractive/Raxe.git
+[submodule "lib/mcore"]
+	path = lib/mcore
+	url = git@github.com:massiveinteractive/mcore.git
