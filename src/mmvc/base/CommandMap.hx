@@ -141,6 +141,7 @@ class CommandMap implements ICommandMap
 		injector.unmap(AnySignal);
 		unmapSignalValues(signal.valueClasses, valueObjects);
 		command.execute();
+		injector.attendedToInjectees.delete(command);
 		
 		if (oneshot)
 		{
