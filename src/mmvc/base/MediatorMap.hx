@@ -163,7 +163,9 @@ class MediatorMap extends ViewMapBase, implements IMediatorMap
 	
 	public function removeMediatorByView(viewComponent:Dynamic):IMediator
 	{
-		return removeMediator(retrieveMediator(viewComponent));
+		var mediator = removeMediator(retrieveMediator(viewComponent));
+		injector.attendedToInjectees.delete(mediator);
+		return mediator;
 	}
 	
 	public function retrieveMediator(viewComponent:Dynamic):IMediator
@@ -259,7 +261,6 @@ class MediatorMap extends ViewMapBase, implements IMediatorMap
 			{
 				removeMediatorByView(view);
 			}
-			
 			mediatorsMarkedForRemoval.delete(view);
 		}
 
