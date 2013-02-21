@@ -17,7 +17,7 @@ MassiveMVC depends on two other Massive libraries also available from haxelib: [
 
 ### Examples
 
-If you are familiar with RobotLegs, you may want to jump directly into the example [reference app](https://github.com/downloads/massiveinteractive/mmvc/example.zip). This contains a simple todo list application demonstrating the main components of MMVC, running across JS, Flash and Neko targets.
+If you are familiar with RobotLegs, you may want to jump directly into the example [reference app](https://github.com/massiveinteractive/mmvc/tree/master/example). This contains a simple todo list application demonstrating the main components of MMVC, running across JS, Flash and Neko targets.
 
 Otherwise read on :)
 
@@ -46,7 +46,7 @@ Injectors provide a dependency injection mechanism for framework classes.
 
 	@inject something:Something; 
 
-> Injection is performed by MassiveInject. For more information checkout the [documentation](https://github.com/massiveinteractive/minject/blob/master/README.md) and [examples](https://github.com/downloads/massiveinteractive/minject/example.zip).
+> Injection is performed by MassiveInject. For more information checkout the [documentation](https://github.com/massiveinteractive/minject/blob/master/README.md) and [examples](https://github.com/massiveinteractive/minject/tree/master/example).
 
 ### Context
 
@@ -170,7 +170,7 @@ However if a actors requires references to other application parts it should ext
 
 Signals are highly scalable and lightweight alternative to Events. MassiveSignal leverages Haxe generics to provide a strictly typed contract between dispatcher (Signal) and it's listeners.
 
-> See MassiveSignals's [documentation](https://github.com/massiveinteractive/msignal/blob/master/README.md) and [examples](https://github.com/downloads/massiveinteractive/msignal/examples.zip) for more details and examples on working with Signals.
+> See MassiveSignals's [documentation](https://github.com/massiveinteractive/msignal/blob/master/README.md) and [examples](https://github.com/massiveinteractive/msignal/tree/master/example) for more details and examples on working with Signals.
 
 Application signals represent unique actions or events within an application.
 
