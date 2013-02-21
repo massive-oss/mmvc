@@ -1,10 +1,14 @@
 {
-	"name":"MassiveMVC",
-	"version":"1.1.1",
-	"id":"mmvc",
-	"dependencies":
+	"project": 
 	{
-		"msignal":"1.x",
-		"minject":"1.x"
+		"name": "MassiveMVC",
+		"version": "1.1.1",
+		"id": "mmvc",
+		"dependencies": 
+		{
+			"minject": "1.x",
+			"msignal": "1.x",
+			"mtask": "1.4.x"
+		}
 	}
 }
