@@ -1,5 +1,10 @@
 {
 	"name":"MassiveMVC",
 	"version":"1.1.0",
-	"id":"mmvc"
+	"id":"mmvc",
+	"dependencies":
+	{
+		"msignal":"1.x",
+		"minject":"1.1.0"
+	}
 }
