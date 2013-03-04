@@ -26,7 +26,7 @@ import msignal.Signal;
 import minject.Injector;
 import mmvc.api.ICommand;
 import mmvc.api.ICommandMap;
-import mcore.data.Dictionary;
+import mdata.Dictionary;
 
 class CommandMap implements ICommandMap
 {

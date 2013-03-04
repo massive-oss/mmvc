@@ -22,7 +22,7 @@ SOFTWARE.
 
 package mmvc.base;
 
-import mcore.data.Dictionary;
+import mdata.Dictionary;
 import minject.Injector;
 import mmvc.api.IViewMap;
 import mmvc.api.IViewContainer;

@@ -22,7 +22,7 @@ SOFTWARE.
 
 package mmvc.impl.support;
 	
-import mcore.data.Dictionary;
+import mdata.Dictionary;
 import mmvc.api.IViewContainer;
 
 class TestContextView implements IViewContainer

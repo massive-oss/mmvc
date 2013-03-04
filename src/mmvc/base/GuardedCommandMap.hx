@@ -22,7 +22,7 @@ SOFTWARE.
 
 package mmvc.base;
 
-import mcore.data.Dictionary;
+import mdata.Dictionary;
 import msignal.Signal;
 import mmvc.api.ICommandMap;
 import mmvc.api.IGuardedCommandMap;

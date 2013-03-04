@@ -12,15 +12,15 @@
 --next
 
 #Flash 8
--main TestMain
--lib munit
--lib hamcrest
--lib msignal
--lib minject
--cp src
--cp test
--swf-version 8
--swf bin/test/as2_test.swf
+# -main TestMain
+# -lib munit
+# -lib hamcrest
+# -lib msignal
+# -lib minject
+# -cp src
+# -cp test
+# -swf-version 8
+# -swf bin/test/as2_test.swf
 
 --next
 

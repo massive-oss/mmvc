@@ -26,7 +26,7 @@ import minject.Injector;
 import mmvc.api.IMediator;
 import mmvc.api.IMediatorMap;
 import minject.Reflector;
-import mcore.data.Dictionary;
+import mdata.Dictionary;
 import mmvc.api.IViewContainer;
 import haxe.Timer;
 

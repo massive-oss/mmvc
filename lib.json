@@ -1,8 +1,10 @@
 {
 	"msignal":"1.1.2",
-	"minject":"1.1.0",
+	"mdata":"1.1.0",
+	"minject":"1.1.1",
+	"mpartial":"1.2.1",
 	"msys":"1.1.0",
-	"mconsole":"1.2.1",
-	"mcore":"1.0.1",
+	"mcore":"1.1.0",
+	"mconsole":"1.2.2",
 	"mtask":"1.4.2"
 }
