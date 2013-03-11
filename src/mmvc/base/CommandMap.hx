@@ -134,13 +134,31 @@ class CommandMap implements ICommandMap
 	
 	function routeSignalToCommand(signal:AnySignal, valueObjects:Array<Dynamic>, commandClass:CommandClass, oneshot:Bool)
 	{
-		injector.mapValue(AnySignal ,signal);
+		var command = Type.createInstance(commandClass, []);
 
-		mapSignalValues(signal.valueClasses, valueObjects);
-		var command = createCommandInstance(commandClass);
-		injector.unmap(AnySignal);
-		unmapSignalValues(signal.valueClasses, valueObjects);
-		command.execute();
+		//checks the command instance for a method named 'executeArgs' 
+		var executeArgs = Reflect.field(command, 'executeArgs');
+		if(executeArgs != null && Reflect.isFunction(executeArgs))
+		{
+			//if the 'executeArgs' method exists, the valueObjects are not mapped for injection 
+			//but passed to the 'executeArgs' method as arguments when it is called.
+			injector.mapValue(AnySignal ,signal);
+			injector.injectInto(command);
+			injector.unmap(AnySignal);
+			Reflect.callMethod(command, executeArgs, valueObjects); 
+		}
+		else
+		{
+			//otherwise normal execution of command including injection signal payloads occurs
+			injector.mapValue(AnySignal ,signal);
+			mapSignalValues(signal.valueClasses, valueObjects);
+			injector.injectInto(command);
+			injector.unmap(AnySignal);
+			unmapSignalValues(signal.valueClasses, valueObjects);
+			
+			command.execute();
+		}
+		
 		injector.attendedToInjectees.delete(command);
 		
 		if (oneshot)

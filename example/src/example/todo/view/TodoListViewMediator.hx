@@ -26,6 +26,8 @@ import example.todo.signal.LoadTodoList;
 import example.todo.model.TodoList;
 import example.todo.model.Todo;
 import example.todo.view.TodoListView;
+import src.example.todo.signal.TestSignal;
+import example.todo.model.TestData;
 
 import example.core.View;
 /**
@@ -41,6 +43,8 @@ Updates view when data has been loaded.
 class TodoListViewMediator extends mmvc.impl.Mediator<TodoListView>
 {
 	@inject public var loadTodoList:LoadTodoList;
+	
+	@inject public var testSignal:TestSignal;
 
 	var list:TodoList;
 
@@ -82,6 +86,8 @@ class TodoListViewMediator extends mmvc.impl.Mediator<TodoListView>
 	{
 		this.list = list;
 		view.setData(list);
+		
+		
 	}
 
 	function loadFailed(error:Dynamic)
@@ -96,6 +102,8 @@ class TodoListViewMediator extends mmvc.impl.Mediator<TodoListView>
 	{
 		if(event == TodoListView.CREATE_TODO)
 		{
+			testSignal.dispatch({name:"Jim", age:12}, TestEnum.SomeString("Hi THere"));
+
 			list.add(new Todo());
 		}
 	}

@@ -23,6 +23,8 @@ SOFTWARE.
 package example.app;
 
 import mmvc.api.IViewContainer;
+import src.example.todo.command.TestCommand;
+import src.example.todo.signal.TestSignal;
 
 
 // Main Application
@@ -63,6 +65,7 @@ class ApplicationContext extends mmvc.impl.Context
 	{
 		// wiring for todo model
 		commandMap.mapSignalClass(LoadTodoList, LoadTodoListCommand);
+		commandMap.mapSignalClass(TestSignal, TestCommand);
 
 		injector.mapSingleton(TodoList);
 		
