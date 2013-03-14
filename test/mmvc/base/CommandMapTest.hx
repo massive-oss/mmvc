@@ -198,6 +198,15 @@ class CommandMapTest implements ICommandTester
 		Assert.isTrue(true);
 	}
 	
+	@Test
+	public function signal_class_can_be_unmapped_then_remapped()
+	{
+		commandMap.mapSignalClass(TestSignal, TestCommand);
+		commandMap.unmapSignalClass(TestSignal, TestCommand);
+		commandMap.mapSignalClass(TestSignal, TestCommand_InjectSignal);
+		signal.dispatch();	
+	}
+	
 	public function markCommandExecuted():Void
 	{
 		if (commandExecuted) secondCommandExecuted = true;
