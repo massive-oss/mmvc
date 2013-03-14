@@ -49,6 +49,7 @@ class CommandMap implements ICommandMap
 		if (hasSignalCommand(signal, commandClass)) return;
 
 		var signalCommandMap:Dictionary<Dynamic, Dynamic>;
+		
 		if (signalMap.exists(signal))
 		{
 			signalCommandMap = signalMap.get(signal);
@@ -73,12 +74,14 @@ class CommandMap implements ICommandMap
 	{
 		var signal = getSignalClassInstance(signalClass);
 		mapSignal(signal, commandClass, oneShot);
+		
 		return signal;
 	}
 
 	public function unmapSignalClass(signalClass:SignalClass, commandClass:CommandClass)
 	{
 		unmapSignal(getSignalClassInstance(signalClass), commandClass);
+		signalClassMap.delete(signalClass);
 		injector.unmap(signalClass);
 	}
 
@@ -128,6 +131,7 @@ class CommandMap implements ICommandMap
 		var callbackFunction = callbacksByCommandClass.get(commandClass);
 		if (callbackFunction == null) return;
 		
+		signalMap.delete(signal);
 		signal.remove(callbackFunction);
 		callbacksByCommandClass.delete(commandClass);
 	}
