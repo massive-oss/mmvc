@@ -175,7 +175,19 @@ class CommandMapTest implements ICommandTester
 		commandMap.mapSignal(signal, TestCommand);
 		commandMap.mapSignal(signal, TestCommand1);
 		signal.dispatch();
-
+	}
+	
+	@Test
+	public function map_signal_class_to_two_commands_unmap_one_executes_one()
+	{
+		commandMap.mapSignalClass(TestSignal, TestCommand);
+		commandMap.mapSignalClass(TestSignal, TestCommand1);
+		
+		commandMap.unmapSignalClass(TestSignal, TestCommand);
+		
+		injector.getInstance(TestSignal).dispatch();
+		
+		Assert.isTrue(commandExecuted);
 	}
 
 	@Test
