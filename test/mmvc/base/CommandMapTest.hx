@@ -159,6 +159,26 @@ class CommandMapTest implements ICommandTester
 	}
 
 	@Test
+	public function unmap_signal_class_with_another_mapping_does_not_unconfigure_injector()
+	{
+		commandMap.mapSignalClass(TestSignal, TestCommand);
+		commandMap.mapSignalClass(TestSignal, TestCommand1);
+		commandMap.unmapSignalClass(TestSignal, TestCommand);
+		var passed = true;
+
+		try
+		{
+			var instance = injector.getInstance(TestSignal);
+		}
+		catch (e:Dynamic)
+		{
+			passed = false;
+		}
+		
+		Assert.isTrue(passed);
+	}
+
+	@Test
 	public function detain_release_does_nothing()
 	{
 		var command = new Command();
@@ -217,6 +237,16 @@ class CommandMapTest implements ICommandTester
 		commandMap.unmapSignalClass(TestSignal, TestCommand);
 		commandMap.mapSignalClass(TestSignal, TestCommand_InjectSignal);
 		signal.dispatch();	
+	}
+
+	@Test
+	public function signal_class_with_multiple_mappings_can_be_unmapped_then_remapped()
+	{
+		commandMap.mapSignalClass(TestSignal, TestCommand);
+		commandMap.mapSignalClass(TestSignal, TestCommand1);
+		commandMap.unmapSignalClass(TestSignal, TestCommand);
+		commandMap.mapSignalClass(TestSignal, TestCommand_InjectSignal);
+		signal.dispatch();
 	}
 	
 	public function markCommandExecuted():Void

@@ -44,6 +44,14 @@ class CommandMap implements ICommandMap
 		detainedCommands = new Dictionary();
 	}
 	
+	public function mapSignalClass(signalClass:SignalClass, commandClass:CommandClass, ?oneShot:Bool=false):AnySignal
+	{
+		var signal = getSignalClassInstance(signalClass);
+		mapSignal(signal, commandClass, oneShot);
+		
+		return signal;
+	}
+
 	public function mapSignal(signal:AnySignal, commandClass:Class<ICommand>, ?oneShot:Bool=false)
 	{
 		if (hasSignalCommand(signal, commandClass)) return;
@@ -70,57 +78,15 @@ class CommandMap implements ICommandMap
 		signal.add(callbackFunction);
 	}
 
-	public function mapSignalClass(signalClass:SignalClass, commandClass:CommandClass, ?oneShot:Bool=false):AnySignal
-	{
-		var signal = getSignalClassInstance(signalClass);
-		mapSignal(signal, commandClass, oneShot);
-		
-		return signal;
-	}
-
 	public function unmapSignalClass(signalClass:SignalClass, commandClass:CommandClass)
 	{
-		unmapSignal(getSignalClassInstance(signalClass), commandClass);
-		signalClassMap.delete(signalClass);
-		injector.unmap(signalClass);
-	}
-
-	function getSignalClassInstance(signalClass:SignalClass):AnySignal
-	{
-		if (signalClassMap.exists(signalClass))
+		var signal = getSignalClassInstance(signalClass);
+		unmapSignal(signal, commandClass);
+		if (!hasCommand(signal))
 		{
-			return cast(signalClassMap.get(signalClass), AnySignal);
+			injector.unmap(signalClass);
+			signalClassMap.delete(signalClass);
 		}
-
-		var signal = createSignalClassInstance(signalClass);
-		signalClassMap.set(signalClass, signal);
-		return signal;
-	}
-
-	function createSignalClassInstance(signalClass:SignalClass):AnySignal
-	{
-		var injectorForSignalInstance = injector;
-		var signal:AnySignal;
-		
-		if (injector.hasMapping(Injector))
-		{
-			injectorForSignalInstance = injector.getInstance(Injector);
-		}
-		
-		signal = injectorForSignalInstance.instantiate(signalClass);
-		injectorForSignalInstance.mapValue(signalClass, signal);
-		signalClassMap.set(signalClass, signal);
-
-		return signal;
-	}
-
-	public function hasSignalCommand(signal:AnySignal, commandClass:Class<ICommand>):Bool
-	{
-		var callbacksByCommandClass = signalMap.get(signal);
-		if (callbacksByCommandClass == null) return false;
-		
-		var callbackFunction = callbacksByCommandClass.get(commandClass);
-		return callbackFunction != null;
 	}
 
 	public function unmapSignal(signal:AnySignal, commandClass:CommandClass)
@@ -131,14 +97,59 @@ class CommandMap implements ICommandMap
 		var callbackFunction = callbacksByCommandClass.get(commandClass);
 		if (callbackFunction == null) return;
 		
-		signalMap.delete(signal);
+		if (!hasCommand(signal)) signalMap.delete(signal);
 		signal.remove(callbackFunction);
 		callbacksByCommandClass.delete(commandClass);
+	}
+
+	function getSignalClassInstance(signalClass:SignalClass):AnySignal
+	{
+		if (signalClassMap.exists(signalClass))
+		{
+			return cast(signalClassMap.get(signalClass), AnySignal);
+		}
+
+		return createSignalClassInstance(signalClass);
+	}
+
+	function createSignalClassInstance(signalClass:SignalClass):AnySignal
+	{
+		var injectorForSignalInstance = injector;
+		
+		if (injector.hasMapping(Injector))
+		{
+			injectorForSignalInstance = injector.getInstance(Injector);
+		}
+		
+		var signal:AnySignal = injectorForSignalInstance.instantiate(signalClass);
+		injectorForSignalInstance.mapValue(signalClass, signal);
+		signalClassMap.set(signalClass, signal);
+
+		return signal;
+	}
+
+	public function hasCommand(signal:AnySignal):Bool
+	{
+		var callbacksByCommandClass:Dictionary<Dynamic, Dynamic> = signalMap.get(signal);
+		if (callbacksByCommandClass == null) return false;
+
+		var count = 0;
+		for (key in callbacksByCommandClass) count ++;
+		return count > 0;
+	}
+
+	public function hasSignalCommand(signal:AnySignal, commandClass:Class<ICommand>):Bool
+	{
+		var callbacksByCommandClass = signalMap.get(signal);
+		if (callbacksByCommandClass == null) return false;
+		
+		var callbackFunction = callbacksByCommandClass.get(commandClass);
+		return callbackFunction != null;
 	}
 	
 	function routeSignalToCommand(signal:AnySignal, valueObjects:Array<Dynamic>, commandClass:CommandClass, oneshot:Bool)
 	{
-		injector.mapValue(AnySignal ,signal);
+		injector.mapValue(AnySignal, signal);
 
 		mapSignalValues(signal.valueClasses, valueObjects);
 		var command = createCommandInstance(commandClass);
