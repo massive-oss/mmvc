@@ -36,3 +36,19 @@ class TestCommand implements mmvc.api.ICommand
 		testSuite.markCommandExecuted();
 	}
 }
+
+class TestCommand_InjectSignal implements mmvc.api.ICommand
+ {
+	public function new() { }
+	
+	@inject
+	public var testSignal:TestSignal;
+	
+	@inject
+	public var testSuite:ICommandTester;
+	
+	public function execute():Void
+	{
+		testSuite.markCommandExecuted();
+	}
+}

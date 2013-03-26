@@ -159,6 +159,26 @@ class CommandMapTest implements ICommandTester
 	}
 
 	@Test
+	public function unmap_signal_class_with_another_mapping_does_not_unconfigure_injector()
+	{
+		commandMap.mapSignalClass(TestSignal, TestCommand);
+		commandMap.mapSignalClass(TestSignal, TestCommand1);
+		commandMap.unmapSignalClass(TestSignal, TestCommand);
+		var passed = true;
+
+		try
+		{
+			var instance = injector.getInstance(TestSignal);
+		}
+		catch (e:Dynamic)
+		{
+			passed = false;
+		}
+		
+		Assert.isTrue(passed);
+	}
+
+	@Test
 	public function detain_release_does_nothing()
 	{
 		var command = new Command();
@@ -175,7 +195,34 @@ class CommandMapTest implements ICommandTester
 		commandMap.mapSignal(signal, TestCommand);
 		commandMap.mapSignal(signal, TestCommand1);
 		signal.dispatch();
+	}
+	
+	@Test
+	public function map_signal_class_to_two_commands_unmap_one_executes_one()
+	{
+		commandMap.mapSignalClass(TestSignal, TestCommand);
+		commandMap.mapSignalClass(TestSignal, TestCommand1);
+		
+		commandMap.unmapSignalClass(TestSignal, TestCommand);
+		
+		injector.getInstance(TestSignal).dispatch();
+		
+		Assert.isTrue(commandExecuted);
+		Assert.isFalse(secondCommandExecuted);
+	}
 
+	@Test
+	public function map_signal_to_two_commands_unmap_one_executes_one()
+	{
+		commandMap.mapSignal(signal, TestCommand);
+		commandMap.mapSignal(signal, TestCommand1);
+		
+		commandMap.unmapSignal(signal, TestCommand1);
+		
+		signal.dispatch();
+
+		Assert.isTrue(commandExecuted);
+		Assert.isFalse(secondCommandExecuted);
 	}
 
 	@Test
@@ -196,6 +243,25 @@ class CommandMapTest implements ICommandTester
 		commandMap.unmapSignal(signal, TestCommand);
 		commandMap.unmapSignal(signal, TestCommand);
 		Assert.isTrue(true);
+	}
+	
+	@Test
+	public function signal_class_can_be_unmapped_then_remapped()
+	{
+		commandMap.mapSignalClass(TestSignal, TestCommand);
+		commandMap.unmapSignalClass(TestSignal, TestCommand);
+		commandMap.mapSignalClass(TestSignal, TestCommand_InjectSignal);
+		signal.dispatch();	
+	}
+
+	@Test
+	public function signal_class_with_multiple_mappings_can_be_unmapped_then_remapped()
+	{
+		commandMap.mapSignalClass(TestSignal, TestCommand);
+		commandMap.mapSignalClass(TestSignal, TestCommand1);
+		commandMap.unmapSignalClass(TestSignal, TestCommand);
+		commandMap.mapSignalClass(TestSignal, TestCommand_InjectSignal);
+		signal.dispatch();
 	}
 	
 	public function markCommandExecuted():Void
