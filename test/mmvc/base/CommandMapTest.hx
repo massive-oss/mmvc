@@ -208,6 +208,21 @@ class CommandMapTest implements ICommandTester
 		injector.getInstance(TestSignal).dispatch();
 		
 		Assert.isTrue(commandExecuted);
+		Assert.isFalse(secondCommandExecuted);
+	}
+
+	@Test
+	public function map_signal_to_two_commands_unmap_one_executes_one()
+	{
+		commandMap.mapSignal(signal, TestCommand);
+		commandMap.mapSignal(signal, TestCommand1);
+		
+		commandMap.unmapSignal(signal, TestCommand1);
+		
+		signal.dispatch();
+
+		Assert.isTrue(commandExecuted);
+		Assert.isFalse(secondCommandExecuted);
 	}
 
 	@Test
