@@ -28,7 +28,7 @@ import mmvc.impl.Context;
 
 class TestContext extends Context
 {
-	public var isInitialized(getIsInitialized, null):Bool;
+	public var isInitialized(get_isInitialized, null):Bool;
 	public var startupComplete:Bool ;
 	
 	public function new(?contextView:IViewContainer=null, ?autoStartup:Bool=true)
@@ -48,7 +48,7 @@ class TestContext extends Context
 		return this.injector;
 	}
 	
-	public function getIsInitialized():Bool
+	public function get_isInitialized():Bool
 	{
 		var initialized:Bool = true;
 		initialized = (commandMap != null && initialized);

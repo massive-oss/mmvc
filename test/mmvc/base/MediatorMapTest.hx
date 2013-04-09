@@ -198,7 +198,6 @@ class MediatorMapTest
 		
 		mediatorMap.mapView(ViewComponent, ViewMediator, null, false, true);
 		contextView.addView(viewComponent);
-		
 		var mediator = mediatorMap.createMediator(viewComponent);
 		
 		Assert.isNotNull(mediator);
@@ -260,7 +259,11 @@ class MediatorMapTest
 		contextView.removeView(viewComponent);
 		
 		var data = {view: viewComponent, mediator: mediator};
+		#if haxe3
+		var handler = factory.createHandler(this, verifyMediatorRemoval.bind(data), 300);
+		#else
 		var handler = factory.createHandler(this, callback(verifyMediatorRemoval, data), 300);
+		#end
 		Timer.delay(handler, 200);
 	}
 	

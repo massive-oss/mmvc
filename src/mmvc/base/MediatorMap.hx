@@ -190,7 +190,7 @@ class MediatorMap extends ViewMapBase, implements IMediatorMap
 	
 	public function hasMediator(mediator:IMediator):Bool
 	{
-		for (key in mediatorByView)
+		for (key in mediatorByView.keys())
 		{
 			if (mediatorByView.get(key) == mediator)
 			{
@@ -274,7 +274,7 @@ class MediatorMap extends ViewMapBase, implements IMediatorMap
 	function createMediatorUsing(viewComponent:Dynamic, ?viewClassName:String=null, ?config:MappingConfig=null):IMediator
 	{
 		var mediator = mediatorByView.get(viewComponent);
-
+		
 		if (mediator == null)
 		{
 			if (viewClassName == null)
