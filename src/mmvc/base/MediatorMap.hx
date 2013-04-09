@@ -33,7 +33,11 @@ import haxe.Timer;
 /**
 An abstract <code>IMediatorMap</code> implementation
 */
+#if haxe3
+class MediatorMap extends ViewMapBase implements IMediatorMap
+#else
 class MediatorMap extends ViewMapBase, implements IMediatorMap
+#end
 {
 	var mediatorByView:Dictionary<Dynamic, IMediator>;
 	var mappingConfigByView:Dictionary<Dynamic, MappingConfig>;

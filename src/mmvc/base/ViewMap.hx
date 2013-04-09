@@ -30,7 +30,11 @@ import mmvc.api.IViewContainer;
 /**
 An abstract <code>IViewMap</code> implementation
 */
+#if haxe3
+class ViewMap extends ViewMapBase implements IViewMap
+#else
 class ViewMap extends ViewMapBase, implements IViewMap
+#end
 {
 	/**
 	Creates a new <code>ViewMap</code> object
