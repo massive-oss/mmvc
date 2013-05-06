@@ -30,7 +30,11 @@ import minject.Injector;
 import mmvc.api.IGuard;
 import mmvc.api.ICommand;
 
+#if haxe3
+class GuardedCommandMap extends CommandMap implements IGuardedCommandMap
+#else
 class GuardedCommandMap extends CommandMap, implements IGuardedCommandMap
+#end
 {
 	public function new(injector:Injector)
 	{

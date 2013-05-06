@@ -50,16 +50,16 @@
 -cp test
 -neko bin/test/neko_test.n
 
---next
+# --next
 
--main TestMain
--lib munit
--lib hamcrest
--lib msignal
--lib minject
--lib mdata
--cp src
--cp test
-#-debug
--cpp bin/test/cpp_test
+# -main TestMain
+# -lib munit
+# -lib hamcrest
+# -lib msignal
+# -lib minject
+# -lib mdata
+# -cp src
+# -cp test
+# #-debug
+# -cpp bin/test/cpp_test
 

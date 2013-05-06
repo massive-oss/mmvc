@@ -29,7 +29,11 @@ import mmvc.api.IGuard;
 
 typedef GuardClassArray = Array<Class<IGuard>>;
 
+#if haxe3
+interface IGuardedCommandMap extends ICommandMap
+#else
 interface IGuardedCommandMap implements ICommandMap
+#end
 {
 	/**
 	Map a Command to an instance of a Signal, with Guards

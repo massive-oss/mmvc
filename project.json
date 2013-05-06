@@ -2,13 +2,18 @@
 	"project": 
 	{
 		"name": "MassiveMVC",
-		"version": "1.2.0",
+		"version": "1.3.0",
 		"id": "mmvc",
 		"dependencies": 
 		{
-			"minject": ">= 1.1.1 < 2.0.0",
-			"msignal": "1.x",
-			"mtask": "1.4.x"
+			"minject": ">=1.2 <2",
+			"msignal": ">=1.2 <2"
+		},
+		"devDependencies":
+		{
+			"mtask": "haxe3",
+			"munit": "2.x",
+			"mcover": "2.x"
 		}
 	}
 }
