@@ -34,7 +34,8 @@ class Build extends mtask.core.BuildBase
 	{
 		target.url = "http://github.com/massiveinteractive/mmvc";
 		target.description = "A Haxe port of the ActionScript 3 RobotLegs MVC framework with signals and Haxe refinements. Supports AVM1, AVM2, JavaScript, Neko and C++.";
-		target.versionDescription = "Added support for Haxe 3.";
+		target.versionDescription = "Added haxelib.json.";
+		target.username = "massive";
 
 		target.addDependency("msignal");
 		target.addDependency("minject");

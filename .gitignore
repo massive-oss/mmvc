@@ -14,3 +14,5 @@ example.swf
 /example/build/Main
 /example/build/example_cpp/
 .mcover
+/MassiveMVC.iml
+/.idea/
