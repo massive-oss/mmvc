@@ -11,7 +11,7 @@
 		},
 		"devDependencies":
 		{
-			"mtask": "haxe3",
+			"mtask": "2.x",
 			"munit": "2.x",
 			"mcover": "2.x"
 		}
