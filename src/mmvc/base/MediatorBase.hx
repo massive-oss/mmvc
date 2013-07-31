@@ -28,6 +28,7 @@ import msignal.Slot;
 /**
 An abstract <code>IMediator</code> implementation
 */
+@:keepSub
 class MediatorBase<T> implements IMediator
 {
 	/**
