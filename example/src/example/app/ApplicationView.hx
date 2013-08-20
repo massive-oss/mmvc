@@ -35,7 +35,7 @@ Extends core view class for basic event bubbling across platforms
 @see mmvc.api.IViewContainer
 */
 
-class ApplicationView extends View, implements mmvc.api.IViewContainer
+class ApplicationView extends View implements mmvc.api.IViewContainer
 {
 	public var viewAdded:Dynamic -> Void;
 	public var viewRemoved:Dynamic -> Void;
@@ -96,7 +96,7 @@ class ApplicationView extends View, implements mmvc.api.IViewContainer
 		#if flash
 			flash.Lib.current.addChild(sprite);
 		#elseif js
-			js.Lib.document.body.appendChild(element);
+			js.Browser.document.body.appendChild(element);
 		#end
 	}
 }

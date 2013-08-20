@@ -16,3 +16,5 @@ example.swf
 .mcover
 /MassiveMVC.iml
 /.idea/
+*.hxproj
+example/build/**
