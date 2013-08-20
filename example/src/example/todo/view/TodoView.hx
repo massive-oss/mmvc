@@ -28,7 +28,9 @@ import example.core.DataView;
 import example.todo.model.Todo;
 
 #if js
-import js.Dom;
+import js.Browser;
+import js.html.Event;
+import js.Browser.document;
 #end
 
 /**
@@ -158,8 +160,8 @@ class TodoView extends DataView<Todo>
 
 		/**
 		JS only: dispatches ACTIONED event on mouse click
-		*/
-		function js_onClick(event:js.Event)
+		*/		
+		function js_onClick(event:js.html.Event)
 		{	
 			dispatch(View.ACTIONED, this);
 		}

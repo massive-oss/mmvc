@@ -1,23 +1,27 @@
 Todo App
 ============
 
-This is a simple application demonstrating the main components of MMVC, running across JS, Flash and Neko targets.
+This is a simple application demonstrating the main components of MMVC, running 
+across JS, Flash and Neko targets.
 
+> This application requires Haxe 3.0 or greater.
 
 Overview
 -----------
 
-This is a partially implemented Todo application, demonstrating the core elements of MMVC
+This is a partially implemented Todo application, demonstrating the core 
+elements of MMVC
 
 * configuring application via a Context (`ApplicationContext`)
 * loads a list of Todos from a file via a Command (`LoadTodoListCommand`)
 * updating contents of a managed Model (`TodoList`) 
 * triggering commands via a Signal and listens to responses (`LoadTodoList`)
-* instanciating Mediators for registered Views (`ApplicationViewMediator`, `TodoListViewMediator`)
+* instanciating Mediators for registered Views (`ApplicationViewMediator`, 
+  `TodoListViewMediator`)
 
 
 Building the app
--------------
+----------------
 
 Compile the js, flash and neko targets via the hxml file:
 
@@ -29,32 +33,33 @@ Application Structure
 
 The application source contains the following classes:
 
+	Main.hx // main entry point, instanciates application view and context
 
-	src
-		Main 	// Main entry point. Instanciates application view and context
-		example
-			app 	// main application module
+	/example
 
-				ApplicationContext 		// MMVC Context for application wiring 
-				ApplicationView 		// main application view
-				ApplicationViewMediator	// main application mediator
+		/app // main application module
 
-			core 	// bare-bones cross platform View classes
+			ApplicationContext.hx       // application Context
+			ApplicationView.hx          // application View
+			ApplicationViewMediator.hx	// application Mediator
 
-				View 		// Simple cross platform View class with concrete implementations for JS and Flash
-				DataView	// View with typed data property (usefull for Views bound to a specific data object)
+		/core // bare-bones cross platform View classes
 
-			todo 	// todo module
-				command
-					LoadTodoListCommand 	// MMVC Command for loading external TodoList
-				model
-					Todo 					// Todo data object
-					TodoList 				// Collection of Todos
-				signal
-					LoadTodoList 			// Signal for loading TodoList and handling responses
-				view
-					TodoListView 			// View for TodoList
-					TodoListViewMediator 	// MMVC Mediator for TodoList. Triggers call to LoadTodoList
-					TodoView 				// View for inidividual Todo items
-					TodoStatsView 			// Summary of current todo list + button to create new Todo
+			View.hx  // simple cross platform View class with concrete implementations for JS and Flash
+			DataView // View with typed data property (useful for Views bound to a specific data object)
+
+		/todo
+
+			/command
+				LoadTodoListCommand.hx 	// MMVC Command for loading external TodoList
+			/model
+				Todo.hx                 // todo data object
+				TodoList.hx             // collection of todos
+			/signal
+				LoadTodoList.hx         // signal for loading TodoList and handling responses
+			/view
+				TodoListView.hx         // View for TodoList
+				TodoListViewMediator.hx // Mediator for TodoList. Triggers call to LoadTodoList
+				TodoView.hx             // View for inidividual Todo items
+				TodoStatsView.hx        // Summary of current todo list + button to create new Todo
 	

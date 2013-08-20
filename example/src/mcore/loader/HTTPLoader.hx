@@ -38,7 +38,7 @@ class HTTPLoader<T> extends LoaderBase<T>
 	/**
 	The headers to pass through with the http request.
 	*/
-	public var headers(default, null):Hash<String>;
+	public var headers(default, null):Map<String,String>;
 
 	/**
 	HTTP status code of response.
@@ -63,7 +63,7 @@ class HTTPLoader<T> extends LoaderBase<T>
 		http.onData = httpData;
 		http.onError = httpError;
 		http.onStatus = httpStatus;
-		headers = new Hash();
+		headers = new Map();
 	}
 	
 	/**

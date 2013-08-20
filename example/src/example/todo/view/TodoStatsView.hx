@@ -28,7 +28,8 @@ import example.todo.model.Todo;
 import example.todo.model.TodoList;
 
 #if js
-import js.Dom;
+import js.Browser;
+import js.html.Element;
 #end
 
 /**
@@ -43,8 +44,8 @@ class TodoStatsView extends DataView<String>
 	var textField:flash.text.TextField;
 	var button:flash.display.Sprite;
 	#elseif js
-	var label:HtmlDom;
-	var button:HtmlDom;
+	var label:Element;
+	var button:Element;
 	#end
 
 	/**
@@ -92,11 +93,11 @@ class TodoStatsView extends DataView<String>
 
 
 		#elseif js
-			label = js.Lib.document.createElement("label");
+			label = Browser.document.createElement("label");
 			label.innerHTML = data != null ? data : "Loading items...";
 			element.appendChild(label);
 
-			button = js.Lib.document.createElement("a");
+			button = Browser.document.createElement("a");
 			button.innerHTML = "New item";
 			button.onclick = js_onClick;
 			element.appendChild(button);
@@ -143,7 +144,7 @@ class TodoStatsView extends DataView<String>
 
 
 	#elseif js
-	function js_onClick(event:js.Event)
+	function js_onClick(event:js.html.Event)
 	{	
 		dispatch(View.ACTIONED, this);
 	}
