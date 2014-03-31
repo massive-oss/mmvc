@@ -1,7 +1,7 @@
 <project name="mmvc" url="http://github.com/massiveinteractive/mmvc" license="MIT">
 	<user name="massive"/>
 	<description><![CDATA[A Haxe port of the ActionScript 3 RobotLegs MVC framework with signals and Haxe refinements. Supports AVM1, AVM2, JavaScript, Neko and C++.]]></description>
-	<version name="1.3.1"><![CDATA[Added haxelib.json.]]></version>
+	<version name="1.4.0"><![CDATA[Add dce metadata, other fixes.]]></version>
 	<depends name="msignal"/>
 	<depends name="minject"/>
 	<tag v="cross"/>
