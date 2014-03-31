@@ -28,9 +28,9 @@ import mmvc.api.IViewContainer;
 import minject.Injector;
 
 /**
-Abstract MVCS <code>IMediator</code> implementation
-*/
-class Mediator<T> extends MediatorBase<T>
+	Abstract MVCS `IMediator` implementation
+**/
+@:keepSub class Mediator<T> extends MediatorBase<T>
 {
 	@inject public var injector:Injector;
 	

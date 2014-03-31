@@ -23,8 +23,8 @@ SOFTWARE.
 package mmvc.api;
 
 /**
-The Robotlegs Context contract
-*/
+	The mmvc Context contract
+**/
 interface IContext
 {
 	var commandMap(get_commandMap, null):ICommandMap;

@@ -25,121 +25,114 @@ package mmvc.api;
 import mmvc.api.IViewContainer;
 
 /**
-The Robotlegs MediatorMap contract
-*/
+	The mmvc MediatorMap contract
+**/
 interface IMediatorMap
 {
 	
 	/**
-	Map an <code>IMediator</code> to a view Class
+		Map an `IMediator` to a view class
 
-	@param viewClassOrName The concrete view Class or Fully Qualified classname
-	@param mediatorClass The <code>IMediator</code> Class
-	@param injectViewAs The explicit view Interface or Class that the mediator 
-	depends on OR an Array of such Interfaces/Classes.
-	@param autoCreate Automatically construct and register an instance of Class 
-	<code>mediatorClass</code> when an instance of Class <code>viewClass</code> 
-	is detected
-	@param autoRemove Automatically remove an instance of Class 
-	<code>mediatorClass</code> when its <code>viewClass</code> leaves the 
-	ancestory of the context view
-	*/
-	function mapView(viewClassOrName:Dynamic, mediatorClass:Class<Dynamic>, ?injectViewAs:Dynamic = null, ?autoCreate:Bool = true, ?autoRemove:Bool = true):Void;
+		@param viewClassOrName The concrete view class or Fully Qualified classname
+		@param mediatorClass The `IMediator` class
+		@param injectViewAs The explicit view Interface or class that the mediator depends on *or* 
+			an Array of such Interfaces/Classes.
+		@param autoCreate Automatically construct and register an instance of class `mediatorClass` 
+			when an instance of class `viewClass` is detected
+		@param autoRemove Automatically remove an instance of class `mediatorClass` when its 
+			`viewClass` leaves the ancestory of the context view
+	**/
+	function mapView(viewClassOrName:Dynamic, mediatorClass:Class<Dynamic>, 
+		?injectViewAs:Dynamic = null, ?autoCreate:Bool = true, ?autoRemove:Bool = true):Void;
 	
 	/**
-	Unmap a view Class
-	
-	@param viewClassOrName The concrete view Class or Fully Qualified classname
-	*/		
+		Unmap a view class
+		
+		@param viewClassOrName The concrete view class or Fully Qualified classname
+	**/		
 	function unmapView(viewClassOrName:Dynamic):Void;
 	
 	/**
-	Create an instance of a mapped <code>IMediator</code>
-	
-	<p>This will instantiate and register a Mediator for a given View Component.
-	Mediator dependencies will be automatically resolved.</p>
-	
-	@param viewComponent An instance of the view Class previously mapped to an 
-	<code>IMediator</code> Class
-	@return The <code>IMediator</code>
-	*/
+		Create an instance of a mapped `IMediator`
+		
+		This will instantiate and register a Mediator for a given View Component. Mediator 
+		dependencies will be automatically resolved.
+		
+		@param viewComponent An instance of the view class previously mapped to an `IMediator` class
+		@return The `IMediator`
+	**/
 	function createMediator(viewComponent:Dynamic):IMediator;
 	
 	/**
-	Manually register an <code>IMediator</code> instance
-	
-	<p>NOTE: Registering a Mediator will NOT inject its dependencies. It is 
-	assumed that dependencies are already satisfied.</p>
-	
-	@param viewComponent The view component for the <code>IMediator</code>
-	@param mediator The <code>IMediator</code> to register
-	*/
+		Manually register an `IMediator` instance
+		
+		> Registering a Mediator will *not* inject its dependencies. It is assumed that 
+		> dependencies are already satisfied.
+		
+		@param viewComponent The view component for the `IMediator`
+		@param mediator The `IMediator` to register
+	**/
 	function registerMediator(viewComponent:Dynamic, mediator:IMediator):Void;
 	
 	/**
-	Remove a registered <code>IMediator</code> instance
-	
-	@param mediator The <code>IMediator</code> to remove
-	@return The <code>IMediator</code> that was removed
-	*/
+		Remove a registered `IMediator` instance
+		
+		@param mediator The `IMediator` to remove
+		@return The `IMediator` that was removed
+	**/
 	function removeMediator(mediator:IMediator):IMediator;
 	
 	/**
-	Remove a registered <code>IMediator</code> instance
-	
-	@param viewComponent The view that the <code>IMediator</code> was 
-	registered with
-	@return The <code>IMediator</code> that was removed
-	*/
+		Remove a registered `IMediator` instance
+		
+		@param viewComponent The view that the `IMediator` was registered with
+		@return The `IMediator` that was removed
+	**/
 	function removeMediatorByView(viewComponent:Dynamic):IMediator;
 	
 	/**
-	Retrieve a registered <code>IMediator</code> instance
-	
-	@param viewComponent The view that the <code>IMediator</code> was 
-	registered with
-	@return The <code>IMediator</code>
-	*/
+		Retrieve a registered `IMediator` instance
+		
+		@param viewComponent The view that the `IMediator` was registered with
+		@return The `IMediator`
+	**/
 	function retrieveMediator(viewComponent:Dynamic):IMediator;
 	
 	/**
-	Check if the view Class has been mapped or not
-	
-	@param viewClassOrName The concrete view Class or Fully Qualified classname
-	@return Whether this view class has been mapped
-	*/
+		Check if the view class has been mapped or not
+		
+		@param viewClassOrName The concrete view class or Fully Qualified classname
+		@return Whether this view class has been mapped
+	**/
 	function hasMapping(viewClassOrName:Dynamic):Bool;
 	
 	/**
-	Check if the <code>IMediator</code> has been registered
-	
-	@param mediator The <code>IMediator</code> instance
-	@return Whether this <code>IMediator</code> has been registered
-	*/
+		Check if the `IMediator` has been registered
+		
+		@param mediator The `IMediator` instance
+		@return Whether this `IMediator` has been registered
+	**/
 	function hasMediator(mediator:IMediator):Bool;
 	
 	/**
-	Check if an <code>IMediator</code> has been registered for a view instance
-	
-	@param viewComponent The view that the <code>IMediator</code> was 
-	registered with
-	@return Whether an <code>IMediator</code> has been registered for this 
-	view instance
-	*/
+		Check if an `IMediator` has been registered for a view instance
+		
+		@param viewComponent The view that the `IMediator` was registered with
+		@return Whether an `IMediator` has been registered for this view instance
+	**/
 	function hasMediatorForView(viewComponent:Dynamic):Bool;
 	
 	/**
-	The <code>IMediatorMap</code>'s <code>IViewContainer</code>
-	
-	@return view The <code>IViewContainer</code> to use as scope for this 
-	<code>IMediatorMap</code>
-	*/
+		The `IMediatorMap`'s `IViewContainer`
+		
+		@return view The `IViewContainer` to use as scope for this `IMediatorMap`
+	**/
 	var contextView(default, set_contextView):IViewContainer;
 	
 	/**
-	The <code>IMediatorMap</code>'s enabled status
-	
-	@return Whether the <code>IMediatorMap</code> is enabled
-	*/		
+		The `IMediatorMap`'s enabled status
+		
+		@return Whether the `IMediatorMap` is enabled
+	**/		
 	var enabled(default, set_enabled):Bool;
 }

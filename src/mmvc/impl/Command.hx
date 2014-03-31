@@ -29,9 +29,9 @@ import mmvc.api.IMediatorMap;
 import mmvc.api.IViewContainer;
 
 /**
-Abstract MVCS command implementation
-*/
-class Command implements ICommand
+	Abstract MVCS command implementation
+**/
+@:keepSub class Command implements ICommand
 {
 	@inject public var contextView:IViewContainer;
 	

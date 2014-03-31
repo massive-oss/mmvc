@@ -11,7 +11,7 @@
 		},
 		"devDependencies":
 		{
-			"mtask": "2.x",
+			"mtask": "3.x",
 			"munit": "2.x",
 			"mcover": "2.x"
 		}

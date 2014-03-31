@@ -23,8 +23,8 @@ SOFTWARE.
 package mmvc.base;
 
 /**
-A framework Error implementation
-*/
+	A framework Error implementation
+**/
 class ContextError
 {
 	public var message:String;

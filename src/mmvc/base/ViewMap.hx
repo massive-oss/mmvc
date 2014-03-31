@@ -28,21 +28,16 @@ import mmvc.api.IViewMap;
 import mmvc.api.IViewContainer;
 
 /**
-An abstract <code>IViewMap</code> implementation
-*/
-#if haxe3
+	An abstract `IViewMap` implementation
+**/
 class ViewMap extends ViewMapBase implements IViewMap
-#else
-class ViewMap extends ViewMapBase, implements IViewMap
-#end
 {
 	/**
-	Creates a new <code>ViewMap</code> object
-	
-	@param contextView The root view node of the context. The map will listen 
-	for ADDED_TO_STAGE events on this node
-	@param injector An <code>Injector</code> to use for this context
-	*/
+		Creates a new `ViewMap` object
+		
+		@param contextView The root view node of the context.
+		@param injector An `Injector` to use for this context
+	**/
 	public function new(contextView:IViewContainer, injector:Injector)
 	{
 		super(contextView, injector);
@@ -94,7 +89,6 @@ class ViewMap extends ViewMapBase, implements IViewMap
 			addListeners();
 		}
 		
-		// This was a bad idea - causes unexpected eager instantiation of object graph 
 		if (contextView != null && Std.is(contextView, type))
 		{
 			injectInto(contextView);
@@ -188,7 +182,7 @@ class ViewMap extends ViewMapBase, implements IViewMap
 
 	override function onViewRemoved(view:Dynamic):Void
 	{
-		trace("TODO");
+		// abstract
 	}
 
 	function injectInto(view:Dynamic):Void

@@ -18,51 +18,50 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 SOFTWARE.
-*/
+**/
 
 package mmvc.api;
 
 /**
-The Robotlegs Mediator contract
-*/
+	The mmvc Mediator contract
+**/
 interface IMediator
 {
 	/**
-	Should be invoked by the <code>IMediatorMap</code> during 
-	<code>IMediator</code> registration
-	*/
+		Should be invoked by the `IMediatorMap` during `IMediator` registration
+	**/
 	function preRegister():Void;
 	
 	/**
-	Should be invoked by the <code>IMediator</code> itself when it is ready to 
-	be interacted with.
-	<p>Override and place your initialization code here</p>
-	*/
+		Should be invoked by the `IMediator` itself when it is ready to be interacted with.
+
+		Override and place your initialization code here.
+	**/
 	function onRegister():Void;
 	
 	/**
-	Invoked when the <code>IMediator</code> has been removed by the 
-	<code>IMediatorMap</code>
-	*/
+		Invoked when the `IMediator` has been removed by the `IMediatorMap`.
+	**/
 	function preRemove():Void;
 	
 	/**
-	Should be invoked by the <code>IMediator</code> itself when it is ready to 
-	for cleanup.
-	<p>Override and place your cleanup code here</p>
-	*/
+		Should be invoked by the `IMediator` itself when it is ready to for cleanup.
+		
+		Override and place your cleanup code here.
+	**/
 	function onRemove():Void;
 	
 	/**
-	The <code>IMediator</code>'s view component
-	@return The view component
-	*/
+		The `IMediator`'s view component
+		
+		@return The view component
+	**/
 	function getViewComponent():Dynamic;
 	
 	/**
-	The <code>IMediator</code>'s view component
-	
-	@param The view component
-	*/
+		The `IMediator`'s view component
+		
+		@param The view component
+	**/
 	function setViewComponent(viewComponent:Dynamic):Void;
 }

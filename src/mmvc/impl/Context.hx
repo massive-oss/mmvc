@@ -37,39 +37,8 @@ import minject.Reflector;
 import mmvc.api.IViewContainer;
 
 /**
-Dispatched by the <code>startup()</code> method when it finishes 
-executing.
-
-<p>One common pattern for application startup/bootstrapping makes use of 
-the <code>startupComplete</code> event. In this pattern, you do the 
-following:</p>
-<ul>
-  <li>Override the <code>startup()</code> method in your Context 
-      subclass and set up application mappings in your 
-      <code>startup()</code> override as you always do in Robotlegs.</li>
-  <li>Create commands that perform startup/bootstrapping operations
-      such as loading the initial data, checking for application updates,
-      etc.</li>
-  <li><p>Map those commands to the <code>ContextEvent.STARTUP_COMPLETE</code>
-      event:</p>
-      <listing>commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, LoadInitialDataCommand, ContextEvent, true):</listing>
-      </li>
-  <li>Dispatch the <code>startupComplete</code> (<code>ContextEvent.STARTUP_COMPLETE</code>)
-      event from your <code>startup()</code> override. You can do this
-      in one of two ways: dispatch the event yourself, or call 
-      <code>super.startup()</code>. (The Context class's 
-      <code>startup()</code> method dispatches the 
-      <code>startupComplete</code> event.)</li>
-</ul>
-
-@eventType mmvc.base.ContextEvent.STARTUP_COMPLETE
-
-@see #startup()
-*/
-
-/**
-Abstract MVCS <code>IContext</code> implementation
-*/
+	Abstract MVCS `IContext` implementation
+**/
 class Context implements IContext
 {
 	var autoStartup:Bool;
@@ -87,16 +56,14 @@ class Context implements IContext
 	public var viewMap(get_viewMap, null):IViewMap;
 	
 	/**
-	Abstract Context Implementation
-	
-	<p>Extend this class to create a Framework or Application context</p>
-	
-	@param contextView The root view node of the context. The context will 
-	listen for ADDED_TO_STAGE events on this node
-	@param autoStartup Should this context automatically invoke it's 
-	<code>startup</code> method when it's <code>contextView</code> arrives 
-	on Stage?
-	*/
+		Abstract Context Implementation
+		
+		Extend this class to create a Framework or Application context.
+		
+		@param contextView The root view node of the context.
+		@param autoStartup Should this context automatically invoke it's `startup` method when it's 
+			`contextView` arrives on Stage
+	**/
 	public function new(?contextView:IViewContainer=null, ?autoStartup:Bool=true)
 	{
 		this.autoStartup = autoStartup;
@@ -104,13 +71,13 @@ class Context implements IContext
 	}
 	
 	/**
-	The startup hook. Override this in your Application context.
-	*/
+		The startup hook. Override this in your Application context.
+	**/
 	public function startup():Void {}
 	
 	/**
-	The Startup Hook. Override this in your Application context.
-	*/
+		The Startup Hook. Override this in your Application context.
+	**/
 	public function shutdown():Void {}
 	
 	public function set_contextView(value:IViewContainer):IViewContainer
@@ -118,7 +85,6 @@ class Context implements IContext
 		if (contextView != value)
 		{
 			contextView = value;
-			// Hack: We have to clear these out and re-map them
 			commandMap = null;
 			mediatorMap = null;
 			viewMap = null;
@@ -131,8 +97,8 @@ class Context implements IContext
 	}
 	
 	/**
-	The <code>Injector</code> for this <code>IContext</code>
-	*/
+		The `Injector` for this `IContext`
+	**/
 	function get_injector():Injector
 	{
 		if (injector == null)
@@ -144,8 +110,8 @@ class Context implements IContext
 	}
 	
 	/**
-	The <code>Reflector</code> for this <code>IContext</code>
-	*/
+		The `Reflector` for this `IContext`
+	**/
 	function get_reflector():Reflector
 	{
 		if (reflector == null)
@@ -157,8 +123,8 @@ class Context implements IContext
 	}
 	
 	/**
-	The <code>ICommandMap</code> for this <code>IContext</code>
-	*/
+		The `ICommandMap` for this `IContext`
+	**/
 	function get_commandMap():ICommandMap
 	{
 		if (commandMap == null)
@@ -170,8 +136,8 @@ class Context implements IContext
 	}
 	
 	/**
-	The <code>IMediatorMap</code> for this <code>IContext</code>
-	*/
+		The `IMediatorMap` for this `IContext`
+	**/
 	function get_mediatorMap():IMediatorMap
 	{
 		if (mediatorMap == null)
@@ -183,8 +149,8 @@ class Context implements IContext
 	}
 	
 	/**
-	The <code>IViewMap</code> for this <code>IContext</code>
-	*/
+		The `IViewMap` for this `IContext`
+	**/
 	function get_viewMap():IViewMap
 	{
 		if (viewMap == null)
@@ -196,12 +162,12 @@ class Context implements IContext
 	}
 	
 	/**
-	Injection Mapping Hook
-	
-	<p>Override this in your Framework context to change the default configuration</p>
-	
-	<p>Beware of collisions in your container</p>
-	*/
+		Injection Mapping Hook
+		
+		Override this in your application context to change the default configuration
+		
+		> Beware of collisions in your container
+	**/
 	function mapInjections():Void
 	{
 		injector.mapValue(Reflector, reflector);

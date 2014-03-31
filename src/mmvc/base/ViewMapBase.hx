@@ -26,19 +26,19 @@ import minject.Injector;
 import mmvc.api.IViewContainer;
 
 /**
-A base ViewMap implementation
-*/
+	A base ViewMap implementation
+**/
 class ViewMapBase
 {
 	public var contextView(default, set_contextView):IViewContainer;
 	public var enabled(default, set_enabled):Bool;
 	
 	/**
-	Creates a new <code>ViewMap</code> object
-	
-	@param contextView The root view node of the context. The map will listen for ADDED_TO_STAGE events on this node
-	@param injector An <code>Injector</code> to use for this context
-	*/
+		Creates a new `ViewMap` object
+		
+		@param contextView The root view node of the context
+		@param injector An `Injector` to use for this context
+	**/
 	public function new(contextView:IViewContainer, injector:Injector)
 	{
 		viewListenerCount = 0;
@@ -83,9 +83,7 @@ class ViewMapBase
 
 		return value;
 	}
-
-	//------------------------------------------------------------------ private
-
+	
 	var injector:Injector;
 	var viewListenerCount:Int;
 

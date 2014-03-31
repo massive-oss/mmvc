@@ -31,13 +31,9 @@ import mmvc.api.IViewContainer;
 import haxe.Timer;
 
 /**
-An abstract <code>IMediatorMap</code> implementation
-*/
-#if haxe3
+	An abstract `IMediatorMap` implementation
+**/
 class MediatorMap extends ViewMapBase implements IMediatorMap
-#else
-class MediatorMap extends ViewMapBase, implements IMediatorMap
-#end
 {
 	var mediatorByView:Dictionary<Dynamic, IMediator>;
 	var mappingConfigByView:Dictionary<Dynamic, MappingConfig>;
@@ -47,13 +43,12 @@ class MediatorMap extends ViewMapBase, implements IMediatorMap
 	var reflector:Reflector;
 	
 	/**
-	Creates a new <code>MediatorMap</code> object
-	
-	@param contextView The root view node of the context. The map will listen 
-	for ADDED_TO_STAGE events on this node
-	@param injector An <code>Injector</code> to use for this context
-	@param reflector An <code>Reflector</code> to use for this context
-	*/
+		Creates a new `MediatorMap` object
+		
+		@param contextView The root view node of the context. 
+		@param injector An `Injector` to use for this context
+		@param reflector An `Reflector` to use for this context
+	**/
 	public function new(contextView:IViewContainer, injector:Injector, reflector:Reflector)
 	{
 		super(contextView, injector);
@@ -112,7 +107,6 @@ class MediatorMap extends ViewMapBase, implements IMediatorMap
 			}	
 		}
 		
-		// This was a bad idea - causes unexpected eager instantiation of object graph 
 		if (autoCreate && contextView != null && viewClassName == Type.getClassName(Type.getClass(contextView)))
 		{
 			createMediatorUsing(contextView, viewClassName, config);
@@ -242,18 +236,7 @@ class MediatorMap extends ViewMapBase, implements IMediatorMap
 
 		if (config != null && config.autoRemove)
 		{
-			// don't delay until isAdded works correctly
 			removeMediatorByView(view);
-
-			/*
-			mediatorsMarkedForRemoval.set(view, view);
-
-			if (!hasMediatorsMarkedForRemoval)
-			{
-				hasMediatorsMarkedForRemoval = true;
-				Timer.delay(removeMediatorLater, 60);
-			}
-			*/
 		}
 	}
 
@@ -271,7 +254,8 @@ class MediatorMap extends ViewMapBase, implements IMediatorMap
 		hasMediatorsMarkedForRemoval = false;
 	}
 
-	function createMediatorUsing(viewComponent:Dynamic, ?viewClassName:String=null, ?config:MappingConfig=null):IMediator
+	function createMediatorUsing(viewComponent:Dynamic, ?viewClassName:String=null, 
+		?config:MappingConfig=null):IMediator
 	{
 		var mediator = mediatorByView.get(viewComponent);
 		
