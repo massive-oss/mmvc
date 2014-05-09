@@ -3,11 +3,11 @@
 	"mlib":"2.0.2",
 	"mcover":"2.0.3",
 	"mdata":"2.2.0",
-	"minject":"1.3.0",
+	"minject":"a89c14d",
 	"msys":"1.2.2",
-	"mcore":"1.3.8",
+	"mcore":"1.3.9",
 	"mconsole":"1.6.1",
 	"munit":"2.1.1",
 	"hamcrest":"1.2.1",
-	"mtask":"3.2.1"
+	"mtask":"3.4.0"
 }
