@@ -1,10 +1,8 @@
-# Flash 9+
 -main TestMain
 -lib munit
 -lib hamcrest
 -lib msignal
 -lib minject
--lib mdata
 -cp src
 -cp test
 -swf-version 9
@@ -12,40 +10,22 @@
 
 --next
 
-#Flash 8
-# -main TestMain
-# -lib munit
-# -lib hamcrest
-# -lib msignal
-# -lib minject
-#-lib mdata
-# -cp src
-# -cp test
-# -swf-version 8
-# -swf bin/test/as2_test.swf
-
---next
-
-# JavaScript
 -main TestMain
 -lib munit
 -lib hamcrest
 -lib msignal
 -lib minject
--lib mdata
 -cp src
 -cp test
 -js bin/test/js_test.js
 
 --next
 
-# Neko
 -main TestMain
 -lib munit
 -lib hamcrest
 -lib msignal
 -lib minject
--lib mdata
 -cp src
 -cp test
 -neko bin/test/neko_test.n
