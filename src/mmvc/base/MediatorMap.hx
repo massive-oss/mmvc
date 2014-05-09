@@ -128,7 +128,7 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 			}
 		}
 
-		mappingConfigByViewClassName.delete(viewClassName);
+		mappingConfigByViewClassName.remove(viewClassName);
 	}
 	
 	public function createMediator(viewComponent:Dynamic):IMediator
@@ -150,8 +150,8 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 		if (mediator != null)
 		{
 			var viewComponent:Dynamic = mediator.getViewComponent();
-			mediatorByView.delete(viewComponent);
-			mappingConfigByView.delete(viewComponent);
+			mediatorByView.remove(viewComponent);
+			mappingConfigByView.remove(viewComponent);
 			mediator.preRemove();
 			mediator.setViewComponent(null);
 		}
@@ -162,7 +162,7 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 	public function removeMediatorByView(viewComponent:Dynamic):IMediator
 	{
 		var mediator = removeMediator(retrieveMediator(viewComponent));
-		injector.attendedToInjectees.delete(mediator);
+		injector.attendedToInjectees.remove(mediator);
 		return mediator;
 	}
 	
@@ -217,7 +217,7 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 	{
 		if (mediatorsMarkedForRemoval.get(view) != null)
 		{
-			mediatorsMarkedForRemoval.delete(view);
+			mediatorsMarkedForRemoval.remove(view);
 			return;
 		}
 		
@@ -248,7 +248,7 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 			{
 				removeMediatorByView(view);
 			}
-			mediatorsMarkedForRemoval.delete(view);
+			mediatorsMarkedForRemoval.remove(view);
 		}
 
 		hasMediatorsMarkedForRemoval = false;

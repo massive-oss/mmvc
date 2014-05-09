@@ -85,7 +85,7 @@ class CommandMap implements ICommandMap
 		if (!hasCommand(signal))
 		{
 			injector.unmap(signalClass);
-			signalClassMap.delete(signalClass);
+			signalClassMap.remove(signalClass);
 		}
 	}
 
@@ -97,9 +97,9 @@ class CommandMap implements ICommandMap
 		var callbackFunction = callbacksByCommandClass.get(commandClass);
 		if (callbackFunction == null) return;
 		
-		if (!hasCommand(signal)) signalMap.delete(signal);
+		if (!hasCommand(signal)) signalMap.remove(signal);
 		signal.remove(callbackFunction);
-		callbacksByCommandClass.delete(commandClass);
+		callbacksByCommandClass.remove(commandClass);
 	}
 
 	function getSignalClassInstance(signalClass:SignalClass):AnySignal
@@ -156,7 +156,7 @@ class CommandMap implements ICommandMap
 		injector.unmap(AnySignal);
 		unmapSignalValues(signal.valueClasses, valueObjects);
 		command.execute();
-		injector.attendedToInjectees.delete(command);
+		injector.attendedToInjectees.remove(command);
 		
 		if (oneshot)
 		{
@@ -194,7 +194,7 @@ class CommandMap implements ICommandMap
 	{
 		if (detainedCommands.exists(command))
 		{
-			detainedCommands.delete(command);
+			detainedCommands.remove(command);
 		}
 	}
 }

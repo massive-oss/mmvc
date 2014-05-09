@@ -98,7 +98,7 @@ class ViewMap extends ViewMapBase implements IViewMap
 	public function unmapType(type:Class<Dynamic>):Void
 	{
 		var mapping:Class<Dynamic> = mappedTypes.get(type);
-		mappedTypes.delete(type);
+		mappedTypes.remove(type);
 		
 		if (mapping != null)
 		{
