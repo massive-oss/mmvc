@@ -2,14 +2,14 @@
 	"project": 
 	{
 		"name": "MassiveMVC",
-		"version": "1.4.0",
+		"version": "1.5.0",
 		"id": "mmvc",
 		"devDependencies": 
 		{
 			"mcover": "2.x",
+			"hamcrest": "1.x",
 			"mtask": "3.x",
-			"munit": "2.x",
-			"hamcrest": "1.x"
+			"munit": "2.x"
 		},
 		"dependencies": 
 		{
