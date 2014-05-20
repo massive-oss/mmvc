@@ -33,7 +33,7 @@ for progressed, completed and failed requests.
 interface Loader<T>
 {
 	var uri:String;
-	var progress(get_progress, null):Float;
+	var progress(get, null):Float;
 
 	var progressed(default, null):Signal1<Float>;
 	var completed(default, null):Signal1<T>;

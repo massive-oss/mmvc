@@ -22,16 +22,24 @@ SOFTWARE.
 
 package mmvc.base;
 
-import mdata.Dictionary;
+import haxe.ds.ObjectMap;
+
 import minject.Injector;
+import minject.ClassMap;
 import mmvc.api.IViewMap;
 import mmvc.api.IViewContainer;
+
+using Lambda;
 
 /**
 	An abstract `IViewMap` implementation
 **/
 class ViewMap extends ViewMapBase implements IViewMap
 {
+	var mappedPackages:Array<Dynamic>;
+	var mappedTypes:ClassMap<Class<Dynamic>>;
+	var injectedViews:ObjectMap<{}, Dynamic>;
+	
 	/**
 		Creates a new `ViewMap` object
 		
@@ -41,116 +49,70 @@ class ViewMap extends ViewMapBase implements IViewMap
 	public function new(contextView:IViewContainer, injector:Injector)
 	{
 		super(contextView, injector);
-
-		mappedPackages = new Array<Dynamic>();
-		mappedTypes = new Dictionary<Dynamic, Dynamic>();
-		injectedViews = new Dictionary<Dynamic, Dynamic>(true);
+		mappedPackages = new Array();
+		mappedTypes = new ClassMap();
+		injectedViews = new ObjectMap();
 	}
 	
 	public function mapPackage(packageName:String):Void
 	{
-		if (!Lambda.has(mappedPackages, packageName))
-		{
-			mappedPackages.push(packageName);
-			viewListenerCount++;
-
-			if (viewListenerCount == 1)
-			{
-				addListeners();
-			}
-		}
+		if (mappedPackages.indexOf(packageName) > -1) return;
+		mappedPackages.push(packageName);
+		viewListenerCount++;
+		if (viewListenerCount == 1) addListeners();
 	}
 
 	public function unmapPackage(packageName:String):Void
 	{
-		var index = Lambda.indexOf(mappedPackages, packageName);
-
-		if (index > -1)
-		{
-			mappedPackages.splice(index, 1);
-			viewListenerCount--;
-
-			if (viewListenerCount == 0)
-			{
-				removeListeners();
-			}
-		}
+		if (!mappedPackages.remove(packageName)) return;
+		viewListenerCount--;
+		if (viewListenerCount == 0) removeListeners();
 	}
 
 	public function mapType(type:Class<Dynamic>):Void
 	{
-		if (mappedTypes.get(type) != null) return;
-
+		if (mappedTypes.exists(type)) return;
 		mappedTypes.set(type, type);
-
 		viewListenerCount++;
-		if (viewListenerCount == 1)
-		{
-			addListeners();
-		}
-		
-		if (contextView != null && Std.is(contextView, type))
-		{
-			injectInto(contextView);
-		}
+		if (viewListenerCount == 1) addListeners();
+		if (contextView != null && Std.is(contextView, type)) injectInto(contextView);
 	}
 
 	public function unmapType(type:Class<Dynamic>):Void
 	{
-		var mapping:Class<Dynamic> = mappedTypes.get(type);
+		if (!mappedTypes.exists(type)) return;
 		mappedTypes.remove(type);
-		
-		if (mapping != null)
-		{
-			viewListenerCount--;
-
-			if (viewListenerCount == 0)
-			{
-				removeListeners();
-			}
-		}
+		viewListenerCount--;
+		if (viewListenerCount == 0) removeListeners();
 	}
 
 	public function hasType(type:Class<Dynamic>):Bool
 	{
-		return mappedTypes.get(type) != null;
+		return mappedTypes.exists(type);
 	}
 
 	public function hasPackage(packageName:String):Bool
 	{
-		return Lambda.has(mappedPackages, packageName);
+		return mappedPackages.indexOf(packageName) > -1;
 	}
-
-	//------------------------------------------------------------------------- private
-	
-	var mappedPackages:Array<Dynamic>;
-	var mappedTypes:Dictionary<Dynamic, Dynamic>;
-	var injectedViews:Dictionary<Dynamic, Dynamic>;
 
 	override function addListeners():Void
 	{
-		if (contextView != null && enabled)
-		{
-			contextView.viewAdded = onViewAdded;
-			contextView.viewRemoved = onViewAdded;
-		}
+		if (contextView == null || !enabled) return;
+		contextView.viewAdded = onViewAdded;
+		contextView.viewRemoved = onViewAdded;
 	}
 
 	override function removeListeners():Void
 	{
-		if (contextView != null)
-		{
-			contextView.viewAdded = null;
-			contextView.viewRemoved = null;
-		}
+		if (contextView == null) return;
+		contextView.viewAdded = null;
+		contextView.viewRemoved = null;
 	}
 
 	override function onViewAdded(view:Dynamic):Void
 	{
-		if (injectedViews.get(view) != null)
-		{
-			return;
-		}
+		if (injectedViews.exists(view)) return;
 		
 		for (type in mappedTypes)
 		{
@@ -161,7 +123,7 @@ class ViewMap extends ViewMapBase implements IViewMap
 			}
 		}
 
-		var len:Int = mappedPackages.length;
+		var len = mappedPackages.length;
 
 		if (len > 0)
 		{
@@ -169,7 +131,7 @@ class ViewMap extends ViewMapBase implements IViewMap
 
 			for (i in 0...len)
 			{
-				var packageName:String = mappedPackages[i];
+				var packageName = mappedPackages[i];
 
 				if (className.indexOf(packageName) == 0)
 				{

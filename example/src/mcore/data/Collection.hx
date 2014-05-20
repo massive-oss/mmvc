@@ -79,7 +79,7 @@ interface Collection<T>
 	/**
 	The number of values in this collection.
 	*/
-	var size(get_size, null):Int;
+	var size(get, null):Int;
 
 	/**
 	Adds a value to the collection.

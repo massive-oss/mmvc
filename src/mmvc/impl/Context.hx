@@ -43,17 +43,17 @@ class Context implements IContext
 {
 	var autoStartup:Bool;
 
-	public var contextView(default, set_contextView):IViewContainer;
+	public var contextView(default, set):IViewContainer;
 	
-	public var commandMap(get_commandMap, null):ICommandMap;
+	public var commandMap(get, null):ICommandMap;
 
-	public var injector(get_injector, null):Injector;
+	public var injector(get, null):Injector;
 	
-	public var mediatorMap(get_mediatorMap, null):IMediatorMap;
+	public var mediatorMap(get, null):IMediatorMap;
 	
-	public var reflector(get_reflector, null):Reflector;
+	public var reflector(get, null):Reflector;
 	
-	public var viewMap(get_viewMap, null):IViewMap;
+	public var viewMap(get, null):IViewMap;
 	
 	/**
 		Abstract Context Implementation
@@ -99,7 +99,7 @@ class Context implements IContext
 	/**
 		The `Injector` for this `IContext`
 	**/
-	function get_injector():Injector
+	public function get_injector():Injector
 	{
 		if (injector == null)
 		{

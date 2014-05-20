@@ -25,8 +25,6 @@ package mmvc.impl;
 import minject.Injector;
 
 /**
-	Abstract MVCS `IActor` implementation.
-
 	As part of the MVCS implementation the `Actor` provides core functionality to an applications 
 	various working parts.
 	 

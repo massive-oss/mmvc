@@ -27,5 +27,5 @@ package mmvc.api;
 **/
 interface IContext
 {
-	var commandMap(get_commandMap, null):ICommandMap;
+	var commandMap(get, null):ICommandMap;
 }

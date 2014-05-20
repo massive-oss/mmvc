@@ -127,12 +127,12 @@ interface IMediatorMap
 		
 		@return view The `IViewContainer` to use as scope for this `IMediatorMap`
 	**/
-	var contextView(default, set_contextView):IViewContainer;
+	var contextView(default, set):IViewContainer;
 	
 	/**
 		The `IMediatorMap`'s enabled status
 		
 		@return Whether the `IMediatorMap` is enabled
 	**/		
-	var enabled(default, set_enabled):Bool;
+	var enabled(default, set):Bool;
 }

@@ -30,7 +30,7 @@ import minject.Injector;
 /**
 	Abstract MVCS `IMediator` implementation
 **/
-@:keepSub class Mediator<T> extends MediatorBase<T>
+class Mediator<T> extends MediatorBase<T>
 {
 	@inject public var injector:Injector;
 	

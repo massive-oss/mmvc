@@ -21,13 +21,14 @@ SOFTWARE.
 */
 
 package mmvc.base.support;
-	
-import mdata.Dictionary;
+
+import haxe.ds.ObjectMap;
+
 import mmvc.api.IViewContainer;
 
 class TestContextView implements IViewContainer
 {
-	var views:Dictionary<Dynamic, Bool>;
+	var views:ObjectMap<{}, Bool>;
 
 	public var viewAdded:Dynamic -> Void;
 	public var viewRemoved:Dynamic -> Void;
@@ -37,7 +38,7 @@ class TestContextView implements IViewContainer
 	
 	public function new()
 	{
-		views = new Dictionary<Dynamic, Bool>();
+		views = new ObjectMap<{}, Bool>();
 	}
 
 	public function addView(view:Dynamic)
@@ -52,7 +53,7 @@ class TestContextView implements IViewContainer
 
 	public function removeView(view:Dynamic)
 	{
-		views.delete(view);
+		views.remove(view);
 
 		if (viewRemoved != null)
 		{

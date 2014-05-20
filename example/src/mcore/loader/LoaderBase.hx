@@ -44,7 +44,7 @@ class LoaderBase<T> implements Loader<T>
 	/**
 	The percentage of loading complete. Between 0 and 1.
 	*/
-	public var progress(get_progress, null):Float;
+	public var progress(get, null):Float;
 	function get_progress() { return 0; }
 
 	/**

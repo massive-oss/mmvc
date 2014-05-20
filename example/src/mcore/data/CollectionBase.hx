@@ -42,7 +42,7 @@ class CollectionBase<T> implements Collection<T>
 	/**
 	The number of values in this collection.
 	*/
-	public var size(get_size, null):Int;
+	public var size(get, null):Int;
 	function get_size():Int { return source.length; }
 
 	var source:Array<T>;

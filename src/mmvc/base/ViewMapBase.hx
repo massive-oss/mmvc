@@ -30,8 +30,11 @@ import mmvc.api.IViewContainer;
 **/
 class ViewMapBase
 {
-	public var contextView(default, set_contextView):IViewContainer;
-	public var enabled(default, set_enabled):Bool;
+	var injector:Injector;
+	var viewListenerCount:Int;
+	
+	public var contextView(default, set):IViewContainer;
+	public var enabled(default, set):Bool;
 	
 	/**
 		Creates a new `ViewMap` object
@@ -43,9 +46,7 @@ class ViewMapBase
 	{
 		viewListenerCount = 0;
 		enabled = true;
-
 		this.injector = injector;
-
 		// this must come last, see the setter
 		this.contextView = contextView;
 	}
@@ -55,15 +56,9 @@ class ViewMapBase
 		if (value != contextView)
 		{
 			removeListeners();
-			
 			contextView = value;
-
-			if (viewListenerCount > 0)
-			{
-				addListeners();
-			}
+			if (viewListenerCount > 0) addListeners();
 		}
-		
 		return contextView;
 	}
 
@@ -72,23 +67,15 @@ class ViewMapBase
 		if (value != enabled)
 		{
 			removeListeners();
-			
 			enabled = value;
-			
-			if (viewListenerCount > 0)
-			{
-				addListeners();
-			}
+			if (viewListenerCount > 0) addListeners();
 		}
-
 		return value;
 	}
-	
-	var injector:Injector;
-	var viewListenerCount:Int;
 
 	function addListeners():Void {}
 	function removeListeners():Void {}
+
 	function onViewAdded(view:Dynamic):Void {}
 	function onViewRemoved(view:Dynamic):Void {}
 }

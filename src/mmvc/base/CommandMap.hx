@@ -24,39 +24,38 @@ package mmvc.base;
 
 import msignal.Signal;
 import minject.Injector;
+import minject.ClassMap;
 import mmvc.api.ICommand;
 import mmvc.api.ICommandMap;
-import mdata.Dictionary;
 
 class CommandMap implements ICommandMap
 {
 	var injector:Injector;
-	var signalMap:Dictionary<Dynamic, Dynamic>;
-	var signalClassMap:Dictionary<Dynamic, Dynamic>;
-	var detainedCommands:Dictionary<Dynamic, Dynamic>;
+	var signalMap:Map<AnySignal, ClassMap<Dynamic>>;
+	var signalClassMap:ClassMap<AnySignal>;
+	var detainedCommands:Map<ICommand, Bool>;
 
 	public function new(injector:Injector)
 	{
 		this.injector = injector;
 
-		signalMap = new Dictionary();
-		signalClassMap = new Dictionary();
-		detainedCommands = new Dictionary();
+		signalMap = new Map();
+		signalClassMap = new ClassMap();
+		detainedCommands = new Map();
 	}
 	
 	public function mapSignalClass(signalClass:SignalClass, commandClass:CommandClass, ?oneShot:Bool=false):AnySignal
 	{
 		var signal = getSignalClassInstance(signalClass);
 		mapSignal(signal, commandClass, oneShot);
-		
 		return signal;
 	}
 
-	public function mapSignal(signal:AnySignal, commandClass:Class<ICommand>, ?oneShot:Bool=false)
+	public function mapSignal(signal:AnySignal, commandClass:CommandClass, ?oneShot:Bool=false):Void
 	{
 		if (hasSignalCommand(signal, commandClass)) return;
 
-		var signalCommandMap:Dictionary<Dynamic, Dynamic>;
+		var signalCommandMap:ClassMap<Dynamic>;
 		
 		if (signalMap.exists(signal))
 		{
@@ -64,7 +63,7 @@ class CommandMap implements ICommandMap
 		}
 		else
 		{
-			signalCommandMap = new Dictionary(false);
+			signalCommandMap = new ClassMap<Dynamic>();
 			signalMap.set(signal, signalCommandMap);
 		}
 		
@@ -130,7 +129,7 @@ class CommandMap implements ICommandMap
 
 	public function hasCommand(signal:AnySignal):Bool
 	{
-		var callbacksByCommandClass:Dictionary<Dynamic, Dynamic> = signalMap.get(signal);
+		var callbacksByCommandClass = signalMap.get(signal);
 		if (callbacksByCommandClass == null) return false;
 
 		var count = 0;

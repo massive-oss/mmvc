@@ -28,8 +28,7 @@ import msignal.Slot;
 /**
 	An abstract `IMediator` implementation
 **/
-@:keepSub
-class MediatorBase<T> implements IMediator
+@:keepSub class MediatorBase<T> implements IMediator
 {
 	/**
 		This Mediator's View - used by the mmvc framework internally. You should declare a 

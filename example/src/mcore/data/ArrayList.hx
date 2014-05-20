@@ -58,7 +58,7 @@ class ArrayList<T> extends CollectionBase<T>
 	/**
 	The first item in the collection.
 	*/
-	public var first(get_first, null):T;
+	public var first(get, null):T;
 
 	function get_first():T
 	{
@@ -71,7 +71,7 @@ class ArrayList<T> extends CollectionBase<T>
 	/**
 	The last item in the collection.
 	*/
-	public var last(get_last, null):T;
+	public var last(get, null):T;
 
 	function get_last():T
 	{
@@ -84,7 +84,7 @@ class ArrayList<T> extends CollectionBase<T>
 	/**
 	The number of items in the collection.
 	*/
-	public var length(get_length, null):Int;
+	public var length(get, null):Int;
 
 	function get_length():Int
 	{

@@ -28,7 +28,7 @@ import mmvc.impl.Context;
 
 class TestContext extends Context
 {
-	public var isInitialized(get_isInitialized, null):Bool;
+	public var isInitialized(get, null):Bool;
 	public var startupComplete:Bool ;
 	
 	public function new(?contextView:IViewContainer=null, ?autoStartup:Bool=true)

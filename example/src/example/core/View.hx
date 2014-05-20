@@ -86,7 +86,7 @@ class View
 	defaults to -1 when view has no parent 
 	@see View.addChild()
 	*/
-	public var index(default, set_index):Int;
+	public var index(default, set):Int;
 
 
 	/**

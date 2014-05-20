@@ -22,23 +22,25 @@ SOFTWARE.
 
 package mmvc.base;
 
+import haxe.Timer;
+import haxe.ds.ObjectMap;
+
 import minject.Injector;
+import minject.Reflector;
+
 import mmvc.api.IMediator;
 import mmvc.api.IMediatorMap;
-import minject.Reflector;
-import mdata.Dictionary;
 import mmvc.api.IViewContainer;
-import haxe.Timer;
 
 /**
 	An abstract `IMediatorMap` implementation
 **/
 class MediatorMap extends ViewMapBase implements IMediatorMap
 {
-	var mediatorByView:Dictionary<Dynamic, IMediator>;
-	var mappingConfigByView:Dictionary<Dynamic, MappingConfig>;
-	var mappingConfigByViewClassName:Dictionary<Dynamic, MappingConfig>;
-	var mediatorsMarkedForRemoval:Dictionary<Dynamic, Dynamic>;
+	var mediatorByView:ObjectMap<{}, IMediator>;
+	var mappingConfigByView:ObjectMap<{}, MappingConfig>;
+	var mappingConfigByViewClassName:Map<String, MappingConfig>;
+	var mediatorsMarkedForRemoval:ObjectMap<{}, Dynamic>;
 	var hasMediatorsMarkedForRemoval:Bool;
 	var reflector:Reflector;
 	
@@ -54,16 +56,16 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 		super(contextView, injector);
 		this.reflector = reflector;
 		
-		mediatorByView = new Dictionary(true);
-		mappingConfigByView = new Dictionary(true);
-		mappingConfigByViewClassName = new Dictionary();
-		mediatorsMarkedForRemoval = new Dictionary();
+		mediatorByView = new ObjectMap();
+		mappingConfigByView = new ObjectMap();
+		mappingConfigByViewClassName = new Map();
+		mediatorsMarkedForRemoval = new ObjectMap();
 		hasMediatorsMarkedForRemoval = false;
 	}
 	
 	public function mapView(viewClassOrName:Dynamic, mediatorClass:Class<Dynamic>, ?injectViewAs:Dynamic=null, ?autoCreate:Bool=true, ?autoRemove:Bool=true):Void
 	{
-		var viewClassName:String = reflector.getFQCN(viewClassOrName);
+		var viewClassName = reflector.getFQCN(viewClassOrName);
 		
 		if (mappingConfigByViewClassName.get(viewClassName) != null)
 		{
@@ -149,7 +151,7 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 	{
 		if (mediator != null)
 		{
-			var viewComponent:Dynamic = mediator.getViewComponent();
+			var viewComponent = mediator.getViewComponent();
 			mediatorByView.remove(viewComponent);
 			mappingConfigByView.remove(viewComponent);
 			mediator.preRemove();
@@ -173,13 +175,13 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 	
 	public function hasMapping(viewClassOrName:Dynamic):Bool
 	{
-		var viewClassName:String = reflector.getFQCN(viewClassOrName);
-		return mappingConfigByViewClassName.get(viewClassName) != null;
+		var viewClassName = reflector.getFQCN(viewClassOrName);
+		return mappingConfigByViewClassName.exists(viewClassName);
 	}
 	
 	public function hasMediatorForView(viewComponent:Dynamic):Bool
 	{
-		return mediatorByView.get(viewComponent) != null;
+		return mediatorByView.exists(viewComponent);
 	}
 	
 	public function hasMediator(mediator:IMediator):Bool
@@ -221,7 +223,7 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 			return;
 		}
 		
-		var viewClassName:String = Type.getClassName(Type.getClass(view));
+		var viewClassName = Type.getClassName(Type.getClass(view));
 		var config = mappingConfigByViewClassName.get(viewClassName);
 		
 		if (config != null && config.autoCreate)

@@ -1,9 +1,15 @@
 {
 	"name": "mmvc",
 	"license": "MIT",
-	"tags": ["cross","massive","mvc"],
+	"tags": [
+	"cross",
+	"massive",
+	"mvc"
+],
 	"description": "A Haxe port of the ActionScript 3 RobotLegs MVC framework with signals and Haxe refinements. Supports AVM1, AVM2, JavaScript, Neko and C++.",
-	"contributors": ["massive"],
+	"contributors": [
+	"massive"
+],
 	"releasenote": "Add dce metadata, other fixes.",
 	"version": "1.4.0",
 	"url": "http://github.com/massiveinteractive/mmvc",
