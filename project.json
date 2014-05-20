@@ -13,7 +13,7 @@
 		},
 		"dependencies": 
 		{
-			"minject": "master",
+			"minject": ">=1.4 <2",
 			"msignal": ">=1.2 <2"
 		}
 	}
