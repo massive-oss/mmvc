@@ -22,6 +22,7 @@ SOFTWARE.
 
 package mmvc.impl;
 
+import mmvc.signal.Startup;
 import mmvc.base.CommandMap;
 import mmvc.base.MediatorMap;
 import mmvc.base.ViewMap;
@@ -73,8 +74,10 @@ class Context implements IContext
 	/**
 		The startup hook. Override this in your Application context.
 	**/
-	public function startup():Void {}
-	
+	public function startup():Void {
+        injector.getInstance(Startup).dispatch();
+    }
+
 	/**
 		The Startup Hook. Override this in your Application context.
 	**/
