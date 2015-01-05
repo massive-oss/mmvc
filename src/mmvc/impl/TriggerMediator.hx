@@ -20,35 +20,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package example.todo.model;
+package mmvc.impl;
 
-/**
-A single todo data object with a name and a done status
-*/
-class Todo
+import mmvc.api.ITriggerMap;
+
+class TriggerMediator<T> extends Mediator<T>
 {
-	/**
-	Name of the todo item
-	*/
-	public var name:String;
-
-	/**
-	Indicates if todo item is completed
-	*/
-	public var done:Bool;
-
-	public function new(?name:String)
+	@inject public var triggerMap:ITriggerMap;
+	
+	function dispatch(trigger:Dynamic)
 	{
-		if (name == null) name = "New todo";
-		this.name = name;
-		this.done = false;
-	}
-
-	/**
-	Serializes the data object as a JSON string 
-	*/
-	public function toString():String
-	{
-		return haxe.Json.stringify(this);
+		triggerMap.dispatch(trigger);
 	}
 }

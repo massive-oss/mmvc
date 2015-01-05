@@ -71,7 +71,7 @@ class Types
 				}
 				catch(e:Dynamic)
 				{
-					if(e != "Invalid call")
+					if (e != "Invalid call")
 					{
 						throw "Error creating instance of " + Type.getClassName(forClass) + "(" + args.toString() + ")";
 					}

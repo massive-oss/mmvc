@@ -20,35 +20,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package example.todo.model;
+package mmvc.impl;
 
-/**
-A single todo data object with a name and a done status
-*/
-class Todo
+import minject.Injector;
+
+import mmvc.api.ICommand;
+import mmvc.api.ICommandMap;
+import mmvc.api.IMediatorMap;
+import mmvc.api.ITriggerMap;
+import mmvc.api.IViewContainer;
+
+// @:generic
+class TriggerCommand<T> implements ICommand
 {
-	/**
-	Name of the todo item
-	*/
-	public var name:String;
+	@inject public var contextView:IViewContainer;
+	@inject public var commandMap:ICommandMap;
+	@inject public var injector:Injector;
+	@inject public var mediatorMap:IMediatorMap;
+	@inject public var triggerMap:ITriggerMap;
 
-	/**
-	Indicates if todo item is completed
-	*/
-	public var done:Bool;
+	public var trigger:T;
 
-	public function new(?name:String)
+	public function new():Void{}
+	public function execute(){}
+
+	function dispatch(trigger:Dynamic)
 	{
-		if (name == null) name = "New todo";
-		this.name = name;
-		this.done = false;
-	}
-
-	/**
-	Serializes the data object as a JSON string 
-	*/
-	public function toString():String
-	{
-		return haxe.Json.stringify(this);
+		triggerMap.dispatch(trigger);
 	}
 }

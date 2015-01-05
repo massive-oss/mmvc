@@ -72,12 +72,12 @@ class TodoListView extends DataView<TodoList>
 		{
 			case View.ACTIONED:
 			{
-				if(Std.is(view, TodoView))
+				if (Std.is(view, TodoView))
 				{
 					var todoView = cast view;
 					toggleTodoViewState(todoView);	
 				}
-				else if(Std.is(view, TodoStatsView))
+				else if (Std.is(view, TodoStatsView))
 				{
 					super.dispatch(CREATE_TODO, this);
 				}
@@ -127,10 +127,10 @@ class TodoListView extends DataView<TodoList>
 	{
 		super.dataChanged();
 
-		if(this.previousData != null)
+		if (this.previousData != null)
 			this.previousData.changed.remove(collectionChanged);
 		
-		if(data != null)
+		if (data != null)
 			data.changed.add(collectionChanged);
 
 		collectionChanged();
@@ -145,13 +145,13 @@ class TodoListView extends DataView<TodoList>
 
 		for(child in children.concat([]))
 		{
-			if(Std.is(child, TodoView))
+			if (Std.is(child, TodoView))
 			{
 				removeChild(child);	
 			}
 		}
 
-		if(data != null)
+		if (data != null)
 		{
 			for(todo in data)
 			{
@@ -166,7 +166,7 @@ class TodoListView extends DataView<TodoList>
 	*/
 	function updateStats()
 	{
-		if(data == null)
+		if (data == null)
 		{
 			statsView.setData("No data available");
 			return;

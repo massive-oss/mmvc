@@ -118,7 +118,7 @@ class TodoStatsView extends DataView<String>
 	*/
 	override function update()
 	{
-		if(data != null)
+		if (data != null)
 		{
 			#if flash
 				textField.text = data;

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2012 Massive Interactive
+Copyright (c) 2015 Massive Interactive
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to deal in 
@@ -20,35 +20,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package example.todo.model;
+package mmvc.api;
 
-/**
-A single todo data object with a name and a done status
-*/
-class Todo
+interface ITriggerMap
 {
 	/**
-	Name of the todo item
-	*/
-	public var name:String;
+		Map trigger to a command. Trigger can be instance of a class, string or enum value.
+		
+		@param trigger Class to trigger the command
+		@param trigger Command to be triggered
+	**/
+	function map(trigger:Dynamic, command:Class<ICommand>):Void;
 
 	/**
-	Indicates if todo item is completed
-	*/
-	public var done:Bool;
-
-	public function new(?name:String)
-	{
-		if (name == null) name = "New todo";
-		this.name = name;
-		this.done = false;
-	}
+		Unmap trigger and a command. Trigger can be instance of a class, string or enum value.
+		
+		@param trigger Class to unmap
+	**/
+	function unmap(trigger:Dynamic, command:Class<ICommand>):Void;
 
 	/**
-	Serializes the data object as a JSON string 
-	*/
-	public function toString():String
-	{
-		return haxe.Json.stringify(this);
-	}
+		Dispatch a trigger. A class of the trigger is evaluated and mapped command is executed.
+		
+		@param trigger Instance of a class
+	**/
+	function dispatch(trigger:Dynamic):Void;
 }

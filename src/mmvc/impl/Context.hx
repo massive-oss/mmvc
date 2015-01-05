@@ -22,19 +22,18 @@ SOFTWARE.
 
 package mmvc.impl;
 
-import mmvc.base.CommandMap;
-import mmvc.base.MediatorMap;
-import mmvc.base.ViewMap;
 import mmvc.api.ICommandMap;
 import mmvc.api.IContext;
-import minject.Injector;
 import mmvc.api.IMediatorMap;
-import minject.Reflector;
-import mmvc.api.IViewMap;
+import mmvc.api.ITriggerMap;
 import mmvc.api.IViewContainer;
+import mmvc.api.IViewMap;
+import mmvc.base.CommandMap;
+import mmvc.base.MediatorMap;
+import mmvc.base.TriggerMap;
+import mmvc.base.ViewMap;
 import minject.Injector;
 import minject.Reflector;
-import mmvc.api.IViewContainer;
 
 /**
 	Abstract MVCS `IContext` implementation
@@ -54,6 +53,8 @@ class Context implements IContext
 	public var reflector(get, null):Reflector;
 	
 	public var viewMap(get, null):IViewMap;
+	
+	public var triggerMap(get, null):ITriggerMap;
 	
 	/**
 		Abstract Context Implementation
@@ -88,6 +89,7 @@ class Context implements IContext
 			commandMap = null;
 			mediatorMap = null;
 			viewMap = null;
+			triggerMap = null;
 
 			mapInjections();
 			checkAutoStartup();
@@ -162,6 +164,19 @@ class Context implements IContext
 	}
 	
 	/**
+		The `ITriggerMap` for this `IContext`
+	**/
+	function get_triggerMap():ITriggerMap
+	{
+		if (triggerMap == null)
+		{
+			triggerMap = new TriggerMap(injector);
+		}
+
+		return triggerMap;
+	}
+	
+	/**
 		Injection Mapping Hook
 		
 		Override this in your application context to change the default configuration
@@ -176,6 +191,7 @@ class Context implements IContext
 		injector.mapValue(ICommandMap, commandMap);
 		injector.mapValue(IMediatorMap, mediatorMap);
 		injector.mapValue(IViewMap, viewMap);
+		injector.mapValue(ITriggerMap, triggerMap);
 	}
 	
 	function checkAutoStartup():Void

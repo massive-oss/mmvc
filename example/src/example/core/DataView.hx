@@ -61,7 +61,7 @@ class DataView<T> extends View
 	*/
 	public function setData(data:T, ?force:Bool=false)
 	{
-		if(this.data != data || force == true)
+		if (this.data != data || force == true)
 		{
 			
 			previousData = this.data;

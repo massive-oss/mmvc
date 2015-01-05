@@ -158,7 +158,7 @@ class View
 	*/
 	public function dispatch(event:String, view:View)
 	{
-		if(view == null) view = this;
+		if (view == null) view = this;
 		signal.dispatch(event, view);
 	}
 
@@ -199,7 +199,7 @@ class View
 	{
 		var removed = children.remove(view);
 
-		if(removed)
+		if (removed)
 		{
 			var oldIndex = view.index;
 
@@ -234,7 +234,7 @@ class View
 		#if flash
 		sprite = new Sprite();
 		#elseif js
-		if(tagName == null) tagName = "div";
+		if (tagName == null) tagName = "div";
 		element = Browser.document.createElement(tagName);
 		element.setAttribute("id", id);
 		element.className = className;
@@ -263,7 +263,7 @@ class View
 	*/
 	function set_index(value:Int):Int
 	{
-		if(index != value)
+		if (index != value)
 		{
 			index = value;
 			update();

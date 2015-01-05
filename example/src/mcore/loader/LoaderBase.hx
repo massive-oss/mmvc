@@ -107,8 +107,8 @@ class LoaderBase<T> implements Loader<T>
 	function checkListeners()
 	{
 		var className = Type.getClassName(Type.getClass(this));
-		if(completed.numListeners == 0) Console.warn("No completed listeners for " + className);
-		if(failed.numListeners == 0) Console.warn("No failed listeners for " + className);
+		if (completed.numListeners == 0) Console.warn("No completed listeners for " + className);
+		if (failed.numListeners == 0) Console.warn("No failed listeners for " + className);
 	}
 	#end
 }

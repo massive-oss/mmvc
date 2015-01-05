@@ -94,7 +94,7 @@ class TodoListViewMediator extends mmvc.impl.Mediator<TodoListView>
 	*/
 	function viewHandler(event:String, view:View)
 	{
-		if(event == TodoListView.CREATE_TODO)
+		if (event == TodoListView.CREATE_TODO)
 		{
 			list.add(new Todo());
 		}
