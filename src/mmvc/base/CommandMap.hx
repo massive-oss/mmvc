@@ -1,22 +1,22 @@
 /*
 Copyright (c) 2012 Massive Interactive
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of 
-this software and associated documentation files (the "Software"), to deal in 
-the Software without restriction, including without limitation the rights to 
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
-of the Software, and to permit persons to whom the Software is furnished to do 
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
 so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all 
+The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
@@ -43,7 +43,7 @@ class CommandMap implements ICommandMap
 		signalClassMap = new ClassMap();
 		detainedCommands = new Map();
 	}
-	
+
 	public function mapSignalClass(signalClass:SignalClass, commandClass:CommandClass, ?oneShot:Bool=false):AnySignal
 	{
 		var signal = getSignalClassInstance(signalClass);
@@ -56,7 +56,7 @@ class CommandMap implements ICommandMap
 		if (hasSignalCommand(signal, commandClass)) return;
 
 		var signalCommandMap:ClassMap<Dynamic>;
-		
+
 		if (signalMap.exists(signal))
 		{
 			signalCommandMap = signalMap.get(signal);
@@ -66,7 +66,7 @@ class CommandMap implements ICommandMap
 			signalCommandMap = new ClassMap<Dynamic>();
 			signalMap.set(signal, signalCommandMap);
 		}
-		
+
 		var me = this;
 		var callbackFunction = Reflect.makeVarArgs(function(args)
 		{
@@ -95,7 +95,7 @@ class CommandMap implements ICommandMap
 
 		var callbackFunction = callbacksByCommandClass.get(commandClass);
 		if (callbackFunction == null) return;
-		
+
 		if (!hasCommand(signal)) signalMap.remove(signal);
 		signal.remove(callbackFunction);
 		callbacksByCommandClass.remove(commandClass);
@@ -114,12 +114,12 @@ class CommandMap implements ICommandMap
 	function createSignalClassInstance(signalClass:SignalClass):AnySignal
 	{
 		var injectorForSignalInstance = injector;
-		
+
 		if (injector.hasMapping(Injector))
 		{
 			injectorForSignalInstance = injector.getInstance(Injector);
 		}
-		
+
 		var signal:AnySignal = injectorForSignalInstance.instantiate(signalClass);
 		injectorForSignalInstance.mapValue(signalClass, signal);
 		signalClassMap.set(signalClass, signal);
@@ -141,11 +141,11 @@ class CommandMap implements ICommandMap
 	{
 		var callbacksByCommandClass = signalMap.get(signal);
 		if (callbacksByCommandClass == null) return false;
-		
+
 		var callbackFunction = callbacksByCommandClass.get(commandClass);
 		return callbackFunction != null;
 	}
-	
+
 	function routeSignalToCommand(signal:AnySignal, valueObjects:Array<Dynamic>, commandClass:CommandClass, oneshot:Bool)
 	{
 		injector.mapValue(AnySignal, signal);
@@ -155,8 +155,7 @@ class CommandMap implements ICommandMap
 		injector.unmap(AnySignal);
 		unmapSignalValues(signal.valueClasses, valueObjects);
 		command.execute();
-		injector.attendedToInjectees.remove(command);
-		
+
 		if (oneshot)
 		{
 			unmapSignal(signal, commandClass);

@@ -1,22 +1,22 @@
 /*
 Copyright (c) 2012 Massive Interactive
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of 
-this software and associated documentation files (the "Software"), to deal in 
-the Software without restriction, including without limitation the rights to 
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies 
-of the Software, and to permit persons to whom the Software is furnished to do 
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
 so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all 
+The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
@@ -43,11 +43,11 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 	var mediatorsMarkedForRemoval:ObjectMap<{}, Dynamic>;
 	var hasMediatorsMarkedForRemoval:Bool;
 	var reflector:Reflector;
-	
+
 	/**
 		Creates a new `MediatorMap` object
-		
-		@param contextView The root view node of the context. 
+
+		@param contextView The root view node of the context.
 		@param injector An `Injector` to use for this context
 		@param reflector An `Reflector` to use for this context
 	**/
@@ -55,28 +55,28 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 	{
 		super(contextView, injector);
 		this.reflector = reflector;
-		
+
 		mediatorByView = new ObjectMap();
 		mappingConfigByView = new ObjectMap();
 		mappingConfigByViewClassName = new Map();
 		mediatorsMarkedForRemoval = new ObjectMap();
 		hasMediatorsMarkedForRemoval = false;
 	}
-	
+
 	public function mapView(viewClassOrName:Dynamic, mediatorClass:Class<Dynamic>, ?injectViewAs:Dynamic=null, ?autoCreate:Bool=true, ?autoRemove:Bool=true):Void
 	{
 		var viewClassName = reflector.getFQCN(viewClassOrName);
-		
+
 		if (mappingConfigByViewClassName.get(viewClassName) != null)
 		{
 			throw new ContextError("Mediator Class has already been mapped to a View Class in this context - " + mediatorClass);
 		}
-		
+
 		if (reflector.classExtendsOrImplements(mediatorClass, IMediator) == false)
 		{
 			throw new ContextError("Mediator Class does not implement IMediator - " + mediatorClass);
 		}
-		
+
 		var config = new MappingConfig();
 		config.mediatorClass = mediatorClass;
 		config.autoCreate = autoCreate;
@@ -98,7 +98,7 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 			config.typedViewClasses = [viewClassOrName];
 		}
 		mappingConfigByViewClassName.set(viewClassName, config);
-		
+
 		if (autoCreate || autoRemove)
 		{
 			viewListenerCount++;
@@ -106,15 +106,15 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 			if (viewListenerCount == 1)
 			{
 				addListeners();
-			}	
+			}
 		}
-		
+
 		if (autoCreate && contextView != null && viewClassName == Type.getClassName(Type.getClass(contextView)))
 		{
 			createMediatorUsing(contextView, viewClassName, config);
 		}
 	}
-	
+
 	public function unmapView(viewClassOrName:Dynamic):Void
 	{
 		var viewClassName = reflector.getFQCN(viewClassOrName);
@@ -132,12 +132,12 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 
 		mappingConfigByViewClassName.remove(viewClassName);
 	}
-	
+
 	public function createMediator(viewComponent:Dynamic):IMediator
 	{
 		return createMediatorUsing(viewComponent);
 	}
-	
+
 	public function registerMediator(viewComponent:Dynamic, mediator:IMediator):Void
 	{
 		mediatorByView.set(viewComponent, mediator);
@@ -146,7 +146,7 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 		mediator.setViewComponent(viewComponent);
 		mediator.preRegister();
 	}
-	
+
 	public function removeMediator(mediator:IMediator):IMediator
 	{
 		if (mediator != null)
@@ -157,33 +157,32 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 			mediator.preRemove();
 			mediator.setViewComponent(null);
 		}
-		
+
 		return mediator;
 	}
-	
+
 	public function removeMediatorByView(viewComponent:Dynamic):IMediator
 	{
 		var mediator = removeMediator(retrieveMediator(viewComponent));
-		injector.attendedToInjectees.remove(mediator);
 		return mediator;
 	}
-	
+
 	public function retrieveMediator(viewComponent:Dynamic):IMediator
 	{
 		return mediatorByView.get(viewComponent);
 	}
-	
+
 	public function hasMapping(viewClassOrName:Dynamic):Bool
 	{
 		var viewClassName = reflector.getFQCN(viewClassOrName);
 		return mappingConfigByViewClassName.exists(viewClassName);
 	}
-	
+
 	public function hasMediatorForView(viewComponent:Dynamic):Bool
 	{
 		return mediatorByView.exists(viewComponent);
 	}
-	
+
 	public function hasMediator(mediator:IMediator):Bool
 	{
 		for (key in mediatorByView.keys())
@@ -193,10 +192,10 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 				return true;
 			}
 		}
-			
+
 		return false;
 	}
-	
+
 	override function addListeners():Void
 	{
 		if (contextView != null && enabled)
@@ -205,7 +204,7 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 			contextView.viewRemoved = onViewRemoved;
 		}
 	}
-		
+
 	override function removeListeners():Void
 	{
 		if (contextView != null)
@@ -214,7 +213,7 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 			contextView.viewRemoved = null;
 		}
 	}
-	
+
 	override function onViewAdded(view:Dynamic):Void
 	{
 		if (mediatorsMarkedForRemoval.get(view) != null)
@@ -222,16 +221,16 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 			mediatorsMarkedForRemoval.remove(view);
 			return;
 		}
-		
+
 		var viewClassName = Type.getClassName(Type.getClass(view));
 		var config = mappingConfigByViewClassName.get(viewClassName);
-		
+
 		if (config != null && config.autoCreate)
 		{
 			createMediatorUsing(view, viewClassName, config);
 		}
 	}
-	
+
 	override function onViewRemoved(view:Dynamic):Void
 	{
 		var config = mappingConfigByView.get(view);
@@ -256,11 +255,11 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 		hasMediatorsMarkedForRemoval = false;
 	}
 
-	function createMediatorUsing(viewComponent:Dynamic, ?viewClassName:String=null, 
+	function createMediatorUsing(viewComponent:Dynamic, ?viewClassName:String=null,
 		?config:MappingConfig=null):IMediator
 	{
 		var mediator = mediatorByView.get(viewComponent);
-		
+
 		if (mediator == null)
 		{
 			if (viewClassName == null)
@@ -275,14 +274,14 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 
 			if (config != null)
 			{
-				for (claxx in config.typedViewClasses) 
+				for (claxx in config.typedViewClasses)
 				{
 					injector.mapValue(claxx, viewComponent);
 				}
 
 				mediator = injector.instantiate(config.mediatorClass);
 
-				for (clazz in config.typedViewClasses) 
+				for (clazz in config.typedViewClasses)
 				{
 					injector.unmap(clazz);
 				}
@@ -291,7 +290,7 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 			}
 		}
 
-		return mediator;			
+		return mediator;
 	}
 }
 
