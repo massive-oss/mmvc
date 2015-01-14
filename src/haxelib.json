@@ -10,7 +10,7 @@
 	"contributors": [
 	"massive"
 ],
-	"releasenote": "Add dce metadata, other fixes.",
+	"releasenote": "Add TriggerMap",
 	"version": "1.6.0",
 	"url": "http://github.com/massiveinteractive/mmvc",
 	"dependencies": 
