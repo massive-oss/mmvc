@@ -206,7 +206,7 @@ class TriggerMap implements ITriggerMap
 		var command = injector.instantiate(commandClass);
 		if (Std.is(command, TriggerCommand))
 		{
-			var triggerCommand:TriggerCommand = cast command;
+			var triggerCommand:TriggerCommand<Dynamic> = cast command;
 			triggerCommand.trigger = trigger;
 		}
 		command.execute();
