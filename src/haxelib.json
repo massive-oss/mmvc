@@ -11,7 +11,7 @@
 	"massive"
 ],
 	"releasenote": "Add dce metadata, other fixes.",
-	"version": "1.5.0",
+	"version": "1.6.0",
 	"url": "http://github.com/massiveinteractive/mmvc",
 	"dependencies": 
 	{
