@@ -1,3 +1,7 @@
+## 1.6.1
+
+- Type fix for Haxe 3.0.0
+
 ## 1.6.0
 
 - Fixes #17: adds TriggerMap to allow mapping of TriggeredCommands to various types
