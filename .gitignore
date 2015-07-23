@@ -21,3 +21,4 @@ example.swf
 example/build/**
 
 .haxelib
+/haxelib.json
