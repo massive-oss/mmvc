@@ -75,7 +75,7 @@ Generally a context is defined at an application level
 
 Models are mapped via the injector:
 
-	injector.mapSigleton(DanceModel);
+	injector.mapSingleton(DanceModel);
 
 
 Commands are mapped to actions (Signals) using the commandMap in the Context
