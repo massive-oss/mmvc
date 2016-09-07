@@ -177,7 +177,7 @@ Application signals represent unique actions or events within an application.
 
 #### Mapping Signals
 
-The can be mapped to an associated Command via the Context
+The Signal can be mapped to an associated Command via the Context
 
 	commandMap.mapSignalClass(Dance, DanceCommand);
 
