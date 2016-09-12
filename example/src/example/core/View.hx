@@ -36,7 +36,7 @@ Simple implementation of a cross platform View class that composes a
 native element/sprite depending on platform.
 
 Contains a basic display lifecycle (initialize, update, remove)
-Contains a basic display hierachy (addChild, removeChild)
+Contains a basic display hierarchy (addChild, removeChild)
 Contains basic dispatching and bubbling via a Signal (dispatch)
 
 Each target has a platform specific element for accessing the raw display API (flash: sprite, js: element)
