@@ -58,18 +58,20 @@ Contexts must extend mmvc.impl.Context and override the startup method to map ap
 
 Generally a context is defined at an application level
 
-	class ApplicationContext extends mmvc.impl.Context
+```haxe
+class ApplicationContext extends mmvc.impl.Context
+{
+	public function new(?contextView:IViewContainer=null, ?autoStartup:Bool=true)
 	{
-		public function new(?contextView:IViewContainer=null, ?autoStartup:Bool=true)
-		{
-			super(contextView, autoStartup);
-		}
-
-		override public function startup():Void
-		{
-			//map commands/models/mediators here
-		}
+		super(contextView, autoStartup);
 	}
+
+	override public function startup():Void
+	{
+		//map commands/models/mediators here
+	}
+}
+```
 
 #### Wiring the Context
 
@@ -96,38 +98,43 @@ Mediators are mapped to Views via the mediatorMap
 
 Usually an application context is instanciated within the main view of an application:
 
-	class ApplicationView implements mmvc.api.IViewContainer
+```haxe
+class ApplicationView implements mmvc.api.IViewContainer
+{
+	static var context:ApplicationContext;
+
+	public function new()
 	{
-		static var context:ApplicationContext;
-
-		public function new()
-		{
-			context = new ApplicationContext(this, true);
-		}
+		context = new ApplicationContext(this, true);
 	}
-
+}
+```
 
 Or externally in the Main haxe file
-	
-	class Main
+
+```haxe
+class Main
+{
+	public static function main()
 	{
-		public static function main()
-		{
-			var view = new ApplicationView();
-			var context = newApplicationContext(view);
-		}
+		var view = new ApplicationView();
+		var context = newApplicationContext(view);
 	}
-	
+}
+```
+
 
 **Important Caveat**
 
 The IViewContainer (ApplicationView) should be the last mapping in the Context.startup function otherwise other mappings may not be configured:
 
-	function startup()
-	{
-		//map everything else
-		mediatorMap.mapView(ApplicationView, ApplicationViewMediator);
-	}
+```haxe
+function startup()
+{
+	//map everything else
+	mediatorMap.mapView(ApplicationView, ApplicationViewMediator);
+}
+```
 
 
 ### Actors (models and services)
@@ -139,7 +146,7 @@ Actor is a generic term for an application class that is wired into the Context.
 
 Actors are mapped via the injector:
 
-	injector.mapSigleton(DanceModel);
+	injector.mapSingleton(DanceModel);
 
 
 #### Example
@@ -148,23 +155,23 @@ By default actors don't require any interface or inheritance to be mapped in the
 
 However if a actors requires references to other application parts it should extend mmvc.impl.Actor
 
+```haxe
+class DanceModel extends mmvc.impl.Actor
+{
+	public inline static var STYLE_WALTZ = "waltz";
+	public inline static var STYLE_FOXTROT = "foxtrot";
 
-	class DanceModel extends mmvc.impl.Actor
+	@inject something:Something;
+
+	public var dancer:String;
+	public var style:String;
+
+	public function new()
 	{
-		public inline static var STYLE_WALTZ = "waltz";
-		public inline static var STYLE_FOXTROT = "foxtrot";
-
-		@inject something:Something;
-
-		public var dancer:String;
-		public var style:String;
-
-		public function new()
-		{
-			...
-		}
+		...
 	}
-
+}
+```
 
 ### Signal
 
@@ -189,16 +196,18 @@ They can also be mapped as a standalone actor
 
 A simple example Signal with a signal dispatcher argument:
 
-	class Dance extends msignal.Signal1<String>
-	{
-		inline static public var FOX_TROT = "foxtrot";
-		inline static public var WALTZ = "waltz";
+```haxe
+class Dance extends msignal.Signal1<String>
+{
+	inline static public var FOX_TROT = "foxtrot";
+	inline static public var WALTZ = "waltz";
 
-		public function new()
-		{
-			super(String);
-		}
+	public function new()
+	{
+		super(String);
 	}
+}
+```
 
 And to dispatch the signal
 
@@ -224,26 +233,28 @@ A good way to achieve this is through child signals.
 
 This example adds a completed signal to dispatch once the dance has been completed.
 
-	class Dance extends msignal.Signal1<String>
+```haxe
+class Dance extends msignal.Signal1<String>
+{
+	public var completed:Signal1<String>;
+
+	inline static public var FOX_TROT = "foxtrot";
+	inline static public var WALTZ = "waltz";
+
+	public function new()
 	{
-		public var completed:Signal1<String>;
-
-		inline static public var FOX_TROT = "foxtrot";
-		inline static public var WALTZ = "waltz";
-
-		public function new()
-		{
-			super(String);
-			completed = new Signal1<String>();
-		}
+		super(String);
+		completed = new Signal1<String>();
 	}
-
+}
+```
 
 To listen for completion of the Dance
 
-	dance.completed.addOnce(this.danceCompleted);
-	dance.dispatch();
-
+```haxe
+dance.completed.addOnce(this.danceCompleted);
+dance.dispatch();
+```
 
 
 
@@ -268,32 +279,32 @@ Commands are triggered by dispatching the associated Signal from elsewhere withi
 
 #### Example
 
+```haxe
+class DanceCommand extends mmvc.impl.Command
+{
+	@inject
+	public var danceModel:DanceModel;
 
-	class DanceCommand extends mmvc.impl.Command
+	@inject
+	public var dance:Dance;
+
+	@inject
+	public var style:String;
+
+	public function new()
 	{
-		@inject
-		public var danceModel:DanceModel;
-
-		@inject
-		public var dance:Dance;
-
-		@inject
-		public var style:String;
-
-		public function new()
-		{
-			super();
-		}
-
-		override public function execute():Void
-		{
-			//some application logic here
-
-			//dispatch completed once done
-			dance.completed.dispatch(style);
-		}
+		super();
 	}
 
+	override public function execute():Void
+	{
+		//some application logic here
+
+		//dispatch completed once done
+		dance.completed.dispatch(style);
+	}
+}
+```
 
 
 ### Views & Mediator
@@ -336,71 +347,75 @@ The associated view instance can be accesed view the 'view' property
 
 This is an example demonstrating integration with both application and view events within a mediator
 
-	class DanceViewMediator extends mmvc.impl.Mediator<DanceView>
+```haxe
+class DanceViewMediator extends mmvc.impl.Mediator<DanceView>
+{
+	@inject model:DanceModel;
+
+	@inject dance:Dance;
+
+	public function new()
 	{
-		@inject model:DanceModel;
-
-		@inject dance:Dance;
-
-		public function new()
-		{
-			super();
-		}
-
-		override function onRegister()
-		{
-			super.onRegister();
-			
-			view.changeStyle.add(styleChanged);
-			
-			view.start(model.style);
-		}
-
-		override public function onRemove():Void
-		{
-			super.onRemove();
-			view.changeStyle.remove(styleChanged);
-		}
-
-
-		function styleChanged(style:String)
-		{
-			dance.completed.addOnce(danceCompleted);
-			dance.dispatch(style);
-		}
-
-		function danceCompleted(newStyle:String)
-		{
-			view.start(newStyle);
-		}
+		super();
 	}
+
+	override function onRegister()
+	{
+		super.onRegister();
+		
+		view.changeStyle.add(styleChanged);
+		
+		view.start(model.style);
+	}
+
+	override public function onRemove():Void
+	{
+		super.onRemove();
+		view.changeStyle.remove(styleChanged);
+	}
+
+
+	function styleChanged(style:String)
+	{
+		dance.completed.addOnce(danceCompleted);
+		dance.dispatch(style);
+	}
+
+	function danceCompleted(newStyle:String)
+	{
+		view.start(newStyle);
+	}
+}
+```
 
 And the view class:
 
-	class DanceView
+```haxe
+class DanceView
+{
+	public var changeStyle:Signal1<String>
+
+	var style:String;
+	
+	public function new()
 	{
-		public var changeStyle:Signal1<String>
-
-		var style:String;
-		
-		public function new()
-		{
-			changeStyle = new Signal1<String>();
-		}
-
-		public function start(style:String)
-		{
-			this.style = style;
-			//do something
-		}
-
-		public function restart()
-		{
-			start(style);
-		}
-
-		function internallyChangeStyle(newStyle:String)
-		{
-			changeStyle.dispatch(newStyle);
-		}
+		changeStyle = new Signal1<String>();
 	}
+
+	public function start(style:String)
+	{
+		this.style = style;
+		//do something
+	}
+
+	public function restart()
+	{
+		start(style);
+	}
+
+	function internallyChangeStyle(newStyle:String)
+	{
+		changeStyle.dispatch(newStyle);
+	}
+}
+```
