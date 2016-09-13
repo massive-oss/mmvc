@@ -118,11 +118,10 @@ class Main
 	public static function main()
 	{
 		var view = new ApplicationView();
-		var context = newApplicationContext(view);
+		var context = new ApplicationContext(view);
 	}
 }
 ```
-
 
 **Important Caveat**
 
