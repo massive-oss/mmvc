@@ -226,7 +226,7 @@ To add a listener to the signal
 
 #### Responder Signals
 
-Within an application is is often usefull to be able to receive callbacks once a signal has finished or completed.
+Within an application is is often useful to be able to receive callbacks once a signal has finished or completed.
 
 A good way to achieve this is through child signals.
 
