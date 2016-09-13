@@ -136,7 +136,7 @@ function startup()
 ```
 
 
-### Actors (models and services)
+### Actors (Models and Services)
 
 Actor is a generic term for an application class that is wired into the Context. Generally these take the form of **models** or **services**
 
@@ -336,7 +336,7 @@ To manually do this call the handler directly
 
 	applicationView.added(viewInstance);
 
-#### Accessing a Meditor's view 
+#### Accessing a Meditor's View 
 
 The associated view instance can be accesed view the 'view' property
 
