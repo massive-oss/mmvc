@@ -96,7 +96,7 @@ Mediators are mapped to Views via the mediatorMap
 
 #### Initializing the Context
 
-Usually an application context is instanciated within the main view of an application:
+Usually an application context is instantiated within the main view of an application:
 
 ```haxe
 class ApplicationView implements mmvc.api.IViewContainer
