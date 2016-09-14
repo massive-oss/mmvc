@@ -77,7 +77,7 @@ class Context implements IContext
 	public function startup():Void {}
 	
 	/**
-		The Startup Hook. Override this in your Application context.
+		The shutdown hook. Override this in your Application context.
 	**/
 	public function shutdown():Void {}
 	

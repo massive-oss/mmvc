@@ -96,7 +96,7 @@ Mediators are mapped to Views via the mediatorMap
 
 #### Initializing the Context
 
-Usually an application context is instanciated within the main view of an application:
+Usually an application context is instantiated within the main view of an application:
 
 ```haxe
 class ApplicationView implements mmvc.api.IViewContainer
@@ -118,11 +118,10 @@ class Main
 	public static function main()
 	{
 		var view = new ApplicationView();
-		var context = newApplicationContext(view);
+		var context = new ApplicationContext(view);
 	}
 }
 ```
-
 
 **Important Caveat**
 
@@ -137,7 +136,7 @@ function startup()
 ```
 
 
-### Actors (models and services)
+### Actors (Models and Services)
 
 Actor is a generic term for an application class that is wired into the Context. Generally these take the form of **models** or **services**
 
@@ -227,7 +226,7 @@ To add a listener to the signal
 
 #### Responder Signals
 
-Within an application is is often usefull to be able to receive callbacks once a signal has finished or completed.
+Within an application is is often useful to be able to receive callbacks once a signal has finished or completed.
 
 A good way to achieve this is through child signals.
 
@@ -337,7 +336,7 @@ To manually do this call the handler directly
 
 	applicationView.added(viewInstance);
 
-#### Accessing a Meditor's view 
+#### Accessing a Meditor's View 
 
 The associated view instance can be accesed view the 'view' property
 

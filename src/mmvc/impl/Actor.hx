@@ -35,7 +35,7 @@ import minject.Injector;
 	- Controller classes
 	- Presentation model classes
 	 
-	Essentially any class where it might be advantagous to have basic dependency injection supplied 
+	Essentially any class where it might be advantageous to have basic dependency injection supplied 
 	is a candidate for extending `Actor`.
 **/
 @:keepSub class Actor
