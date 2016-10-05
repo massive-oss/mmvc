@@ -336,7 +336,7 @@ To manually do this call the handler directly
 
 	applicationView.added(viewInstance);
 
-#### Accessing a Meditor's View 
+#### Accessing a Mediator's View 
 
 The associated view instance can be accesed view the 'view' property
 
