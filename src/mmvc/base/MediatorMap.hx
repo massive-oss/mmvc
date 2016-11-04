@@ -275,16 +275,22 @@ class MediatorMap extends ViewMapBase implements IMediatorMap
 
 			if (config != null)
 			{
-				for (claxx in config.typedViewClasses) 
+				if (config.typedViewClasses != null)
 				{
-					injector.mapValue(claxx, viewComponent);
+					for (claxx in config.typedViewClasses) 
+					{
+						injector.mapValue(claxx, viewComponent);
+					}
 				}
 
 				mediator = injector.instantiate(config.mediatorClass);
 
-				for (clazz in config.typedViewClasses) 
+				if (config.typedViewClasses != null)
 				{
-					injector.unmap(clazz);
+					for (clazz in config.typedViewClasses) 
+					{
+						injector.unmap(clazz);
+					}
 				}
 
 				registerMediator(viewComponent, mediator);
