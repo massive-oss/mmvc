@@ -69,12 +69,12 @@ class TriggerMap implements ITriggerMap
 
 	public function dispatch(trigger:Dynamic)
 	{
-		if (isClassInstance(trigger))
-			return dispatchClass(trigger);
-		if (isString(trigger))
-			return dispatchString(trigger);
 		if (isEnumValue(trigger))
 			return dispatchEnumValue(trigger);
+		if (isString(trigger))
+			return dispatchString(trigger);
+		if (isClassInstance(trigger))
+			return dispatchClass(trigger);
 		throw "Unmapping type " + Std.string(Type.typeof(trigger)) + " is not supported.";
 	}
 
@@ -229,6 +229,6 @@ class TriggerMap implements ITriggerMap
 	
 	function isClassInstance(source:Dynamic):Bool
 	{
-		return Type.getClass(source) != null && !Std.is(source, String);
+		return Type.getClass(source) != null && !Std.is(source, String) && Math.isNaN(source);
 	}
 }
