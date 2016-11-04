@@ -87,6 +87,22 @@ class MediatorMapTest
 	}
 	
 	@Test
+	public function mediator_is_mapped_by_string_And_created_for_view():Void
+	{
+		mediatorMap.mapView('mmvc.impl.support.ViewComponent', ViewMediator, null, false, false);
+		
+		var viewComponent = new ViewComponent();
+		contextView.addView(viewComponent);
+		
+		var mediator = mediatorMap.createMediator(viewComponent);
+		var hasMapping = mediatorMap.hasMapping(ViewComponent);
+		
+		Assert.isTrue(hasMapping);
+		Assert.isNotNull(mediator);
+		Assert.isTrue(mediatorMap.hasMediatorForView(viewComponent));
+	}
+	
+	@Test
 	public function mediator_is_mapped_and_created_with_inject_view_as_class():Void
 	{
 		mediatorMap.mapView(ViewComponent, ViewMediator, ViewComponent, false, false);
