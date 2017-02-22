@@ -22,40 +22,44 @@ SOFTWARE.
 
 package mmvc.base;
 
-import msignal.Signal;
+import com.g.cas.core.api.data.IData;
+import com.g.cas.core.base.signal.ContextSignal;
+import mdata.Dictionary;
 import minject.Injector;
-import minject.ClassMap;
 import mmvc.api.ICommand;
 import mmvc.api.ICommandMap;
+import mmvc.api.IGuard;
+import msignal.Signal.AnySignal;
 
 class CommandMap implements ICommandMap
 {
 	var injector:Injector;
-	var signalMap:Map<AnySignal, ClassMap<Dynamic>>;
-	var signalClassMap:ClassMap<AnySignal>;
-	var detainedCommands:Map<ICommand, Bool>;
+	var signalMap:Dictionary<Dynamic, Dynamic>;
+	var signalClassMap:Dictionary<Dynamic, Dynamic>;
+	var detainedCommands:Dictionary<Dynamic, Dynamic>;
 
 	public function new(injector:Injector)
 	{
 		this.injector = injector;
 
-		signalMap = new Map();
-		signalClassMap = new ClassMap();
-		detainedCommands = new Map();
+		signalMap = new Dictionary();
+		signalClassMap = new Dictionary();
+		detainedCommands = new Dictionary();
 	}
 	
 	public function mapSignalClass(signalClass:SignalClass, commandClass:CommandClass, ?oneShot:Bool=false):AnySignal
 	{
 		var signal = getSignalClassInstance(signalClass);
 		mapSignal(signal, commandClass, oneShot);
+		
 		return signal;
 	}
 
-	public function mapSignal(signal:AnySignal, commandClass:CommandClass, ?oneShot:Bool=false):Void
+	public function mapSignal(signal:AnySignal, commandClass:Class<ICommand>, ?oneShot:Bool=false)
 	{
 		if (hasSignalCommand(signal, commandClass)) return;
 
-		var signalCommandMap:ClassMap<Dynamic>;
+		var signalCommandMap:Dictionary<Dynamic, Dynamic>;
 		
 		if (signalMap.exists(signal))
 		{
@@ -63,7 +67,7 @@ class CommandMap implements ICommandMap
 		}
 		else
 		{
-			signalCommandMap = new ClassMap<Dynamic>();
+			signalCommandMap = new Dictionary(false);
 			signalMap.set(signal, signalCommandMap);
 		}
 		
@@ -84,7 +88,7 @@ class CommandMap implements ICommandMap
 		if (!hasCommand(signal))
 		{
 			injector.unmap(signalClass);
-			signalClassMap.remove(signalClass);
+			signalClassMap.delete(signalClass);
 		}
 	}
 
@@ -96,9 +100,9 @@ class CommandMap implements ICommandMap
 		var callbackFunction = callbacksByCommandClass.get(commandClass);
 		if (callbackFunction == null) return;
 		
-		if (!hasCommand(signal)) signalMap.remove(signal);
+		if (!hasCommand(signal)) signalMap.delete(signal);
 		signal.remove(callbackFunction);
-		callbacksByCommandClass.remove(commandClass);
+		callbacksByCommandClass.delete(commandClass);
 	}
 
 	function getSignalClassInstance(signalClass:SignalClass):AnySignal
@@ -129,7 +133,7 @@ class CommandMap implements ICommandMap
 
 	public function hasCommand(signal:AnySignal):Bool
 	{
-		var callbacksByCommandClass = signalMap.get(signal);
+		var callbacksByCommandClass:Dictionary<Dynamic, Dynamic> = signalMap.get(signal);
 		if (callbacksByCommandClass == null) return false;
 
 		var count = 0;
@@ -155,7 +159,7 @@ class CommandMap implements ICommandMap
 		injector.unmap(AnySignal);
 		unmapSignalValues(signal.valueClasses, valueObjects);
 		command.execute();
-		injector.attendedToInjectees.remove(command);
+		injector.attendedToInjectees.delete(command);
 		
 		if (oneshot)
 		{
@@ -193,7 +197,51 @@ class CommandMap implements ICommandMap
 	{
 		if (detainedCommands.exists(command))
 		{
-			detainedCommands.remove(command);
+			detainedCommands.delete(command);
 		}
+	}
+	
+	public function mapSignalValue(signalClass:SignalClass):Void
+	{
+		getSignalClassInstance(signalClass);
+	}
+	
+	public function mapAction(inputSignalClass:SignalClass, outputSignalClass:SignalClass, 
+		?data:IData, ?guardClasses:Array<Class<IGuard>>, ?checkKeyInputSignal:String):Void
+	{
+		var inputSignal:AnySignal = getSignalClassInstance(inputSignalClass);
+		
+		var me = this;
+		var callback = Reflect.makeVarArgs(function(args)
+		{
+			me.routeAction(args[0], outputSignalClass, data, guardClasses, checkKeyInputSignal);
+		});
+		
+		inputSignal.add(callback);
+	}
+	
+	private function routeAction(keyInputSignal:String, outputSignalClass:SignalClass, 
+		data:IData, guardClasses:Array<Class<IGuard>>, checkKeyInputSignal:String):Void
+	{
+		if (keyInputSignal != null && checkKeyInputSignal != null && keyInputSignal != checkKeyInputSignal)
+			return;
+		
+		var approved:Bool = true;
+		
+		if (guardClasses != null)
+		{
+			for (guardClass in guardClasses)
+			{
+				var nextGuard:IGuard = injector.instantiate(guardClass);
+				
+				approved = (approved && nextGuard.approve());
+				
+				if (!approved)
+					return;
+			}
+		}
+		
+		var outputSignal:ContextSignal = cast(getSignalClassInstance(outputSignalClass), ContextSignal);
+		outputSignal.dispatch(null, data);
 	}
 }

@@ -24,23 +24,29 @@ package mmvc.api;
 
 import msignal.Signal;
 import mmvc.api.ICommand;
+import com.g.cas.core.api.data.IData;
 
 typedef CommandClass = Class<ICommand>;
 typedef SignalClass = Class<AnySignal>;
 
 interface ICommandMap
 {
-	function mapSignal(signal:AnySignal, commandClass:CommandClass, ?oneShot:Bool=false):Void;
+    function mapSignal(signal:AnySignal, commandClass:CommandClass, ?oneShot:Bool=false):Void;
 
-	function mapSignalClass(signalClass:SignalClass, commandClass:CommandClass, ?oneShot:Bool=false):AnySignal;
+    function mapSignalClass(signalClass:SignalClass, commandClass:CommandClass, ?oneShot:Bool=false):AnySignal;
 
-	function hasSignalCommand(signal:AnySignal, commandClass:CommandClass):Bool;
+    function hasSignalCommand(signal:AnySignal, commandClass:CommandClass):Bool;
 
-	function unmapSignal(signal:AnySignal, commandClass:CommandClass):Void;
+    function unmapSignal(signal:AnySignal, commandClass:CommandClass):Void;
+	
+    function unmapSignalClass(signalClass:SignalClass, commandClass:CommandClass):Void;
 
-	function unmapSignalClass(signalClass:SignalClass, commandClass:CommandClass):Void;
+    function detain(command:ICommand):Void;
 
-	function detain(command:ICommand):Void;
-
-	function release(command:ICommand):Void;
+    function release(command:ICommand):Void;
+	
+	function mapSignalValue(signalClass:SignalClass):Void;
+	
+	function mapAction(inputSignalClass:SignalClass, outputSignalClass:SignalClass, ?data:IData, 
+		?guardClasses:Array<Class<IGuard>>, ?checkKeyInputSignal:String):Void;
 }
