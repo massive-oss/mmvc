@@ -68,6 +68,8 @@ class TriggerMap implements ITriggerMap
 			return unmapString(trigger, command);
 		if (isEnumValue(trigger))
 			return unmapEnumValue(trigger, command);
+		if (isInt(trigger))
+			return unmapInt(trigger, command);
 		throw "Unmapping type " + Std.string(Type.typeof(trigger)) + " is not supported.";
 	}
 

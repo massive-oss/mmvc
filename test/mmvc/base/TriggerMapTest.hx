@@ -163,7 +163,18 @@ class TriggerMapTest
 		var triggerMap:TriggerMap = cast context.triggerMap;
 		var myDynamic:Dynamic = 1;
 		var isError:Bool;
-		
+
+		isError = false;
+		try
+		{
+			triggerMap.dispatch(1.1);
+		}
+		catch(error:Dynamic)
+		{
+			isError = true;
+		}
+		Assert.isTrue(isError);
+
 		isError = false;
 		try
 		{
