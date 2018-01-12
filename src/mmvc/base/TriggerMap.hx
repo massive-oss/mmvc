@@ -23,6 +23,7 @@ SOFTWARE.
 package mmvc.base;
 
 import haxe.ds.EnumValueMap;
+import haxe.ds.IntMap;
 import haxe.ds.ObjectMap;
 import haxe.ds.StringMap;
 
@@ -38,6 +39,7 @@ class TriggerMap implements ITriggerMap
 	var classToCommand:StringMap<Array<Class<ICommand>>>;
 	var stringToCommand:StringMap<Array<Class<ICommand>>>;
 	var enumValueToCommand:EnumValueMap<EnumValue, Array<Class<ICommand>>>;
+	var intToCommand:IntMap<Array<Class<ICommand>>>;
 	var instanceToCommand:ObjectMap<Dynamic, Array<Class<ICommand>>>;
 
 	public function new(injector:Injector)
@@ -53,9 +55,11 @@ class TriggerMap implements ITriggerMap
 			return mapString(trigger, command);
 		if (isEnumValue(trigger))
 			return mapEnumValue(trigger, command);
+		if (isInt(trigger))
+			return mapInt(trigger, command);
 		throw "Mapping type " + Std.string(Type.typeof(trigger)) + " is not supported.";
 	}
-	
+
 	public function unmap(trigger:Dynamic, command:Class<ICommand>)
 	{
 		if (isClass(trigger))
@@ -73,6 +77,8 @@ class TriggerMap implements ITriggerMap
 			return dispatchEnumValue(trigger);
 		if (isString(trigger))
 			return dispatchString(trigger);
+		if (isInt(trigger))
+			return dispatchInt(trigger);
 		if (isClassInstance(trigger))
 			return dispatchClass(trigger);
 		throw "Unmapping type " + Std.string(Type.typeof(trigger)) + " is not supported.";
@@ -164,6 +170,34 @@ class TriggerMap implements ITriggerMap
 				invokeCommand(trigger, triggerClass, commandClass);
 	}
 
+	public function mapInt(trigger:Int, command:Class<ICommand>)
+	{
+		if (intToCommand == null)
+			intToCommand = new IntMap<Array<Class<ICommand>>>();
+		var list = intToCommand.get(trigger);
+		(list == null) ? intToCommand.set(trigger, [command]) : list.push(command);
+	}
+
+	public function unmapInt(trigger:Int, command:Class<ICommand>)
+	{
+		if (intToCommand == null)
+			return;
+		var list = intToCommand.get(trigger);
+		if (list != null)
+			list.remove(command);
+	}
+
+	public function dispatchInt(trigger:Int)
+	{
+		if (intToCommand == null)
+			return;
+		var triggerClass = Type.getClass(trigger);
+		var list = intToCommand.get(trigger);
+		if (list != null)
+			for(commandClass in list)
+				invokeCommand(trigger, triggerClass, commandClass);
+	}
+
 	public function mapInstance(trigger:{}, command:Class<ICommand>)
 	{
 		if (!isClassInstance(trigger))
@@ -216,19 +250,24 @@ class TriggerMap implements ITriggerMap
 	{
 		return Std.is(source, Class);
 	}
-	
+
 	function isString(source:Dynamic):Bool
 	{
 		return Std.is(source, String);
 	}
-	
+
 	function isEnumValue(source:Dynamic):Bool
 	{
 		return Reflect.isEnumValue(source);
 	}
-	
+
+	function isInt(source:Dynamic):Bool
+	{
+		return Std.is(source, Int);
+	}
+
 	function isClassInstance(source:Dynamic):Bool
 	{
-		return Type.getClass(source) != null && !Std.is(source, String) && Math.isNaN(source);
+		return Type.getClass(source) != null && Math.isNaN(source) && !isString(source) && !isEnumValue(source);
 	}
 }

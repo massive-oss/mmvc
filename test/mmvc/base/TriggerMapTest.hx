@@ -29,6 +29,7 @@ import mmvc.base.support.MockEnum;
 import mmvc.base.support.MockResult;
 import mmvc.base.support.TriggerCommand_EnumValue;
 import mmvc.base.support.TriggerCommand_Instance;
+import mmvc.base.support.TriggerCommand_Int;
 import mmvc.base.support.TriggerCommand_MockClass;
 import mmvc.base.support.TriggerCommand_String;
 import mmvc.impl.Context;
@@ -122,8 +123,22 @@ class TriggerMapTest
 		var triggerMap:TriggerMap = cast context.triggerMap;
 		triggerMap.mapEnumValue(MockEnum.A, TriggerCommand_EnumValue);
 		triggerMap.dispatchEnumValue(MockEnum.A);
-		
+
 		Assert.areEqual(MockEnum.A, MockResult.result);
+	}
+
+	@Test
+	public function dispatched_int_triggers_command():Void
+	{
+		MockResult.result = null;
+		var value = 1;
+
+		var context = new Context(new mmvc.base.support.TestContextView());
+		var triggerMap:TriggerMap = cast context.triggerMap;
+		triggerMap.mapInt(value, TriggerCommand_Int);
+		triggerMap.dispatchInt(value);
+
+		Assert.areEqual(value, MockResult.result);
 	}
 
 	@Test
@@ -148,28 +163,6 @@ class TriggerMapTest
 		var triggerMap:TriggerMap = cast context.triggerMap;
 		var myDynamic:Dynamic = 1;
 		var isError:Bool;
-		
-		isError = false;
-		try
-		{
-			triggerMap.dispatch(1);
-		}
-		catch(error:Dynamic)
-		{
-			isError = true;
-		}
-		Assert.isTrue(isError);
-		
-		isError = false;
-		try
-		{
-			triggerMap.dispatch(myDynamic);
-		}
-		catch(error:Dynamic)
-		{
-			isError = true;
-		}
-		Assert.isTrue(isError);
 		
 		isError = false;
 		try
