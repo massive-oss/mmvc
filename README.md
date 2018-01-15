@@ -432,7 +432,7 @@ Commit and push updates using git commands:
 
 ```
 git add CHANGES.md project.json src/haxelib.json src/haxelib.xml
-git commit -m Version 1.2.3
+git commit -m "Version 1.2.3"
 git tag 1.2.3
 git push origin master --tags
 ```

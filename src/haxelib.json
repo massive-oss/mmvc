@@ -11,7 +11,7 @@
 	"massive"
 ],
 	"releasenote": "Add TriggerMap",
-	"version": "1.6.2",
+	"version": "1.6.3",
 	"url": "http://github.com/massiveinteractive/mmvc",
 	"dependencies": 
 	{

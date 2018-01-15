@@ -1,3 +1,7 @@
+## 1.6.3
+
+- Updated README.md and relase information
+
 ## 1.6.2
 
 - Fixes TriggerMap for Haxe 3.2.1+
