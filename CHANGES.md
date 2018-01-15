@@ -1,3 +1,9 @@
+## 1.6.2
+
+- Fixes TriggerMap for Haxe 3.2.1+
+- Fixed enum bug where an enum trigger would not fire the command, added support for Int triggers
+- Added unit test for unsupported type and added missing unmap call
+
 ## 1.6.1
 
 - Type fix for Haxe 3.0.0
