@@ -418,3 +418,28 @@ class DanceView
 	}
 }
 ```
+
+## Release
+
+Update version information (lets say 1.2.3) in:
+
+1. CHANGES.md
+2. project.json
+3. src/haxelib.json
+4. src/haxelib.xml
+
+Commit and push updates using git commands:
+
+```
+git add CHANGES.md project.json src/haxelib.json src/haxelib.xml
+git commit -m Version 1.2.3
+git tag 1.2.3
+git push origin master --tags
+```
+
+Submit updated version into haxelib:
+
+```
+haxelib submit
+	package: src 
+```
