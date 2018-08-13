@@ -338,7 +338,7 @@ To manually do this call the handler directly
 
 #### Accessing a Mediator's View 
 
-The associated view instance can be accesed view the 'view' property
+The associated view instance can be accesed via the 'view' property
 
 	this.view.doSomething(); 
 
@@ -392,7 +392,7 @@ And the view class:
 ```haxe
 class DanceView
 {
-	public var changeStyle:Signal1<String>
+	public var changeStyle:Signal1<String>;
 
 	var style:String;
 	
